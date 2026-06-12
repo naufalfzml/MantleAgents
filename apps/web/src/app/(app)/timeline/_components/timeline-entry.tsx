@@ -22,6 +22,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
+import { useExplorerTxUrl } from '@/lib/explorer';
 import { formatRelativeTime, formatUsd, shortenAddress } from '@/lib/format';
 import { SignalCard, YieldSignalCard } from '@/components/signal-card';
 
@@ -148,13 +149,14 @@ function renderCitations(
   );
 }
 
-function renderTxHash(txHash: string | null) {
+function TxHashLink({ txHash }: { txHash: string | null }) {
+  const txUrl = useExplorerTxUrl(txHash);
   if (!txHash) return null;
-  const explorerUrl =
-    process.env.NEXT_PUBLIC_EXPLORER_URL || 'https://bscscan.com';
+  if (!txUrl) return null;
+
   return (
     <a
-      href={`${explorerUrl}/tx/${txHash}`}
+      href={txUrl}
       target="_blank"
       rel="noopener noreferrer"
       className="inline-flex items-center gap-1 text-xs text-primary hover:underline font-mono"
@@ -204,7 +206,7 @@ function renderDetail(entry: TimelineEntryProps['entry']) {
             </p>
           ) : null}
           {renderCitations(entry.citations)}
-          {renderTxHash(entry.txHash)}
+          <TxHashLink txHash={entry.txHash} />
         </div>
       );
 
@@ -293,7 +295,7 @@ function renderDetail(entry: TimelineEntryProps['entry']) {
               </span>
             </p>
           ) : null}
-          {renderTxHash(entry.txHash)}
+          <TxHashLink txHash={entry.txHash} />
         </div>
       );
 

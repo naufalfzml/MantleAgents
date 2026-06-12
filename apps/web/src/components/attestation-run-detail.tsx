@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useExplorerTxUrl } from '@/lib/explorer';
 import { toast } from 'sonner';
 
 type AttestationDecisionTrail = {
@@ -79,6 +80,8 @@ export function AttestationRunDetail(props: {
   }
 
   const detail = selectedEntry ?? null;
+  const commitTxUrl = useExplorerTxUrl(detail?.commitTxHash ?? null);
+  const outcomeTxUrl = useExplorerTxUrl(detail?.decisionTrail?.outcome?.txHash ?? null);
 
   return (
     <div className="grid gap-4 lg:grid-cols-[260px_minmax(0,1fr)]">
@@ -142,9 +145,9 @@ export function AttestationRunDetail(props: {
                   {detail.runId ?? 'No run id'}
                 </p>
               </div>
-              {detail.commitTxHash && detail.commitTxExplorerUrl ? (
+              {detail.commitTxHash && commitTxUrl ? (
                 <a
-                  href={detail.commitTxExplorerUrl}
+                  href={commitTxUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300 transition-colors hover:bg-emerald-500/15"
@@ -218,10 +221,16 @@ export function AttestationRunDetail(props: {
                 <p className="mt-2 text-xs text-muted-foreground">
                   {detail.decisionTrail?.outcome?.summary ?? 'No execution summary recorded.'}
                 </p>
-                {detail.decisionTrail?.outcome?.txHash ? (
-                  <p className="mt-2 font-mono text-[11px] text-muted-foreground">
+                {detail.decisionTrail?.outcome?.txHash && outcomeTxUrl ? (
+                  <a
+                    href={outcomeTxUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-2 inline-flex items-center gap-1 font-mono text-[11px] text-primary hover:underline"
+                  >
                     {shortHash(detail.decisionTrail.outcome.txHash)}
-                  </p>
+                    <ExternalLink className="size-3" />
+                  </a>
                 ) : null}
               </div>
             </div>
@@ -244,7 +253,7 @@ export function AttestationRunDetail(props: {
                 value={detail.commitTxHash}
                 copied={copiedField === 'Commit Tx'}
                 onCopy={() => copyValue('Commit Tx', detail.commitTxHash)}
-                href={detail.commitTxExplorerUrl}
+                href={commitTxUrl}
               />
             </div>
           </div>

@@ -16,6 +16,7 @@ import { Badge } from '@/components/ui/badge';
 import { useMotionSafe } from '@/lib/motion';
 import { formatUsd } from '@/lib/format';
 import { cn } from '@/lib/utils';
+import { useExplorerTxUrl } from '@/lib/explorer';
 import type { StepEntry, ProgressStep } from '@/hooks/use-agent-progress';
 import type {
   ProgressNewsData,
@@ -64,13 +65,6 @@ function isCompleteData(data: ProgressData): data is ProgressCompleteData {
 function isErrorData(data: ProgressData): data is ProgressErrorData {
   return 'error' in data && 'step' in data && !('currency' in data);
 }
-
-/* ------------------------------------------------------------------ */
-/*  Explorer URL                                                       */
-/* ------------------------------------------------------------------ */
-
-const EXPLORER_URL =
-  process.env.NEXT_PUBLIC_EXPLORER_URL || 'https://bscscan.com';
 
 /* ------------------------------------------------------------------ */
 /*  Step dot                                                           */
@@ -189,6 +183,8 @@ function GuardrailDataView({ data }: { data: ProgressGuardrailData }) {
 
 function TradeDataView({ data }: { data: ProgressTradeData }) {
   const isError = !!data.error;
+  const txUrl = useExplorerTxUrl(data.txHash ?? null);
+
   return (
     <div className="mt-1 ml-6 flex items-center gap-2 text-xs">
       {data.direction === 'buy' ? (
@@ -200,9 +196,9 @@ function TradeDataView({ data }: { data: ProgressTradeData }) {
       <span className={cn('font-mono', isError ? 'text-destructive' : 'text-foreground')}>
         {formatUsd(data.amountUsd)}
       </span>
-      {data.txHash && (
+      {data.txHash && txUrl && (
         <a
-          href={`${EXPLORER_URL}/tx/${data.txHash}`}
+          href={txUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="text-primary hover:underline font-mono"
