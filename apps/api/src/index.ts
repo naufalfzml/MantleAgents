@@ -13,6 +13,8 @@ import { yieldAgentRoutes } from './routes/yield-agent.js';
 import { conversationRoutes } from './routes/conversation.js';
 import { selfclawRoutes } from './routes/selfclaw.js';
 import { monitorRoutes } from './routes/monitor.js';
+import { n8nBridgeRoutes } from './routes/n8n-bridge.js';
+import { systemRoutes } from './routes/system.js';
 import { startPriceSnapshotCron } from './services/snapshot-cron.js';
 import { startAgentCron } from './services/agent-cron.js';
 import { startMonitorCron } from './services/token-monitor.js';
@@ -90,6 +92,7 @@ app.get('/api/health', async () => {
 
 // Routes
 await app.register(authRoutes);
+await app.register(systemRoutes);
 await app.register(userRoutes);
 await app.register(marketRoutes);
 await app.register(overviewRoutes);
@@ -100,6 +103,7 @@ await app.register(yieldAgentRoutes);
 await app.register(conversationRoutes);
 await app.register(selfclawRoutes);
 await app.register(monitorRoutes);
+await app.register(n8nBridgeRoutes, { prefix: '/api/n8n' });
 
 try {
   await app.listen({ port: PORT, host: '0.0.0.0' });
