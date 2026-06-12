@@ -620,6 +620,7 @@ export type Database = {
           created_at: string | null
           display_name: string | null
           id: string
+          n8n_workflow_id: string | null
           onboarding_completed: boolean | null
           preferred_currencies: string[] | null
           risk_answers: Json | null
@@ -639,6 +640,7 @@ export type Database = {
           created_at?: string | null
           display_name?: string | null
           id?: string
+          n8n_workflow_id?: string | null
           onboarding_completed?: boolean | null
           preferred_currencies?: string[] | null
           risk_answers?: Json | null
@@ -658,6 +660,7 @@ export type Database = {
           created_at?: string | null
           display_name?: string | null
           id?: string
+          n8n_workflow_id?: string | null
           onboarding_completed?: boolean | null
           preferred_currencies?: string[] | null
           risk_answers?: Json | null
