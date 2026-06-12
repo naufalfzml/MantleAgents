@@ -1,6 +1,7 @@
 'use client';
 
 import { AuthGuard } from '@/components/auth-guard';
+import { DashboardStatusBadges } from '@/components/dashboard-status-badges';
 import { PageTransition } from '@/components/page-transition';
 import { TerminalNavbar } from '@/components/terminal-navbar';
 
@@ -9,6 +10,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <AuthGuard requireOnboarded={true}>
       <div className="flex flex-col overflow-hidden bg-gb-light">
         <TerminalNavbar />
+        <div className="shrink-0 border-b-2 border-gb-deep bg-gb-mid/30 px-4 py-2">
+          <div className="mx-auto flex w-full max-w-6xl justify-end">
+            <DashboardStatusBadges />
+          </div>
+        </div>
         <main className="w-full flex-1 overflow-y-auto overflow-x-hidden relative">
           <div className="mx-auto w-full max-w-6xl px-4 py-6 md:px-6 md:py-8">
             <PageTransition>{children}</PageTransition>
