@@ -8,6 +8,7 @@ import {
 import { encodeFunctionData, parseUnits, maxUint256 } from 'viem';
 import {
   ALL_TOKEN_ADDRESSES,
+  type TradeResult,
   type FailureCategory,
   getTokenDecimals,
 } from '@jakartagents/shared';
@@ -98,24 +99,6 @@ function getMantleDataClient(): MantleDataClient {
   }
   return _aveClient;
 }
-
-// ---------------------------------------------------------------------------
-// Types — kept compatible with the original interface
-// ---------------------------------------------------------------------------
-
-export type TradeResult =
-  | {
-      success: true;
-      txHash: string;
-      amountIn: string;
-      amountOut: string;
-      rate: number;
-    }
-  | {
-      success: false;
-      failureCategory: FailureCategory;
-      reason: string;
-    };
 
 function mapFailureCategory(statusOrReason: string, maybeReason?: string): FailureCategory {
   const combined = `${statusOrReason} ${maybeReason ?? ''}`.toLowerCase();

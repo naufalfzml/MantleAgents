@@ -6,7 +6,16 @@ import {
   type TokenInfo,
   type SupportedToken,
 } from '@jakartagents/shared';
-import type { Chain } from '@jakartagents/mantle-data';
+import {
+  MantleDataClient,
+  checkContractRisk,
+  getKlineByToken,
+  getTokenDetail,
+  type Chain,
+  type ContractRisk,
+  type KlineCandle,
+  type TokenDetail,
+} from '@jakartagents/mantle-data';
 import { priceCache, PRICE_CACHE_TTL_MS } from '../lib/cache.js';
 import { fetchAllPrices } from './price-service.js';
 
@@ -16,6 +25,14 @@ const supabaseAdmin = createSupabaseAdmin(
 );
 
 const ALL_SYMBOLS: string[] = [...STABLE_TOKENS, 'XAUT'];
+let mantleDataClient: MantleDataClient | undefined;
+
+function getMantleDataClient(): MantleDataClient {
+  if (!mantleDataClient) {
+    mantleDataClient = new MantleDataClient();
+  }
+  return mantleDataClient;
+}
 
 export async function getMarketTokens(): Promise<TokenInfo[]> {
   const cached = priceCache.get<TokenInfo[]>('market_tokens');
@@ -108,6 +125,35 @@ export async function getMarketTokens(): Promise<TokenInfo[]> {
 
   priceCache.set('market_tokens', tokens, PRICE_CACHE_TTL_MS);
   return tokens;
+}
+
+export async function getN8nMarketData(params: {
+  chain: Chain;
+  tokenAddress: string;
+  klineInterval?: 1 | 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 4320 | 10080;
+  klineLimit?: number;
+}): Promise<{
+  detail: TokenDetail;
+  kline: KlineCandle[];
+  riskSummary: ContractRisk | null;
+}> {
+  const client = getMantleDataClient();
+  const { chain, tokenAddress, klineInterval = 60, klineLimit = 24 } = params;
+
+  const [detail, kline, riskSummary] = await Promise.all([
+    getTokenDetail(client, chain, tokenAddress),
+    getKlineByToken(client, chain, tokenAddress, {
+      interval: klineInterval,
+      limit: klineLimit,
+    }),
+    checkContractRisk(client, chain, tokenAddress).catch(() => null),
+  ]);
+
+  return {
+    detail,
+    kline,
+    riskSummary,
+  };
 }
 
 function downsample(arr: number[], targetLen: number): number[] {
