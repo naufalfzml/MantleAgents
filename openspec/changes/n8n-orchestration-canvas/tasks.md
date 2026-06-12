@@ -1,44 +1,44 @@
 ## 1. Infrastructure — n8n Service
 
-- [ ] 1.1 Create `docker-compose.yml` at repo root with services: `api` (Fastify, port 4000), `n8n` (n8n self-hosted, port 5678), shared Docker network `jakartagents`
-- [ ] 1.2 Configure n8n service with a named volume (`n8n_data`) for workflow persistence and env vars: `N8N_BASIC_AUTH_ACTIVE=true`, `N8N_EDITOR_BASE_URL`, `WEBHOOK_URL`
-- [ ] 1.3 Add `N8N_BASE_URL`, `N8N_API_KEY` (n8n instance API key), `N8N_BRIDGE_API_KEY_SECRET` to `apps/api/.env.example`
-- [ ] 1.4 Add `NEXT_PUBLIC_N8N_BASE_URL` to `apps/web/.env.local.example`
+- [x] 1.1 Create `docker-compose.yml` at repo root with services: `api` (Fastify, port 4000), `n8n` (n8n self-hosted, port 5678), shared Docker network `jakartagents`
+- [x] 1.2 Configure n8n service with a named volume (`n8n_data`) for workflow persistence and env vars: `N8N_BASIC_AUTH_ACTIVE=true`, `N8N_EDITOR_BASE_URL`, `WEBHOOK_URL`
+- [x] 1.3 Add `N8N_BASE_URL`, `N8N_API_KEY` (n8n instance API key), `N8N_BRIDGE_API_KEY_SECRET` to `apps/api/.env.example`
+- [x] 1.4 Add `NEXT_PUBLIC_N8N_BASE_URL` to `apps/web/.env.local.example`
 - [ ] 1.5 Verify `docker compose up` starts both api and n8n; n8n UI accessible at `http://localhost:5678`
 
 ## 2. Shared Bridge Payload Types
 
-- [ ] 2.1 Add `N8nMarketDataRequest` and `N8nMarketDataResponse` types to `packages/shared`
-- [ ] 2.2 Add `N8nSignalAnalysisRequest` and `N8nSignalAnalysisResponse` types
-- [ ] 2.3 Add `N8nGuardrailCheckRequest` and `N8nGuardrailCheckResponse` types
-- [ ] 2.4 Add `N8nRiskCheckRequest` and `N8nRiskCheckResponse` types
-- [ ] 2.5 Add `N8nExecuteTradeRequest` and `N8nExecuteTradeResponse` types (reuse `TradeResult` from Change 03)
-- [ ] 2.6 Add `N8nCommitAttestationRequest` and `N8nCommitAttestationResponse` types
-- [ ] 2.7 Export all types from `packages/shared/index.ts`
+- [x] 2.1 Add `N8nMarketDataRequest` and `N8nMarketDataResponse` types to `packages/shared`
+- [x] 2.2 Add `N8nSignalAnalysisRequest` and `N8nSignalAnalysisResponse` types
+- [x] 2.3 Add `N8nGuardrailCheckRequest` and `N8nGuardrailCheckResponse` types
+- [x] 2.4 Add `N8nRiskCheckRequest` and `N8nRiskCheckResponse` types
+- [x] 2.5 Add `N8nExecuteTradeRequest` and `N8nExecuteTradeResponse` types (reuse `TradeResult` from Change 03)
+- [x] 2.6 Add `N8nCommitAttestationRequest` and `N8nCommitAttestationResponse` types
+- [x] 2.7 Export all types from `packages/shared/index.ts`
 - [ ] 2.8 Run `pnpm type-check` — exit 0
 
 ## 3. n8n Bridge Route Plugin
 
-- [ ] 3.1 Create `apps/api/src/routes/n8n-bridge.ts` as a Fastify plugin registered under prefix `/api/n8n`
-- [ ] 3.2 Implement `validateN8nApiKey(walletAddress, key)` helper using `HMAC-SHA256(walletAddress, N8N_BRIDGE_API_KEY_SECRET)`
-- [ ] 3.3 Add startup check: if `N8N_BRIDGE_API_KEY_SECRET` is unset, register a catch-all `/api/n8n/*` handler returning HTTP 503
-- [ ] 3.4 Implement `POST /api/n8n/market-data` — validate key, call market data service, return `N8nMarketDataResponse`
-- [ ] 3.5 Implement `POST /api/n8n/signal-analysis` — validate key, call `llm-analyzer.ts`, return `N8nSignalAnalysisResponse`
-- [ ] 3.6 Implement `POST /api/n8n/guardrail-check` — validate key, call `rules-engine.ts`, return `N8nGuardrailCheckResponse`
-- [ ] 3.7 Implement `POST /api/n8n/risk-check` — validate key, call GoPlus/simulation, return `N8nRiskCheckResponse`
-- [ ] 3.8 Implement `POST /api/n8n/execute-trade` — validate key, call `executeTrade`, return `N8nExecuteTradeResponse`
-- [ ] 3.9 Implement `POST /api/n8n/commit-attestation` — validate key, call `createAndAttachRunAttestation`, return `N8nCommitAttestationResponse`
-- [ ] 3.10 Register `n8n-bridge.ts` plugin in main API server (`apps/api/src/index.ts`)
+- [x] 3.1 Create `apps/api/src/routes/n8n-bridge.ts` as a Fastify plugin registered under prefix `/api/n8n`
+- [x] 3.2 Implement `validateN8nApiKey(walletAddress, key)` helper using `HMAC-SHA256(walletAddress, N8N_BRIDGE_API_KEY_SECRET)`
+- [x] 3.3 Add startup check: if `N8N_BRIDGE_API_KEY_SECRET` is unset, register a catch-all `/api/n8n/*` handler returning HTTP 503
+- [x] 3.4 Implement `POST /api/n8n/market-data` — validate key, call market data service, return `N8nMarketDataResponse`
+- [x] 3.5 Implement `POST /api/n8n/signal-analysis` — validate key, call `llm-analyzer.ts`, return `N8nSignalAnalysisResponse`
+- [x] 3.6 Implement `POST /api/n8n/guardrail-check` — validate key, call `rules-engine.ts`, return `N8nGuardrailCheckResponse`
+- [x] 3.7 Implement `POST /api/n8n/risk-check` — validate key, call GoPlus/simulation, return `N8nRiskCheckResponse`
+- [x] 3.8 Implement `POST /api/n8n/execute-trade` — validate key, call `executeTrade`, return `N8nExecuteTradeResponse`
+- [x] 3.9 Implement `POST /api/n8n/commit-attestation` — validate key, call `createAndAttachRunAttestation`, return `N8nCommitAttestationResponse`
+- [x] 3.10 Register `n8n-bridge.ts` plugin in main API server (`apps/api/src/index.ts`)
 
 ## 4. Bridge Route Tests
 
-- [ ] 4.1 Create `apps/api/src/routes/n8n-bridge.test.ts`
-- [ ] 4.2 Test: valid API key + valid body → 200 + response matches shared type schema for each of the 6 endpoints
-- [ ] 4.3 Test: missing `X-N8N-Api-Key` header → 401 for each endpoint
-- [ ] 4.4 Test: wrong `X-N8N-Api-Key` value → 401 for each endpoint
-- [ ] 4.5 Test: `execute-trade` endpoint with mock `trade-executor` → verify params forwarded unmodified
-- [ ] 4.6 Test: missing `N8N_BRIDGE_API_KEY_SECRET` env → all endpoints return 503
-- [ ] 4.7 Run `cd apps/api && pnpm vitest run src/routes/n8n-bridge.test.ts` — all green
+- [x] 4.1 Create `apps/api/src/routes/n8n-bridge.test.ts`
+- [x] 4.2 Test: valid API key + valid body → 200 + response matches shared type schema for each of the 6 endpoints
+- [x] 4.3 Test: missing `X-N8N-Api-Key` header → 401 for each endpoint
+- [x] 4.4 Test: wrong `X-N8N-Api-Key` value → 401 for each endpoint
+- [x] 4.5 Test: `execute-trade` endpoint with mock `trade-executor` → verify params forwarded unmodified
+- [x] 4.6 Test: missing `N8N_BRIDGE_API_KEY_SECRET` env → all endpoints return 503
+- [x] 4.7 Run `cd apps/api && pnpm vitest run src/routes/n8n-bridge.test.ts` — all green
 
 ## 5. Workflow Template
 
@@ -50,7 +50,7 @@
 
 ## 6. First-Visit Workflow Provisioning
 
-- [ ] 6.1 Add `n8n_workflow_id` column (nullable text) to `user_profiles` via a new Supabase migration
+- [x] 6.1 Add `n8n_workflow_id` column (nullable text) to `user_profiles` via a new Supabase migration
 - [ ] 6.2 Create `apps/api/src/services/n8n-provisioner.ts` with `provisionUserWorkflow(walletAddress)`: check `user_profiles.n8n_workflow_id`; if null, POST template to n8n REST API with substituted params; store returned workflow ID
 - [ ] 6.3 Add `GET /api/n8n/provision` endpoint (authenticated via existing SIWE middleware) that calls `provisionUserWorkflow` and returns `{ workflowId, n8nBaseUrl }`
 - [ ] 6.4 Verify idempotency: calling provision twice for the same user does not create a second workflow
