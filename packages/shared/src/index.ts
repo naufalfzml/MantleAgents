@@ -5,3 +5,4 @@ export * from './types/tokens.js';
 export * from './types/transaction.js';
 export * from './types/sip.js';
 export * from './types/yield.js';
+export * from './types/n8n.js';
