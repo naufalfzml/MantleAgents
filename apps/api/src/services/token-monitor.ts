@@ -84,7 +84,7 @@ export async function addToWatchlist(params: {
 }): Promise<WatchlistItem> {
   const { walletAddress, chain, tokenAddress, tokenSymbol } = params;
 
-  // Run risk check in background
+  // Run the contract risk check (transaction simulation / GoPlus) in background.
   let riskScore: ContractRisk | null = null;
   try {
     const client = getMantleDataClient();

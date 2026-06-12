@@ -30,9 +30,9 @@ The LLM call in `workflow-generator.ts` SHALL use `Output.object({ schema: N8nWo
 - **THEN** the endpoint MUST return HTTP 200 with `{ workflowJson: null, validation: { passed: false, issues: ['invalid JSON from model'] } }` and MUST NOT return HTTP 500
 
 ### Requirement: System prompt maps honeypot/risk language to Risk Check node
-The system prompt SHALL contain an explicit rule: "When the user mentions honeypot detection, contract risk, or AI risk check, always use the 'Risk Check' node (transaction simulation / GoPlus). Never use an AI node for risk detection." Generated workflows MUST NOT contain an AI/LLM node in the position of risk detection when a risk-related instruction appears in the prompt.
+The system prompt SHALL contain an explicit rule: "When the user mentions honeypot detection or contract risk, always use the 'Risk Check' node (transaction simulation / GoPlus). Never use an LLM node for risk detection." Generated workflows MUST NOT contain an LLM node in the position of risk detection when a risk-related instruction appears in the prompt.
 
-#### Scenario: Prompt mentioning honeypot produces Risk Check node, not AI node
+#### Scenario: Prompt mentioning contract risk produces Risk Check node, not AI node
 - **WHEN** the prompt contains "detect honeypot" or "no honeypot risk"
 - **THEN** the generated workflow MUST include a "Risk Check" node and MUST NOT include a node named "AI Signal Analysis" or equivalent in the risk-check position
 

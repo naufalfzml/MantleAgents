@@ -2,16 +2,16 @@
 
 JakartAgents is a hackathon submission for The Turing Test 2026 (Mantle). The codebase and docs evolved quickly and now contain three categories of misleading copy that could cause judges to distrust the technical accuracy of the project:
 
-1. **Byreal-as-DEX confusion** — Byreal is a Solana DEX; JakartAgents uses the Byreal agent layer (RealClaw / OpenClaw / Byreal Skills CLI) that operates on Mantle at `openclaw.mantle.xyz`. The actual on-chain swap venues are Merchant Moe, Agni Finance, and Fluxion.
+1. **Byreal venue confusion** — Byreal's swap venue is on Solana; JakartAgents uses the Byreal agent layer (RealClaw / OpenClaw / Byreal Skills CLI) that operates on Mantle at `openclaw.mantle.xyz`. The actual on-chain swap venues are Merchant Moe, Agni Finance, and Fluxion.
 2. **Missing custody model** — agents that auto-execute trades require an explicit statement about who holds private keys. The answer (Privy via RealClaw, non-custodial) is already implemented but never documented.
-3. **"AI honeypot detection"** — honeypot detection is a deterministic transaction simulation (GoPlus / `eth_call`); attributing it to the LLM is technically wrong and undermines credibility for technically literate judges.
+3. **AI-attributed contract risk checking** — honeypot detection is a deterministic transaction simulation (GoPlus / `eth_call`); attributing it to the LLM is technically wrong and undermines credibility for technically literate judges.
 
 This change is **copy-only**: it touches docs, comments, and UI string literals — no runtime logic.
 
 ## Goals / Non-Goals
 
 **Goals:**
-- Eliminate all factually incorrect references to Byreal as a Mantle DEX.
+- Eliminate all factually incorrect references that frame Byreal as the Mantle swap venue.
 - Document the custody model explicitly in README.
 - Relabel all honeypot/risk UI copy to accurately describe transaction simulation.
 - Tighten positioning copy to emphasise on-chain track record over performance claims.

@@ -35,7 +35,7 @@
 
 - [ ] 5.1 Create `apps/api/src/services/workflow-generator.ts`
 - [ ] 5.2 Build `buildNodeSchemaSnippet()`: derive `AVAILABLE_NODES` list from `packages/shared` bridge types; return as a JSON string for injection into the system prompt
-- [ ] 5.3 Build `buildGeneratorSystemPrompt(nodeSchemaSnippet)`: include available nodes, the risk-check mapping rule ("honeypot → Risk Check node, not AI node"), the required node rule, and the conservative guardrails rule for profit-claiming prompts
+- [ ] 5.3 Build `buildGeneratorSystemPrompt(nodeSchemaSnippet)`: include available nodes, the risk-check mapping rule ("honeypot language → Risk Check node"), the required node rule, and the conservative guardrails rule for profit-claiming prompts
 - [ ] 5.4 Define `N8nWorkflowSchema` Zod schema: `{ name: string, nodes: array of { type, name, parameters }, connections: object }`
 - [ ] 5.5 Implement `generateWorkflow(prompt, userConfig)`: call Gemini with `Output.object({ schema: N8nWorkflowSchema })`, build summary from result, call `validateWorkflow`, insert `generated_workflows` row, return `GeneratedWorkflow`
 - [ ] 5.6 Handle LLM parse failure: catch schema validation error, return `{ workflowJson: null, summary: 'Generation failed: invalid model output', validation: { passed: false, issues: ['invalid JSON from model'] } }`, still insert audit row
@@ -70,7 +70,7 @@
 
 ## 9. Manual Demo Verification
 
-- [ ] 9.1 Open `/orchestration`; enter the reference prompt ("Pantau likuiditas token XYZ, jika AI mendeteksi volume beli tinggi tanpa risiko honeypot, masuk posisi $500, TP 20%, SL 5%")
+- [ ] 9.1 Open `/orchestration`; enter the reference prompt ("Pantau likuiditas token XYZ, jika volume beli tinggi dan contract risk check lolos, masuk posisi $500, TP 20%, SL 5%")
 - [ ] 9.2 Verify preview shows node chain: Get Market Data → AI Signal Analysis → Risk Check → Guardrail Check → Execute Trade → Commit Attestation, with `$500` amount and correct TP/SL
 - [ ] 9.3 Verify "Risk Check" node is present (honeypot mapping rule working)
 - [ ] 9.4 Click "Deploy to Canvas" → verify workflow appears in n8n canvas iframe

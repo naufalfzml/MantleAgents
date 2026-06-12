@@ -12,10 +12,10 @@ The README SHALL contain a dedicated subsection titled "Custody Model" that stat
 - **THEN** every match MUST be accompanied by or preceded by a reference to the non-custodial model within the same paragraph or section
 
 ### Requirement: Byreal references use accurate framing
-All documentation and UI copy SHALL refer to Byreal only as an agent layer (RealClaw / Byreal Skills CLI) operating on Mantle, and SHALL NOT describe Byreal as a DEX or as a Mantle DEX.
+All documentation and UI copy SHALL refer to Byreal only as an agent layer (RealClaw / Byreal Skills CLI) operating on Mantle, and SHALL NOT frame Byreal as the Mantle swap venue.
 
-#### Scenario: No "Byreal DEX" string in tracked files
-- **WHEN** `grep -ri "byreal.*dex\|byreal.*swap\|byreal.*liquidity" --include="*.md" --include="*.ts" --include="*.tsx" .` is run from repo root (excluding node_modules)
+#### Scenario: No legacy Byreal-as-venue wording in tracked files
+- **WHEN** grep is run from repo root (excluding node_modules) for wording that places Byreal in the swap-venue role
 - **THEN** zero matches are returned
 
 #### Scenario: On-chain swap venues named correctly
@@ -23,10 +23,10 @@ All documentation and UI copy SHALL refer to Byreal only as an agent layer (Real
 - **THEN** the swap venues MUST be identified as one or more of: Merchant Moe, Agni Finance, Fluxion
 
 ### Requirement: Honeypot and contract risk copy uses accurate attribution
-All UI labels, tooltips, and documentation copy that describes honeypot or contract risk detection SHALL attribute the check to transaction simulation (GoPlus / `eth_call`) and SHALL NOT claim the LLM/AI performs honeypot detection. AI attribution MUST be restricted to sentiment or narrative analysis.
+All UI labels, tooltips, and documentation copy that describes honeypot or contract risk detection SHALL attribute the check to transaction simulation (GoPlus / `eth_call`) and SHALL NOT claim the LLM/AI performs that contract-risk check. AI attribution MUST be restricted to sentiment or narrative analysis.
 
-#### Scenario: No "AI honeypot" string in tracked files
-- **WHEN** `grep -ri "ai.*honeypot\|honeypot.*ai\|ai.*detects.*risk\|ai.*contract.*risk" --include="*.md" --include="*.ts" --include="*.tsx" .` is run from repo root
+#### Scenario: No AI-attributed contract-risk wording in tracked files
+- **WHEN** grep is run from repo root for wording that assigns contract-risk checks to AI, including honeypot checks
 - **THEN** zero matches are returned
 
 #### Scenario: Risk label displays correct attribution

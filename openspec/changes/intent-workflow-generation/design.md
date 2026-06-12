@@ -6,7 +6,7 @@ The n8n bridge nodes defined in Change 04 are the vocabulary for generated workf
 
 Validation must happen server-side before the workflow reaches n8n. The validator is a pure function (no LLM, no network calls) — it checks structural completeness and guardrail parameter bounds. This separation means the validator is fast, deterministic, and independently testable.
 
-Important carry-over from Change 00: when a user prompt mentions "AI honeypot detection", the system prompt instructs the LLM to map this to the "Risk Check" node (transaction simulation / GoPlus), not an AI node. The system prompt is the enforcement point for correct node semantics.
+Important carry-over from Change 00: when a user prompt uses natural-language contract-risk wording, the system prompt instructs the LLM to map this to the "Risk Check" node (transaction simulation / GoPlus), not an AI node. The system prompt is the enforcement point for correct node semantics.
 
 ## Goals / Non-Goals
 
@@ -39,7 +39,7 @@ This is the same "tools as schema" pattern recommended in the reference doc. It 
 `validateWorkflow(workflowJson, userConfig)` takes the parsed workflow and the user's `agent_configs` row, returns `{ passed: boolean, issues: string[] }`. The route handler calls `generateWorkflow` then `validateWorkflow` in sequence. The database record is written regardless of validation outcome (audit log captures both).
 
 **D4 — System prompt explicitly maps honeypot/risk language to the Risk Check node**
-The system prompt contains a rule: "When the user mentions 'honeypot detection', 'contract risk', or 'AI risk check', always use the 'Risk Check' node (which uses transaction simulation and GoPlus), never an AI/LLM node for this purpose." This is the enforcement point for the semantic correction from Change 00.
+The system prompt contains a rule: "When the user mentions honeypot detection or contract risk, always use the 'Risk Check' node (which uses transaction simulation and GoPlus), never an LLM node for this purpose." This is the enforcement point for the semantic correction from Change 00.
 
 **D5 — Ambiguous/overclaiming prompts get a workflow with conservative guardrails + a disclaimer note**
 If a prompt implies guaranteed profit (e.g. "strategy that always wins"), the system prompt instructs the LLM to add a `notes` field to the workflow JSON containing a disclaimer, and to set conservative default guardrails. The validator checks for the presence of this disclaimer field when the prompt contains profit-guarantee language (keyword heuristic on the server side).

@@ -10,12 +10,12 @@ Pilar V2 #1 — UX unlock utama menurut review ("fitur terkuat... jangan dikecil
 user menulis prompt bahasa natural, AI men-generate workflow n8n yang siap jalan.
 
 Contoh dari dokumen konsep:
-> "Pantau likuiditas token XYZ. Jika AI mendeteksi volume beli tinggi tanpa ada
-> risiko honeypot, langsung masuk posisi $500. Pasang auto-sell saat profit 20% dan
+> "Pantau likuiditas token XYZ. Jika volume beli tinggi dan contract risk check
+> menyatakan token aman, langsung masuk posisi $500. Pasang auto-sell saat profit 20% dan
 > ketat di stop-loss 5%."
 
-Catatan penting (carry-over dari Tahap 0): frasa "AI mendeteksi risiko honeypot" di
-prompt user boleh saja (itu bahasa natural user), tapi **workflow yang dihasilkan**
+Catatan penting (carry-over dari Tahap 0): user bisa saja memakai bahasa natural
+yang keliru tentang contract-risk checking, tapi **workflow yang dihasilkan**
 harus memetakan "no honeypot risk" ke node **"Risk Check" (tx simulation/GoPlus)**,
 bukan node AI — penting untuk konsistensi dengan Tahap 0.
 

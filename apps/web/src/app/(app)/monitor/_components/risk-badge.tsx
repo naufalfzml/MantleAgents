@@ -47,8 +47,11 @@ export function RiskBadge({ riskScore }: RiskBadgeProps) {
             {config.label}
           </Badge>
         </TooltipTrigger>
-        <TooltipContent side="top" className="text-xs space-y-1">
-          <p>Honeypot: {riskScore.honeypot ? 'Yes' : 'No'}</p>
+        <TooltipContent side="top" className="max-w-72 space-y-1 text-xs">
+          <p className="font-medium leading-relaxed">
+            Contract Risk Check (transaction simulation / GoPlus)
+          </p>
+          <p>Honeypot Flag: {riskScore.honeypot ? 'Yes' : 'No'}</p>
           <p>Buy Tax: {riskScore.buy_tax}%</p>
           <p>Sell Tax: {riskScore.sell_tax}%</p>
         </TooltipContent>

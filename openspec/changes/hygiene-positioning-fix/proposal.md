@@ -1,12 +1,12 @@
 ## Why
 
-Three factually incorrect or misleading claims in docs and UI copy risk undermining credibility with hackathon judges: Byreal is described as a Mantle DEX (it's on Solana), auto-execution is offered without any custody explanation (a security red flag), and "AI honeypot detection" is claimed when honeypot detection is actually transaction simulation, not an LLM task. All three can be fixed purely in documentation and UI strings — no logic changes required.
+Three factually incorrect or misleading claims in docs and UI copy risk undermining credibility with hackathon judges: Byreal is framed as the Mantle swap venue (it is not), auto-execution is offered without any custody explanation (a security red flag), and contract-risk checking is attributed to AI when it is actually transaction simulation, not an LLM task. All three can be fixed purely in documentation and UI strings — no logic changes required.
 
 ## What Changes
 
-- Replace every "Byreal DEX" / "Byreal API Mantle" reference with accurate framing: RealClaw / Byreal Skills CLI (Mantle agent layer); on-chain swap venues are Merchant Moe / Agni Finance / Fluxion.
+- Replace every legacy reference that frames Byreal as the Mantle swap venue with accurate wording: RealClaw / Byreal Skills CLI (Mantle agent layer); on-chain swap venues are Merchant Moe / Agni Finance / Fluxion.
 - Add an explicit **Custody Model** subsection to README explaining non-custodial execution via Privy through RealClaw.
-- Rename / relabel all UI and doc references to "AI Honeypot Detection" → "Contract Risk Check (transaction simulation / GoPlus)"; restrict AI attribution to sentiment/narrative analysis only.
+- Rename / relabel all UI and doc references that attribute contract-risk checking to AI → "Contract Risk Check (transaction simulation / GoPlus)"; restrict AI attribution to sentiment/narrative analysis only.
 - Tighten pitch positioning away from "fastest ROI" toward "no-code agent builder for Mantle whose trust comes from on-chain track record."
 
 ## Capabilities

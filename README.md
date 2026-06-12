@@ -8,6 +8,8 @@ Built for **The Turing Test Hackathon 2026 (Mantle)** — Agentic Economy track.
 
 JakartAgents runs autonomous AI agents that monitor markets, generate trading signals with an LLM, validate them against user-defined guardrails, and execute on-chain. Every agent is registered as an ERC-8004 identity NFT on Mantle, and every run produces an attestation — a hash-anchored, timestamped record committed on-chain — so performance is independently verifiable rather than a black-box claim.
 
+JakartAgents is also evolving into a no-code agent builder for Mantle, where trust comes from each agent's on-chain track record rather than marketing claims about performance.
+
 The platform runs two agent types:
 
 - **FX Agent** — trades stablecoin pairs based on macro news sentiment (USD strength/weakness, risk-on/risk-off).
@@ -31,7 +33,11 @@ Contract sources, deploy scripts, and verification: [`packages/contracts`](./pac
 - **Agent identity (ERC-8004)** — every FX/Yield agent registers on-chain via `IdentityRegistry.register()`, minting an agent NFT and linking the agent's execution wallet (`apps/api/src/services/agent-registry.ts`).
 - **Reputation** — trade outcomes are submitted to `ReputationRegistry.giveFeedback()`, building an on-chain track record per agent.
 - **On-chain attestations** — each agent run's timeline (signals, trades, tx hashes) is hashed and committed to `AgentAttestationRegistry` (`apps/api/src/services/attestation-service.ts`), giving every run a permanent, queryable on-chain anchor.
-- **Mantle-native execution (in progress)** — DEX execution on Mantle (Merchant Moe / Agni Finance / Fluxion) via the **Byreal Skills CLI / RealClaw** is scaffolded in `apps/api/src/services/realclaw-executor.ts`. Non-Mantle chains continue to use the existing market-data/execution SDK described below.
+- **Mantle-native execution (in progress)** — Mantle swaps are routed through **RealClaw / Byreal Skills CLI**, the agent layer that sits in front of Merchant Moe / Agni Finance / Fluxion. The integration is scaffolded in `apps/api/src/services/realclaw-executor.ts`. Non-Mantle chains continue to use the existing market-data/execution SDK described below.
+
+### Custody Model
+
+Agent execution on Mantle is non-custodial via Privy through RealClaw. When agents auto-execute swaps, the platform routes the request through the Privy-managed execution flow and never stores or has access to users' raw private keys.
 
 ## Architecture
 
@@ -104,7 +110,7 @@ graph TB
 - 📜 **On-Chain Attestations** — Every agent run's events are hashed and committed to `AgentAttestationRegistry` on Mantle
 - 🛡️ **Smart Guardrails** — Daily trade limits, max allocation per token, max trade size caps, stop-loss protection
 - 📊 **Real-Time Dashboard** — Live portfolio tracking, agent execution timeline, WebSocket streaming
-- 🚨 **Risk Detection** — Honeypot/contract risk checks on every watchlisted token
+- 🚨 **Contract Risk Check** — Transaction simulation / GoPlus checks on every watchlisted token
 
 ## Tech Stack
 
@@ -169,7 +175,7 @@ pnpm --filter @jakartagents/contracts verify:registries             # sanity-che
 | `MANTLE_ATTESTATION_REGISTRY_ADDRESS` | AgentAttestationRegistry address |
 | `MANTLE_USDC_ADDRESS` / `MANTLE_USDT_ADDRESS` / `MANTLE_WMNT_ADDRESS` | Mock token addresses (testnet) |
 | `EVM_SIGNER_PRIVATE_KEY` | Server signer key for Mantle on-chain registration & transactions |
-| `REALCLAW_API_BASE` / `REALCLAW_API_KEY` | Byreal Skills CLI / RealClaw execution layer (Mantle DEX trades) |
+| `REALCLAW_API_BASE` / `REALCLAW_API_KEY` | RealClaw / Byreal Skills CLI execution layer for Mantle swaps |
 
 ### Core / Auth / Data
 
@@ -205,7 +211,7 @@ jakartagents/
 │   │   │   │   ├── price-service.ts        # Market data feeds + cache
 │   │   │   │   ├── agent-registry.ts       # ERC-8004 register / reputation (Mantle)
 │   │   │   │   ├── attestation-service.ts  # On-chain run attestations
-│   │   │   │   ├── realclaw-executor.ts    # Mantle DEX execution (RealClaw/Byreal)
+│   │   │   │   ├── realclaw-executor.ts    # Mantle execution via RealClaw agent layer
 │   │   │   │   ├── trade-executor.ts       # Multi-chain DEX trading
 │   │   │   │   ├── agent-cron.ts           # 60s agent execution loop
 │   │   │   │   ├── rules-engine.ts         # Trading guardrails

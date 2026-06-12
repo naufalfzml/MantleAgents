@@ -28,8 +28,8 @@ Status saat ini (V1, sudah berjalan di repo):
 **Gap kritikal yang harus ditutup** (dari `review-jakartagents-v2.md`):
 - Decision logic harus **ter-benchmark on-chain**, bukan cuma execution. (Sebagian sudah ada via attestation — perlu dipertajam jadi "decision hash" eksplisit.)
 - **Custody** harus jelas: non-custodial via RealClaw/Privy (default) atau session key ERC-4337.
-- Diksi "Byreal DEX Mantle" salah → ganti jadi "RealClaw / Byreal Skills CLI" + sebut venue (Merchant Moe / Agni / Fluxion).
-- "AI deteksi honeypot" → reframe jadi tx-simulation / GoPlus Security API.
+- Diksi yang menempatkan Byreal sebagai venue swap Mantle itu salah → ganti jadi "RealClaw / Byreal Skills CLI" + sebut venue (Merchant Moe / Agni / Fluxion).
+- Klaim bahwa AI melakukan contract-risk check harus diubah jadi tx-simulation / GoPlus Security API.
 - Positioning: jangan adu ROI — posisikan sebagai **no-code agent builder + marketplace dengan trust dari on-chain track record**.
 
 ---
@@ -65,11 +65,11 @@ idealnya bisa di-ship dan didemo terpisah.
 
 ### Tahap 0 — Hygiene & Positioning (dokumentasi + wording, tanpa kode baru)
 **Tujuan:** bersihkan klaim yang salah/menyesatkan sebelum submission, tanpa menyentuh fitur.
-- Ganti semua sebutan "Byreal API/DEX Mantle" → "RealClaw / Byreal Skills CLI" + sebut venue eksekusi (Merchant Moe / Agni Finance / Fluxion).
+- Ganti semua sebutan yang menempatkan Byreal sebagai venue swap Mantle → "RealClaw / Byreal Skills CLI" + sebut venue eksekusi (Merchant Moe / Agni Finance / Fluxion).
 - Update README/docs: tegaskan model custody (non-custodial via Privy/RealClaw).
-- Reframe deskripsi "AI mendeteksi honeypot" → "risk check via transaction simulation / GoPlus API, AI hanya untuk analisis sentiment".
+- Reframe deskripsi pemeriksaan kontrak → "risk check via transaction simulation / GoPlus API, AI hanya untuk analisis sentiment".
 - Set positioning copy ke "no-code agent builder untuk Mantle dengan trust dari on-chain track record" di README & pitch materials.
-- **Definition of done:** tidak ada lagi referensi salah ke Byreal-as-DEX-Solana atau klaim "AI honeypot detection" di seluruh docs/README/UI copy.
+- **Definition of done:** tidak ada lagi referensi salah yang menempatkan Byreal sebagai venue swap Mantle atau klaim bahwa model AI melakukan contract-risk check di seluruh docs/README/UI copy.
 
 ### Tahap 1 — RealClaw Execution: dari scaffold ke live
 **Tujuan:** menutup "Status: scaffolded" di `realclaw-executor.ts` — ini komponen Byreal-track paling berbobot (18 pts).

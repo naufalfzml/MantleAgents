@@ -71,7 +71,7 @@ Per-run timeline events are canonicalized + hashed (`eventsHash`), HMAC-signed (
 
 ### Mantle Execution (`apps/api/src/services/realclaw-executor.ts`)
 
-Mantle DEX execution (Merchant Moe / Agni Finance / Fluxion) goes through **RealClaw / Byreal Skills CLI** — non-custodial via Privy. `executeRealClawSwap()` is the entry point; `isRealClawConfigured()` gates whether this path is active. **Status: scaffolded, pending confirmation of the live API schema** at openclaw.mantle.xyz before wiring into `trade-executor.ts`.
+Mantle execution routes through **RealClaw / Byreal Skills CLI**, the agent layer that dispatches swaps to Merchant Moe / Agni Finance / Fluxion — non-custodial via Privy. `executeRealClawSwap()` is the entry point; `isRealClawConfigured()` gates whether this path is active. **Status: scaffolded, pending confirmation of the live API schema** at openclaw.mantle.xyz before wiring into `trade-executor.ts`.
 
 ### Agent Execution Loop (`apps/api/src/services/agent-cron.ts`)
 
@@ -86,7 +86,7 @@ Mantle DEX execution (Merchant Moe / Agni Finance / Fluxion) goes through **Real
 ### Token Monitor (`apps/api/src/services/token-monitor.ts`)
 
 30s poll cron for token watchlist:
-- Watchlist CRUD with auto risk-check (honeypot) on token add
+- Watchlist CRUD with auto contract risk check (transaction simulation / GoPlus) on token add
 - Price alert matching (above/below threshold)
 - Event emission via `agent-events.ts` for WebSocket broadcast
 

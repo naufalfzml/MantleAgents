@@ -1,9 +1,9 @@
 // realclaw-executor.ts
 //
-// Execution layer for Mantle trades via Byreal's RealClaw / Byreal Skills
-// CLI (https://openclaw.mantle.xyz). This is the "Plan B1" execution path
-// chosen for the Agentic Economy track — non-custodial via Privy, so it
-// sidesteps the custody concerns of holding raw private keys for DEX swaps.
+// Execution layer for Mantle trades via the RealClaw / Byreal Skills CLI
+// agent layer (https://openclaw.mantle.xyz). RealClaw sits in front of
+// Merchant Moe / Agni Finance / Fluxion and keeps swaps non-custodial via
+// Privy, so the platform never needs to hold raw private keys.
 //
 // STATUS: scaffold / interface only. The actual RealClaw API surface
 // (auth flow, request/response shapes, supported skills) needs to be
@@ -42,7 +42,7 @@ export interface RealClawSkillResponse {
 const REALCLAW_API_BASE = process.env.REALCLAW_API_BASE || 'https://openclaw.mantle.xyz/api';
 
 /**
- * Low-level call to a Byreal Skills CLI / RealClaw skill endpoint.
+ * Low-level call to a RealClaw / Byreal Skills CLI skill endpoint.
  *
  * TODO: confirm against openclaw.mantle.xyz docs:
  *  - exact base path / versioning (e.g. /v1/skills/...)
@@ -79,8 +79,9 @@ async function callRealClawSkill(
 }
 
 /**
- * Execute a token swap on Mantle via RealClaw, routed through whichever DEX
- * (Merchant Moe / Agni Finance / Fluxion) RealClaw selects internally.
+ * Execute a token swap on Mantle via RealClaw, routed through whichever
+ * on-chain venue (Merchant Moe / Agni Finance / Fluxion) RealClaw selects
+ * internally.
  *
  * NOTE: This is the function trade-executor.ts / convert-to-usdc.ts /
  * yield-executor.ts should call once REALCLAW_API_KEY is configured and
