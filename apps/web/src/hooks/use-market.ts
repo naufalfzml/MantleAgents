@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api-client';
-import type { MarketTokensResponse } from '@jakartagents/shared';
+import type { MarketTokensResponse } from '@mantleagents/shared';
 
 export const marketKeys = {
   all: ['market'] as const,

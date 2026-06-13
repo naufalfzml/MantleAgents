@@ -19,15 +19,15 @@ export function Logo({ size = 'md', className, showWordmark = true }: LogoProps)
   return (
     <div className={cn('flex items-center gap-3', className)}>
       <Image
-        src="/jakartagents-polos.png"
-        alt="JakartAgents logo"
+        src="/mantleagents-polos.png"
+        alt="MantleAgents logo"
         width={icon}
         height={icon}
         className="rounded-lg"
       />
       {showWordmark && (
         <span className={cn('font-bold tracking-tight', text)}>
-          JakartAgents
+          MantleAgents
         </span>
       )}
     </div>

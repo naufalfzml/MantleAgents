@@ -1,6 +1,6 @@
 ## Why
 
-The project review identified intent-centric workflow generation as the "strongest feature — don't downplay it": users write a natural-language strategy prompt and the system generates a deployable n8n workflow. Without this, the n8n canvas built in Change 04 is a visual wrapper for a fixed workflow — impressive but not differentiated. This change is the primary UX unlock that makes JakartAgents a no-code agent builder rather than a cron-job wrapper.
+The project review identified intent-centric workflow generation as the "strongest feature — don't downplay it": users write a natural-language strategy prompt and the system generates a deployable n8n workflow. Without this, the n8n canvas built in Change 04 is a visual wrapper for a fixed workflow — impressive but not differentiated. This change is the primary UX unlock that makes MantleAgents a no-code agent builder rather than a cron-job wrapper.
 
 ## What Changes
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { STABLE_TOKENS, TOKEN_METADATA } from '@jakartagents/shared';
+import { STABLE_TOKENS, TOKEN_METADATA } from '@mantleagents/shared';
 import { TokenLogo } from '@/components/token-logo';
 import { cn } from '@/lib/utils';
 

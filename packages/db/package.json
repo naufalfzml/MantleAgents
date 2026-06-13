@@ -1,5 +1,5 @@
 {
-  "name": "@jakartagents/db",
+  "name": "@mantleagents/db",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -21,7 +21,7 @@
     "@supabase/supabase-js": "^2.x"
   },
   "devDependencies": {
-    "@jakartagents/typescript-config": "workspace:*",
+    "@mantleagents/typescript-config": "workspace:*",
     "typescript": "^5.x"
   }
 }

@@ -94,4 +94,4 @@
 
 - [x] 12.1 Add `MIN_ATTESTATIONS_REQUIRED`, `MIN_TRACK_RECORD_DAYS`, `PLATFORM_TAKE_RATE_PCT` to `apps/api/.env.example`
 - [x] 12.2 Run `pnpm type-check` — exit 0
-- [x] 12.3 Run `pnpm --filter @jakartagents/web build` — exit 0
+- [x] 12.3 Run `pnpm --filter @mantleagents/web build` — exit 0

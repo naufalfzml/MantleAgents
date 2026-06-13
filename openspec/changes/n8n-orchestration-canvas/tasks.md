@@ -1,6 +1,6 @@
 ## 1. Infrastructure — n8n Service
 
-- [x] 1.1 Create `docker-compose.yml` at repo root with services: `api` (Fastify, port 4000), `n8n` (n8n self-hosted, port 5678), shared Docker network `jakartagents`
+- [x] 1.1 Create `docker-compose.yml` at repo root with services: `api` (Fastify, port 4000), `n8n` (n8n self-hosted, port 5678), shared Docker network `mantleagents`
 - [x] 1.2 Configure n8n service with a named volume (`n8n_data`) for workflow persistence and env vars: `N8N_BASIC_AUTH_ACTIVE=true`, `N8N_EDITOR_BASE_URL`, `WEBHOOK_URL`
 - [x] 1.3 Add `N8N_BASE_URL`, `N8N_API_KEY` (n8n instance API key), `N8N_BRIDGE_API_KEY_SECRET` to `apps/api/.env.example`
 - [x] 1.4 Add `NEXT_PUBLIC_N8N_BASE_URL` to `apps/web/.env.local.example`
@@ -76,5 +76,5 @@
 ## 9. Cleanup
 
 - [x] 9.1 Run `pnpm type-check` — exit 0
-- [x] 9.2 Run `pnpm --filter @jakartagents/web build` — exit 0
+- [x] 9.2 Run `pnpm --filter @mantleagents/web build` — exit 0
 - [x] 9.3 Add `N8N_BASIC_AUTH_USER`, `N8N_BASIC_AUTH_PASSWORD`, `N8N_BASE_URL`, `N8N_API_KEY`, `N8N_BRIDGE_API_KEY_SECRET` to README environment variables table

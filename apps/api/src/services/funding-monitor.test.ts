@@ -20,7 +20,7 @@ const { mockNot, mockSelect, mockFrom, mockReadContract, mockLogTimeline } = vi.
   return { mockNot, mockSelect, mockFrom, mockReadContract, mockLogTimeline };
 });
 
-vi.mock('@jakartagents/db', () => ({
+vi.mock('@mantleagents/db', () => ({
   createSupabaseAdmin: vi.fn(() => ({ from: mockFrom })),
 }));
 
@@ -37,7 +37,7 @@ vi.mock('./agent-cron', () => ({
 // ---------------------------------------------------------------------------
 
 import { checkForDeposits } from './funding-monitor';
-import { STABLE_TOKEN_ADDRESSES, USDC_ADDRESS, USDT_ADDRESS } from '@jakartagents/shared';
+import { STABLE_TOKEN_ADDRESSES, USDC_ADDRESS, USDT_ADDRESS } from '@mantleagents/shared';
 
 // ---------------------------------------------------------------------------
 // Helpers

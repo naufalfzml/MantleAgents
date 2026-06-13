@@ -1,11 +1,11 @@
 // deploy-mock-tokens.ts
 //
 // Deploys mock USDC, USDT, and WMNT ERC20 tokens to Mantle Sepolia Testnet
-// for use by JakartAgents agent wallets. Each token has a public faucet()
+// for use by MantleAgents agent wallets. Each token has a public faucet()
 // for self-funding test balances.
 //
 // Usage:
-//   pnpm --filter @jakartagents/contracts deploy:tokens
+//   pnpm --filter @mantleagents/contracts deploy:tokens
 //
 // Required env (reads from apps/api/.env so addresses can be copy-pasted
 // straight into that file):
@@ -52,7 +52,7 @@ interface TokenSpec {
 const TOKENS: TokenSpec[] = [
   {
     envVar: 'MANTLE_USDC_ADDRESS',
-    name: 'JakartAgents Mock USDC',
+    name: 'MantleAgents Mock USDC',
     symbol: 'mUSDC',
     decimals: 6,
     initialSupply: 1_000_000n * 10n ** 6n, // 1,000,000 mUSDC
@@ -60,7 +60,7 @@ const TOKENS: TokenSpec[] = [
   },
   {
     envVar: 'MANTLE_USDT_ADDRESS',
-    name: 'JakartAgents Mock USDT',
+    name: 'MantleAgents Mock USDT',
     symbol: 'mUSDT',
     decimals: 6,
     initialSupply: 1_000_000n * 10n ** 6n,
@@ -68,7 +68,7 @@ const TOKENS: TokenSpec[] = [
   },
   {
     envVar: 'MANTLE_WMNT_ADDRESS',
-    name: 'JakartAgents Mock Wrapped MNT',
+    name: 'MantleAgents Mock Wrapped MNT',
     symbol: 'mWMNT',
     decimals: 18,
     initialSupply: 1_000_000n * 10n ** 18n,

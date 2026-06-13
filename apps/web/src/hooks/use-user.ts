@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api-client';
 import { useAuth } from '@/providers/auth-provider';
-import type { RiskAnswers, RiskProfile } from '@jakartagents/shared';
+import type { RiskAnswers, RiskProfile } from '@mantleagents/shared';
 
 interface RiskProfileResponse {
   display_name: string | null;

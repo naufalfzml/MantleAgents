@@ -16,7 +16,7 @@ vi.mock('@ai-sdk/google', () => ({
 vi.mock('ai-sdk-provider-gemini-cli', () => ({
   createGeminiProvider: () => () => 'mock-model',
 }));
-vi.mock('@jakartagents/db', () => ({
+vi.mock('@mantleagents/db', () => ({
   createSupabaseAdmin: () => ({ from: mockSupabaseInsert.mockFrom }),
 }));
 

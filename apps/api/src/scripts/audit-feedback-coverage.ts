@@ -1,7 +1,7 @@
 import { config as loadEnv } from 'dotenv';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createSupabaseAdmin } from '@jakartagents/db';
+import { createSupabaseAdmin } from '@mantleagents/db';
 
 type AgentType = 'fx' | 'yield';
 

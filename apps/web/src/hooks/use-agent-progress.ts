@@ -7,7 +7,7 @@ import { agentKeys } from './use-agent';
 import { timelineKeys } from './use-timeline';
 import { yieldAgentKeys } from './use-yield-agent';
 import { portfolioKeys } from './use-portfolio';
-import type { ProgressStep, ProgressData } from '@jakartagents/shared';
+import type { ProgressStep, ProgressData } from '@mantleagents/shared';
 
 export type { ProgressStep };
 

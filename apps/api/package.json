@@ -1,5 +1,5 @@
 {
-  "name": "@jakartagents/api",
+  "name": "@mantleagents/api",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -18,9 +18,9 @@
     "@ai-sdk/google": "^3.0.63",
     "@fastify/cors": "^10.x",
     "@fastify/websocket": "^11.2.0",
-    "@jakartagents/mantle-data": "workspace:*",
-    "@jakartagents/db": "workspace:*",
-    "@jakartagents/shared": "workspace:*",
+    "@mantleagents/mantle-data": "workspace:*",
+    "@mantleagents/db": "workspace:*",
+    "@mantleagents/shared": "workspace:*",
     "@mendable/firecrawl-js": "^4.13.0",
     "@solana/web3.js": "^1.98.4",
     "@supabase/supabase-js": "^2.x",
@@ -35,7 +35,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@jakartagents/typescript-config": "workspace:*",
+    "@mantleagents/typescript-config": "workspace:*",
     "@types/node": "^20.x",
     "pg": "^8.18.0",
     "pino-pretty": "^13.1.3",

@@ -16,7 +16,7 @@ const {
   };
 });
 
-vi.mock('@jakartagents/db', () => ({
+vi.mock('@mantleagents/db', () => ({
   createSupabaseAdmin: () => mockSupabaseClient,
 }));
 

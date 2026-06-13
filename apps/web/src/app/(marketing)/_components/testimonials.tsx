@@ -48,7 +48,7 @@ export function Testimonials() {
             </h2>
           </div>
           <p className="max-w-sm text-lg font-vt323 text-gb-dark uppercase">
-            Real players, real loot. See what others have to say about deploying JakartAgents.
+            Real players, real loot. See what others have to say about deploying MantleAgents.
           </p>
         </div>
 

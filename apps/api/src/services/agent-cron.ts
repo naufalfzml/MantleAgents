@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { createPublicClient, http, type Address, formatUnits } from 'viem';
 import { bsc } from 'viem/chains';
-import { createSupabaseAdmin, type Database } from '@jakartagents/db';
+import { createSupabaseAdmin, type Database } from '@mantleagents/db';
 import {
   DEFAULT_GUARDRAILS,
   MAX_ADAPTATIONS_PER_TICK,
@@ -10,7 +10,7 @@ import {
   type AgentFrequency,
   type ProgressStep,
   type TradeSignal,
-} from '@jakartagents/shared';
+} from '@mantleagents/shared';
 import { getPositions, calculatePortfolioValue, updatePositionAfterTrade } from './position-tracker.js';
 import {
   upsertYieldPositionAfterDeposit,

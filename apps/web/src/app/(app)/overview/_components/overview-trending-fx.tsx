@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { TokenLogo } from '@/components/token-logo';
 import { formatUsd } from '@/lib/format';
 import { cn } from '@/lib/utils';
-import type { SupportedToken } from '@jakartagents/shared';
+import type { SupportedToken } from '@mantleagents/shared';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { OverviewTrendingFxAnalysis } from '@/hooks/use-overview';

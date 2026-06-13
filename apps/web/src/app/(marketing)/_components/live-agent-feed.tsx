@@ -88,7 +88,7 @@ export function LiveAgentFeed() {
               <div className="h-3 w-3 border-2 border-gb-mid" />
               <div className="h-3 w-3 border-2 border-gb-mid" />
               <span className="ml-4 font-press-start-2p text-xs text-gb-mid uppercase">
-                jakartagents://feed
+                mantleagents://feed
               </span>
             </div>
 

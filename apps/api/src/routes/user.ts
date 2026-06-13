@@ -1,12 +1,12 @@
 import type { FastifyInstance } from 'fastify';
 import { authMiddleware } from '../middleware/auth.js';
-import { createSupabaseAdmin, type Database } from '@jakartagents/db';
+import { createSupabaseAdmin, type Database } from '@mantleagents/db';
 import { formatEther } from 'viem';
 import { MANTLE_NETWORK } from '../lib/chains.js';
 import { publicClient } from '../lib/chain-client.js';
 import { computeRiskScore, scoreToProfile } from '../lib/risk-scoring.js';
 import { createServerWallet } from '../lib/thirdweb-wallet.js';
-import { DEFAULT_GUARDRAILS, type RiskAnswers, type RiskProfile } from '@jakartagents/shared';
+import { DEFAULT_GUARDRAILS, type RiskAnswers, type RiskProfile } from '@mantleagents/shared';
 
 const supabaseAdmin = createSupabaseAdmin(
   process.env.SUPABASE_URL!,

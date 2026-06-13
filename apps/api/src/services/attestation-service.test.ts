@@ -76,7 +76,7 @@ const {
   return { callRecordsRef, mockResultsRef, mockSupabaseClient, mockWriteContract };
 });
 
-vi.mock('@jakartagents/db', () => ({
+vi.mock('@mantleagents/db', () => ({
   createSupabaseAdmin: () => mockSupabaseClient,
 }));
 

@@ -1,7 +1,7 @@
 # 02 — On-Chain Decision Attestation
 
 > Referensi untuk: `openspec propose onchain-decision-attestation`
-> Sumber: `review-jakartagents-v2.md` poin #2 (PALING PENTING);
+> Sumber: `review-mantleagents-v2.md` poin #2 (PALING PENTING);
 > `apps/api/src/services/attestation-service.ts`;
 > `packages/contracts/contracts/AgentAttestationRegistry.sol`
 
@@ -86,7 +86,7 @@ event AgentDecision(
       membuka data yang konsisten dengan apa yang ditampilkan di UI (signal,
       guardrail check, hasil eksekusi).
 - [ ] Jika contract diubah, ada deploy script baru
-      (`pnpm --filter @jakartagents/contracts deploy:attestation-registry`) dan
+      (`pnpm --filter @mantleagents/contracts deploy:attestation-registry`) dan
       alamat baru terdokumentasi di README (tabel Mantle Integration).
 
 ## 5. Testing

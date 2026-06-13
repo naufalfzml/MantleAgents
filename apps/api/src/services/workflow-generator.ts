@@ -2,8 +2,8 @@ import { generateText, Output } from 'ai';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createGeminiProvider } from 'ai-sdk-provider-gemini-cli';
 import { z } from 'zod';
-import { createSupabaseAdmin } from '@jakartagents/db';
-import type { GeneratedWorkflow } from '@jakartagents/shared';
+import { createSupabaseAdmin } from '@mantleagents/db';
+import type { GeneratedWorkflow } from '@mantleagents/shared';
 import { validateWorkflow, type AgentConfigForRules } from './workflow-validator.js';
 
 const supabaseAdmin = createSupabaseAdmin(
@@ -102,7 +102,7 @@ export function buildNodeSchemaSnippet(): string {
 }
 
 export function buildGeneratorSystemPrompt(nodeSchemaSnippet: string): string {
-  return `You are an autonomous trading agent workflow architect for JakartAgents on Mantle blockchain.
+  return `You are an autonomous trading agent workflow architect for MantleAgents on Mantle blockchain.
 
 You MUST generate a valid n8n workflow JSON that uses ONLY nodes from the following list:
 

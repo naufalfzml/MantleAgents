@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { Logo } from '@/components/logo';
 
 export const metadata = {
-  title: 'Terms of Service | JakartAgents',
-  description: 'Terms of Service for JakartAgents',
+  title: 'Terms of Service | MantleAgents',
+  description: 'Terms of Service for MantleAgents',
 };
 
 export default function TermsPage() {
@@ -28,7 +28,7 @@ export default function TermsPage() {
           href="/"
           className="mt-8 inline-block text-sm text-primary hover:underline"
         >
-          ← Back to JakartAgents
+          ← Back to MantleAgents
         </Link>
       </main>
     </div>

@@ -7,7 +7,7 @@ import {
   encodeFunctionData,
 } from 'viem';
 import { bsc } from 'viem/chains';
-import type { YieldExecutionResult } from '@jakartagents/shared';
+import type { YieldExecutionResult } from '@mantleagents/shared';
 import { sendTransactionFromServerWallet } from '../lib/thirdweb-wallet.js';
 
 const yieldPublicClient = createPublicClient({ chain: bsc, transport: http() });

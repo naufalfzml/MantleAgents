@@ -1,5 +1,5 @@
 // TODO: implement multi-chain logic — was using Uniswap V3 QuoterV2/SwapRouter02 ABIs
-// and addresses from @jakartagents/mantle-data, plus chain client and thirdweb wallet.
+// and addresses from @mantleagents/mantle-data, plus chain client and thirdweb wallet.
 
 import type { Address, PublicClient } from 'viem';
 

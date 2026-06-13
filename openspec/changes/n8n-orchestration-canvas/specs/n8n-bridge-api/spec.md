@@ -37,7 +37,7 @@ Every `/api/n8n/*` endpoint SHALL validate the `X-N8N-Api-Key` header using `HMA
 Request and response types for each bridge endpoint SHALL be exported from `packages/shared` as `N8nBridgePayloads`. TypeScript compilation of both `apps/api` and `apps/web` MUST succeed with these types imported.
 
 #### Scenario: Types importable without circular dependency
-- **WHEN** `import type { N8nMarketDataRequest, N8nMarketDataResponse } from '@jakartagents/shared'` is used in `apps/api`
+- **WHEN** `import type { N8nMarketDataRequest, N8nMarketDataResponse } from '@mantleagents/shared'` is used in `apps/api`
 - **THEN** `pnpm type-check` MUST exit 0
 
 ### Requirement: N8N_BRIDGE_API_KEY_SECRET env var required at startup

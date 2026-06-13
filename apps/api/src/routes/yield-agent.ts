@@ -1,10 +1,10 @@
-import { createSupabaseAdmin, type Database } from "@jakartagents/db";
+import { createSupabaseAdmin, type Database } from "@mantleagents/db";
 import {
 	DEFAULT_YIELD_GUARDRAILS,
 	frequencyToMs,
 	parseFrequencyToMs,
 	type RiskProfile,
-} from "@jakartagents/shared";
+} from "@mantleagents/shared";
 import type { FastifyInstance } from "fastify";
 import { chainClient } from "../lib/chain-client.js";
 import { createServerWallet } from "../lib/thirdweb-wallet.js";
@@ -951,7 +951,7 @@ export async function yieldAgentRoutes(app: FastifyInstance) {
 			const displayName =
 				profileResult.data?.display_name ?? walletAddress.slice(0, 8);
 			const agentConfig = configResult.data as Pick<AgentConfigRow, "active">;
-			const agentName = `JakartAgents-Yield-${displayName.replace(/\s+/g, "-")}`;
+			const agentName = `MantleAgents-Yield-${displayName.replace(/\s+/g, "-")}`;
 			const teeSummary = await getLatestAttestationSummary({
 				walletAddress,
 				agentType: "yield",
@@ -962,22 +962,22 @@ export async function yieldAgentRoutes(app: FastifyInstance) {
 				type: "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
 				name: agentName,
 				description:
-					"JakartAgents runs autonomous AI agents that read the news, hunt yield, rebalance your portfolio, and execute on-chain — while you touch grass. No Bloomberg terminal. No gas fees. No babysitting.",
-				image: "https://jakartagents.co/jakartagents.png",
+					"MantleAgents runs autonomous AI agents that read the news, hunt yield, rebalance your portfolio, and execute on-chain — while you touch grass. No Bloomberg terminal. No gas fees. No babysitting.",
+				image: "https://mantleagents.co/mantleagents.png",
 				services: [
 					{
 						name: "web",
-						endpoint: "https://jakartagents.co",
+						endpoint: "https://mantleagents.co",
 						description: "Website",
 					},
 					{
 						name: "github",
-						endpoint: "https://github.com/0xkemcho/JakartAgents",
+						endpoint: "https://github.com/0xkemcho/MantleAgents",
 						description: "Source Code",
 					},
 					{
 						name: "attestations",
-						endpoint: `${process.env.PUBLIC_API_BASE_URL || "https://api.jakartagents.co"}/api/yield-agent/attestations`,
+						endpoint: `${process.env.PUBLIC_API_BASE_URL || "https://api.mantleagents.co"}/api/yield-agent/attestations`,
 						description: "Run attestations (TEE-ready interface)",
 					},
 				],
@@ -989,7 +989,7 @@ export async function yieldAgentRoutes(app: FastifyInstance) {
 						status: teeSummary.status,
 						attestationType: "hmac-sha256",
 						latestAttestationAt: teeSummary.latestAttestationAt,
-						attestationEndpoint: `${process.env.PUBLIC_API_BASE_URL || "https://api.jakartagents.co"}/api/yield-agent/attestations`,
+						attestationEndpoint: `${process.env.PUBLIC_API_BASE_URL || "https://api.mantleagents.co"}/api/yield-agent/attestations`,
 					},
 				},
 				x402Support: false,

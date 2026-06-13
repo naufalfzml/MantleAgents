@@ -65,4 +65,4 @@
 ## 10. Cleanup
 
 - [x] 10.1 Run `pnpm type-check` — exit 0
-- [x] 10.2 Run `pnpm --filter @jakartagents/web build` — exit 0
+- [x] 10.2 Run `pnpm --filter @mantleagents/web build` — exit 0

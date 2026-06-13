@@ -11,7 +11,7 @@
 - [x] 2.4 Update `getAttestation()` return values to include `decisionHash`
 - [x] 2.5 Write/update contract test: commit with `decisionHash` → `AttestationCommitted` event emits it; `getAttestation` returns it; duplicate `runId` reverts with `AlreadyCommitted()`
 - [x] 2.6 Run `cd packages/contracts && pnpm test` — all tests green
-- [ ] 2.7 Deploy updated contract to Mantle Sepolia: `pnpm --filter @jakartagents/contracts deploy:attestation-registry`
+- [ ] 2.7 Deploy updated contract to Mantle Sepolia: `pnpm --filter @mantleagents/contracts deploy:attestation-registry`
 - [ ] 2.8 Record new contract address; update `MANTLE_ATTESTATION_REGISTRY_ADDRESS` in `.env` and `apps/api/.env.example`
 
 ## 3. ABI Update
@@ -74,4 +74,4 @@
 
 - [x] 11.1 Update README Mantle Integration table with new `AgentAttestationRegistry` contract address
 - [x] 11.2 Run `pnpm type-check` — exit 0
-- [x] 11.3 Run `pnpm --filter @jakartagents/web build` — exit 0
+- [x] 11.3 Run `pnpm --filter @mantleagents/web build` — exit 0

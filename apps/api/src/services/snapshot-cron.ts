@@ -1,6 +1,6 @@
-import { createSupabaseAdmin } from '@jakartagents/db';
-import { ALL_TOKEN_ADDRESSES } from '@jakartagents/shared';
-import type { Chain } from '@jakartagents/mantle-data';
+import { createSupabaseAdmin } from '@mantleagents/db';
+import { ALL_TOKEN_ADDRESSES } from '@mantleagents/shared';
+import type { Chain } from '@mantleagents/mantle-data';
 import { fetchAllPrices } from './price-service.js';
 
 const SNAPSHOT_INTERVAL_MS = 15 * 60 * 1000; // 15 minutes

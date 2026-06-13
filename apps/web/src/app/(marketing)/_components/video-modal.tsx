@@ -20,9 +20,9 @@ export function VideoModal({ trigger }: VideoModalProps) {
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="max-w-4xl border-white/[0.08] bg-card p-3 sm:p-4">
         <DialogHeader className="sr-only">
-          <DialogTitle>What is JakartAgents?</DialogTitle>
+          <DialogTitle>What is MantleAgents?</DialogTitle>
           <DialogDescription>
-            Product demo video showing how JakartAgents works.
+            Product demo video showing how MantleAgents works.
           </DialogDescription>
         </DialogHeader>
 
@@ -31,7 +31,7 @@ export function VideoModal({ trigger }: VideoModalProps) {
             <iframe
               className="absolute inset-0 h-full w-full"
               src="https://player.vimeo.com/video/1165647906?transparent=0"
-              title="What is JakartAgents?"
+              title="What is MantleAgents?"
               loading="lazy"
               allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
               allowFullScreen

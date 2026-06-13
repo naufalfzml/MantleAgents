@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api-client';
 import { useAuth } from '@/providers/auth-provider';
-import type { TimelineEventType, TradeDirection, Citation } from '@jakartagents/shared';
+import type { TimelineEventType, TradeDirection, Citation } from '@mantleagents/shared';
 
 interface TimelineEntry {
   id: string;

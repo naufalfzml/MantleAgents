@@ -1,5 +1,5 @@
-import type { Database } from '@jakartagents/db';
-import type { FailureCategory, GuardrailCheck } from '@jakartagents/shared';
+import type { Database } from '@mantleagents/db';
+import type { FailureCategory, GuardrailCheck } from '@mantleagents/shared';
 
 export type AgentConfigRow = Database['public']['Tables']['agent_configs']['Row'];
 

@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'motion/react';
 import { useMotionSafe } from '@/lib/motion';
 
-const DEFAULT_DISMISS_KEY = 'jakartagents_funding_banner_dismissed';
+const DEFAULT_DISMISS_KEY = 'mantleagents_funding_banner_dismissed';
 const DEFAULT_MESSAGE = 'Fund your agent to start trading.';
 
 interface FundingBannerProps {

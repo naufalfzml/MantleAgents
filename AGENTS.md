@@ -4,7 +4,7 @@ Guidance for Codex when working in this repository.
 
 ## Project Overview
 
-JakartAgents runs autonomous AI agents (FX + Yield) that monitor markets, generate trading signals with Gemini, validate against guardrails, and execute trades. Built for **The Turing Test Hackathon 2026 (Mantle)** — Agentic Economy track. Every agent has an on-chain ERC-8004 identity on Mantle, and every run produces a hash-anchored attestation committed to a custom registry contract on Mantle.
+MantleAgents runs autonomous AI agents (FX + Yield) that monitor markets, generate trading signals with Gemini, validate against guardrails, and execute trades. Built for **The Turing Test Hackathon 2026 (Mantle)** — Agentic Economy track. Every agent has an on-chain ERC-8004 identity on Mantle, and every run produces a hash-anchored attestation committed to a custom registry contract on Mantle.
 
 ## Commands
 
@@ -17,19 +17,19 @@ pnpm test                             # Run all tests
 pnpm clean                            # Clean dist/build output
 
 # API-specific
-pnpm --filter @jakartagents/api dev   # Run API server in watch mode
-pnpm --filter @jakartagents/api test  # Run API tests
+pnpm --filter @mantleagents/api dev   # Run API server in watch mode
+pnpm --filter @mantleagents/api test  # Run API tests
 
 # Web-specific
-pnpm --filter @jakartagents/web dev   # Run Next.js dev server
+pnpm --filter @mantleagents/web dev   # Run Next.js dev server
 
 # Single test file
 cd apps/api && pnpm vitest run src/services/rules-engine.test.ts
 
 # Contracts (Mantle Sepolia)
-pnpm --filter @jakartagents/contracts deploy:tokens
-pnpm --filter @jakartagents/contracts deploy:attestation-registry
-pnpm --filter @jakartagents/contracts verify:registries
+pnpm --filter @mantleagents/contracts deploy:tokens
+pnpm --filter @mantleagents/contracts deploy:attestation-registry
+pnpm --filter @mantleagents/contracts verify:registries
 ```
 
 ## Monorepo Structure
@@ -80,7 +80,7 @@ Mantle execution routes through **RealClaw / Byreal Skills CLI**, the agent laye
 2. Fetch market data (`price-service.ts`, Merkl for yield)
 3. Generate signals with Gemini 2.5 Flash (`llm-analyzer.ts`)
 4. Validate signals against guardrails (`rules-engine.ts`)
-5. Execute trades (`trade-executor.ts` → Mantle via `realclaw-executor.ts`, or `@jakartagents/mantle-data` for non-Mantle chains)
+5. Execute trades (`trade-executor.ts` → Mantle via `realclaw-executor.ts`, or `@mantleagents/mantle-data` for non-Mantle chains)
 6. Log events to `agent_timeline`; commit attestation (`attestation-service.ts`)
 
 ### Token Monitor (`apps/api/src/services/token-monitor.ts`)
@@ -95,7 +95,7 @@ Mantle execution routes through **RealClaw / Byreal Skills CLI**, the agent laye
 - `executeTrade()` -- agent-driven trades (currency + direction + amount)
 - `executeSwap()` -- manual swaps (arbitrary from/to pair)
 - `signTransaction` callback pattern keeps private keys isolated
-- Mantle trades route to `realclaw-executor.ts`; non-Mantle chains use `@jakartagents/mantle-data`'s `trade-chain-wallet`
+- Mantle trades route to `realclaw-executor.ts`; non-Mantle chains use `@mantleagents/mantle-data`'s `trade-chain-wallet`
 
 ### Market Data SDK (`packages/mantle-data`)
 

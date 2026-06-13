@@ -6,8 +6,8 @@ import {
   createDecipheriv,
   randomBytes,
 } from 'node:crypto';
-import { createSupabaseAdmin, type Database } from '@jakartagents/db';
-import type { SelfClawVerification } from '@jakartagents/shared';
+import { createSupabaseAdmin, type Database } from '@mantleagents/db';
+import type { SelfClawVerification } from '@mantleagents/shared';
 
 const SELFCLAW_API_URL = process.env.SELFCLAW_API_URL || 'https://selfclaw.ai';
 const BASE = `${SELFCLAW_API_URL}/api/selfclaw/v1`;
@@ -111,7 +111,7 @@ export async function startVerification(
     .toLowerCase()
     .replace(/[^a-z0-9-]/g, '-')
     .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '') || `jakartagents-${walletAddress.slice(2, 10)}`;
+    .replace(/^-|-$/g, '') || `mantleagents-${walletAddress.slice(2, 10)}`;
 
   // Check if already verified
   const { data: profile } = await supabaseAdmin

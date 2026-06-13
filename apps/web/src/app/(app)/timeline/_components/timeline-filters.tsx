@@ -1,6 +1,6 @@
 'use client';
 
-import type { TimelineEventType } from '@jakartagents/shared';
+import type { TimelineEventType } from '@mantleagents/shared';
 import { cn } from '@/lib/utils';
 
 interface TimelineFiltersProps {

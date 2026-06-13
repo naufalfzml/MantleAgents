@@ -1,4 +1,4 @@
-import type { WorkflowValidationResult } from '@jakartagents/shared';
+import type { WorkflowValidationResult } from '@mantleagents/shared';
 
 export interface AgentConfigForRules {
   max_trade_size_pct?: number | null;

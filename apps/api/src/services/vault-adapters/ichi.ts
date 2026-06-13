@@ -1,4 +1,4 @@
-// TODO: implement multi-chain logic — was using ichiVaultAbi from @jakartagents/mantle-data
+// TODO: implement multi-chain logic — was using ichiVaultAbi from @mantleagents/mantle-data
 // for Ichi vault interactions.
 
 import {

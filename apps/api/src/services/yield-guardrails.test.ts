@@ -1,5 +1,5 @@
 import { checkYieldGuardrails } from './yield-guardrails.js';
-import type { YieldSignal, YieldGuardrails } from '@jakartagents/shared';
+import type { YieldSignal, YieldGuardrails } from '@mantleagents/shared';
 
 // Helper: Create a yield signal with defaults
 function makeSignal(overrides: Partial<YieldSignal> = {}): YieldSignal {

@@ -60,4 +60,4 @@
 ## 8. Cleanup
 
 - [x] 8.1 Run `pnpm type-check` from repo root — exit 0
-- [x] 8.2 Run `pnpm --filter @jakartagents/web build` — exit 0 (no frontend regressions from shared type changes)
+- [x] 8.2 Run `pnpm --filter @mantleagents/web build` — exit 0 (no frontend regressions from shared type changes)

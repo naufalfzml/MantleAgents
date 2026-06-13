@@ -4,7 +4,7 @@ import {
   type TokenDetail,
   getTokenDetail,
   batchTokenPrices,
-} from '@jakartagents/mantle-data';
+} from '@mantleagents/mantle-data';
 
 // ---------------------------------------------------------------------------
 // Config

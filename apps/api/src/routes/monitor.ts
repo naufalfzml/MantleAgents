@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify';
-import type { Chain } from '@jakartagents/mantle-data';
+import type { Chain } from '@mantleagents/mantle-data';
 import { authMiddleware } from '../middleware/auth.js';
 import {
   getWatchlist,

@@ -28,7 +28,7 @@ const { mockSupabaseClient, mockFetch, setMockResult } = vi.hoisted(() => {
   return { mockSupabaseClient, mockFetch, setMockResult };
 });
 
-vi.mock('@jakartagents/db', () => ({ createSupabaseAdmin: () => mockSupabaseClient }));
+vi.mock('@mantleagents/db', () => ({ createSupabaseAdmin: () => mockSupabaseClient }));
 vi.stubGlobal('fetch', mockFetch);
 
 import { provisionUserWorkflow, generateN8nToken } from './n8n-provisioner.js';

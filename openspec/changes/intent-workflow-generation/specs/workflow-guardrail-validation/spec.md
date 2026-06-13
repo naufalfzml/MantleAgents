@@ -44,5 +44,5 @@ If the generated workflow contains an "Execute Trade" node or any node that call
 `GeneratedWorkflow` (`{ workflowJson, summary, validation }`) and `WorkflowValidationResult` (`{ passed: boolean, issues: string[] }`) SHALL be exported from `packages/shared` and used consistently across the route, service, and frontend.
 
 #### Scenario: Types importable without error
-- **WHEN** `import type { WorkflowValidationResult } from '@jakartagents/shared'` is used in `apps/api` or `apps/web`
+- **WHEN** `import type { WorkflowValidationResult } from '@mantleagents/shared'` is used in `apps/api` or `apps/web`
 - **THEN** `pnpm type-check` MUST exit 0

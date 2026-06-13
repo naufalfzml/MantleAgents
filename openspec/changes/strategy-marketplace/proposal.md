@@ -1,6 +1,6 @@
 ## Why
 
-A strategy marketplace turns JakartAgents into a platform with a network effect and a revenue model, but three design risks — distributed alpha killing returns, survivorship bias from short winning streaks, and pump-and-dump vectors — make a naive marketplace actively harmful. The key insight from the project review is that listing eligibility gated on verified on-chain attestation data (Change 02) both mitigates all three risks and is the strongest differentiator to present to judges: trust comes from on-chain track record, not seller claims.
+A strategy marketplace turns MantleAgents into a platform with a network effect and a revenue model, but three design risks — distributed alpha killing returns, survivorship bias from short winning streaks, and pump-and-dump vectors — make a naive marketplace actively harmful. The key insight from the project review is that listing eligibility gated on verified on-chain attestation data (Change 02) both mitigates all three risks and is the strongest differentiator to present to judges: trust comes from on-chain track record, not seller claims.
 
 ## What Changes
 

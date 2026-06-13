@@ -1,5 +1,5 @@
 // TODO: implement multi-chain logic — entire script depends on IdentityRegistry
-// Was using identityRegistryAbi, IDENTITY_REGISTRY_ADDRESS from @jakartagents/mantle-data,
+// Was using identityRegistryAbi, IDENTITY_REGISTRY_ADDRESS from @mantleagents/mantle-data,
 // chain client, and thirdweb wallet for on-chain URI migration.
 
 async function main() {

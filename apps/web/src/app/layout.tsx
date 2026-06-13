@@ -5,11 +5,11 @@ import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'JakartAgents — Powered by AI',
+  title: 'MantleAgents — Powered by AI',
   description: 'AI-Powered Multi-Chain Crypto Agents — Built on Automated DEX Aggregation',
   icons: {
-    icon: '/jakartagents-polos.png',
-    apple: '/jakartagents-polos.png',
+    icon: '/mantleagents-polos.png',
+    apple: '/mantleagents-polos.png',
   },
 };
 

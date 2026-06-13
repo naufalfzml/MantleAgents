@@ -1,7 +1,7 @@
 import { streamText, Output } from 'ai';
 import { createGeminiProvider } from 'ai-sdk-provider-gemini-cli';
 import { z } from 'zod';
-import type { YieldOpportunity, YieldSignal, YieldAnalysisResult, YieldGuardrails, ProgressReasoningData } from '@jakartagents/shared';
+import type { YieldOpportunity, YieldSignal, YieldAnalysisResult, YieldGuardrails, ProgressReasoningData } from '@mantleagents/shared';
 import { emitProgress } from './agent-events.js';
 
 const gemini = createGeminiProvider({

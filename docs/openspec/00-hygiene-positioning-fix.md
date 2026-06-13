@@ -1,7 +1,7 @@
 # 00 — Hygiene & Positioning Fix
 
 > Referensi untuk: `openspec propose hygiene-positioning-fix`
-> Sumber: `review-jakartagents-v2.md` poin #1, #3, #5; `Dokumentasi_Konseptual_JakartAgents_V2.md` §3
+> Sumber: `review-mantleagents-v2.md` poin #1, #3, #5; `Dokumentasi_Konseptual_MantleAgents_V2.md` §3
 
 ## 1. Kenapa tahap ini ada
 
@@ -24,7 +24,7 @@ menyesatkan juri, dan semuanya bisa diperbaiki **tanpa mengubah kode fungsional*
 **In scope** (semua file dokumentasi/teks, TIDAK ada perubahan logika):
 - `README.md` (root)
 - `CLAUDE.md`, `AGENTS.md`
-- `Dokumentasi_Konseptual_JakartAgents_V2.md` (kalau disimpan di repo)
+- `Dokumentasi_Konseptual_MantleAgents_V2.md` (kalau disimpan di repo)
 - String/label di UI dashboard (`apps/web`) yang menyebut AI sebagai pelaku
   contract-risk check atau menempatkan Byreal sebagai venue swap — cek di
   komponen risk-check & token-monitor display.
@@ -63,7 +63,7 @@ Tahap ini **tidak menyentuh logika**, jadi testing berupa verifikasi statis, buk
 2. **Build sanity check** (memastikan perubahan string tidak merusak build):
    ```bash
    pnpm type-check
-   pnpm --filter @jakartagents/web build
+   pnpm --filter @mantleagents/web build
    ```
 3. **Visual check**: jalankan `pnpm dev`, buka dashboard, screenshot halaman yang
    menampilkan label risk-check & status integrasi Mantle — pastikan copy baru tampil

@@ -1,8 +1,8 @@
 # 06 — Marketplace Strategi P2P
 
 > Referensi untuk: `openspec propose strategy-marketplace`
-> Sumber: `Dokumentasi_Konseptual_JakartAgents_V2.md` §2.2, §4 (langkah 4);
-> `review-jakartagents-v2.md` poin #6 (mitigasi risiko marketplace)
+> Sumber: `Dokumentasi_Konseptual_MantleAgents_V2.md` §2.2, §4 (langkah 4);
+> `review-mantleagents-v2.md` poin #6 (mitigasi risiko marketplace)
 > Bergantung pada: Tahap 2 (on-chain track record) dan Tahap 4 (kanvas n8n untuk clone workflow)
 
 ## 1. Kenapa tahap ini ada
@@ -133,4 +133,4 @@ cd apps/api && pnpm vitest run src/routes/marketplace.test.ts
 Ada minimal satu strategi dengan track record on-chain terverifikasi yang
 dipublish, dan satu user lain bisa menyewa/clone strategi tersebut ke kanvas mereka
 sendiri — dengan disclosure performa yang jujur (termasuk disclaimer) sesuai
-mitigasi risiko di `review-jakartagents-v2.md` poin #6.
+mitigasi risiko di `review-mantleagents-v2.md` poin #6.

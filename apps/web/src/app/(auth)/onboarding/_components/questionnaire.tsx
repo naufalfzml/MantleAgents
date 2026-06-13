@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import type { RiskAnswers } from '@jakartagents/shared';
-import { STABLE_TOKENS, TOKEN_METADATA } from '@jakartagents/shared';
+import type { RiskAnswers } from '@mantleagents/shared';
+import { STABLE_TOKENS, TOKEN_METADATA } from '@mantleagents/shared';
 import { TokenLogo } from '@/components/token-logo';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -50,7 +50,7 @@ const QUESTIONS: Question[] = [
     key: 'name',
     type: 'text',
     title: "What should we call you?",
-    subtitle: 'This is your display name in JakartAgents.',
+    subtitle: 'This is your display name in MantleAgents.',
     placeholder: 'Enter your name',
   },
   {

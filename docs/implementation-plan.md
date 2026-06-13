@@ -1,4 +1,4 @@
-# Implementation Plan — JakartAgents Pending OpenSpec Tasks
+# Implementation Plan — MantleAgents Pending OpenSpec Tasks
 
 _Last updated: 2026-06-12._
 
@@ -25,7 +25,7 @@ Jalankan satu per satu dari atas ke bawah. Nomor 3, 4, 5 harus tunggu yang sebel
 ### Verifikasi kode
 ```bash
 pnpm type-check
-pnpm --filter @jakartagents/web build
+pnpm --filter @mantleagents/web build
 pnpm test
 ```
 

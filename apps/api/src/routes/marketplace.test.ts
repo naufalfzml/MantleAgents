@@ -63,7 +63,7 @@ const mockSupabase = {
   from: (table: string) => makeChain(table),
 };
 
-vi.mock('@jakartagents/db', () => ({
+vi.mock('@mantleagents/db', () => ({
   createSupabaseAdmin: () => mockSupabase,
 }));
 

@@ -59,7 +59,7 @@ and the `n8n_workflow_id` DB column migration.
 ---
 
 #### 9.x — Final cleanup
-> `pnpm type-check` exit 0, `pnpm --filter @jakartagents/web build` exit 0, README env vars table update.
+> `pnpm type-check` exit 0, `pnpm --filter @mantleagents/web build` exit 0, README env vars table update.
 
 **Why not done:** Gated on the remaining sections above being complete. Type-check and build are expected to be clean for the already-implemented sections, but the full check should be run only once sections 5–7 are wired up.
 

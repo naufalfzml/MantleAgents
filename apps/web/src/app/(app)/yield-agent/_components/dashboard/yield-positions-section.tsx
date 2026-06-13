@@ -8,7 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { EmptyState } from '@/components/empty-state';
 import { TokenLogo } from '@/components/token-logo';
 import { formatUsd, formatUsdCompact, formatRelativeTime } from '@/lib/format';
-import { TOKEN_METADATA } from '@jakartagents/shared';
+import { TOKEN_METADATA } from '@mantleagents/shared';
 import { useYieldPositions, useYieldOpportunities } from '@/hooks/use-yield-agent';
 import { getProtocolLogo } from './utils';
 

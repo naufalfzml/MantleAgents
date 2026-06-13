@@ -1,5 +1,5 @@
 /**
- * Thirdweb server wallet library for JakartAgents.
+ * Thirdweb server wallet library for MantleAgents.
  * Replaces Privy: create wallets, send sponsored transactions (EIP-7702), sign typed data.
  */
 const THIRDWEB_API_BASE = 'https://api.thirdweb.com';

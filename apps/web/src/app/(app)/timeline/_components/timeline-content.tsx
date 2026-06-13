@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
-import type { TimelineEventType } from '@jakartagents/shared';
+import type { TimelineEventType } from '@mantleagents/shared';
 import { useTimeline } from '@/hooks/use-timeline';
 import { useMotionSafe } from '@/lib/motion';
 import { Badge } from '@/components/ui/badge';

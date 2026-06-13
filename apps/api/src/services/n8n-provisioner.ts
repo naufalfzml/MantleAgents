@@ -2,7 +2,7 @@ import { createHash, createHmac } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { createSupabaseAdmin } from '@jakartagents/db';
+import { createSupabaseAdmin } from '@mantleagents/db';
 
 const supabaseAdmin = createSupabaseAdmin(
   process.env.SUPABASE_URL!,
@@ -14,7 +14,7 @@ const __dirname = dirname(__filename);
 const TEMPLATE_PATH = join(__dirname, '../../../../n8n/templates/fx-agent-default-flow.json');
 
 export function generateN8nToken(walletAddress: string): string {
-  const secret = process.env.N8N_BRIDGE_API_KEY_SECRET ?? 'jakartagents-dev-secret';
+  const secret = process.env.N8N_BRIDGE_API_KEY_SECRET ?? 'mantleagents-dev-secret';
   const exp = Math.floor(Date.now() / 1000) + 300;
   const payload = Buffer.from(JSON.stringify({ sub: walletAddress, exp })).toString('base64url');
   const sig = createHmac('sha256', secret).update(payload).digest('base64url');

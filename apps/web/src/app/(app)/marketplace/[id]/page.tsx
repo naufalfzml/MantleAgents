@@ -1,7 +1,7 @@
 import { StrategyDetail } from '../_components/strategy-detail';
 
 export const metadata = {
-  title: 'Strategy Detail | JakartAgents',
+  title: 'Strategy Detail | MantleAgents',
 };
 
 export default function StrategyDetailPage({ params }: { params: { id: string } }) {

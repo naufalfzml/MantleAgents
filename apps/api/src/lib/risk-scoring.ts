@@ -1,4 +1,4 @@
-import type { RiskProfile } from '@jakartagents/shared';
+import type { RiskProfile } from '@mantleagents/shared';
 
 interface ScoreInputs {
   experience: 'beginner' | 'some_experience' | 'advanced';

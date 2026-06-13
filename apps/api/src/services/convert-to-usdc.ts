@@ -1,4 +1,4 @@
-// TODO: implement multi-chain logic — was using findRoute, applySlippage from @jakartagents/mantle-data,
+// TODO: implement multi-chain logic — was using findRoute, applySlippage from @mantleagents/mantle-data,
 // chain client, DEX route finding, and Uniswap fallback swaps.
 
 export interface ConvertSwapped {

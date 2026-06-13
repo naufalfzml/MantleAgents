@@ -81,7 +81,7 @@ cd apps/api && pnpm vitest run src/services/realclaw-executor.test.ts
 ### Integration tests (`trade-executor.test.ts` — extend)
 - Tambah kasus: chain = Mantle, `isRealClawConfigured() = true` → pastikan
   `executeTrade()` memanggil `executeRealClawSwap` (spy/mock), bukan jalur
-  `@jakartagents/mantle-data` non-Mantle.
+  `@mantleagents/mantle-data` non-Mantle.
 - Tambah kasus: `isRealClawConfigured() = false` → pastikan behaviour fallback
   eksplisit (event `trade_skipped` dengan reason "RealClaw not configured"), bukan
   silent failure.
@@ -92,7 +92,7 @@ cd apps/api && pnpm vitest run src/services/trade-executor.test.ts
 
 ### End-to-end manual test (Mantle Sepolia, sebelum demo)
 1. Set env RealClaw di `.env` (testnet credentials).
-2. Jalankan `pnpm --filter @jakartagents/api dev`.
+2. Jalankan `pnpm --filter @mantleagents/api dev`.
 3. Trigger satu agent run manual (via endpoint admin atau tunggu cron 60s) dengan
    guardrail yang pasti menghasilkan signal "buy" kecil (mis. mUSDC → mWMNT, $5 testnet).
 4. Verifikasi:

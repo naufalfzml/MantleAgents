@@ -1,5 +1,5 @@
 {
-  "name": "@jakartagents/web",
+  "name": "@mantleagents/web",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.88",
-    "@jakartagents/shared": "workspace:*",
+    "@mantleagents/shared": "workspace:*",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-popover": "^1.1.15",
     "@radix-ui/react-scroll-area": "^1.2.10",
@@ -40,7 +40,7 @@
     "thirdweb": "^5.x"
   },
   "devDependencies": {
-    "@jakartagents/typescript-config": "workspace:*",
+    "@mantleagents/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "^4.x",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",

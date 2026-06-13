@@ -4,7 +4,7 @@
 // should be set as MANTLE_ATTESTATION_REGISTRY_ADDRESS in apps/api/.env.
 //
 // Usage:
-//   pnpm --filter @jakartagents/contracts deploy:attestation-registry
+//   pnpm --filter @mantleagents/contracts deploy:attestation-registry
 
 import 'dotenv/config';
 import path from 'node:path';

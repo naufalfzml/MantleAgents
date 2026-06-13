@@ -1,6 +1,6 @@
 "use client";
 
-import { formatFrequency } from "@jakartagents/shared";
+import { formatFrequency } from "@mantleagents/shared";
 import { ExternalLink, Info, Loader2, UserCheck } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";

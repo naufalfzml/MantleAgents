@@ -1,4 +1,4 @@
-import { TOKEN_METADATA } from '@jakartagents/shared';
+import { TOKEN_METADATA } from '@mantleagents/shared';
 import { cn } from '@/lib/utils';
 
 interface TokenLogoProps {

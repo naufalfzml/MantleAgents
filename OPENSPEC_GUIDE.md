@@ -1,4 +1,4 @@
-# JakartAgents — Panduan Roadmap untuk OpenSpec
+# MantleAgents — Panduan Roadmap untuk OpenSpec
 
 > Dokumen kerja (bukan format OpenSpec). Tujuannya: jadi rujukan saat menjalankan
 > `openspec propose` per fitur/tahap. Setiap bagian "Tahap" di bawah bisa langsung
@@ -8,9 +8,9 @@
 
 ## 1. Proyek ini apa?
 
-**JakartAgents** adalah platform agen AI otonom di **Mantle Network** untuk
+**MantleAgents** adalah platform agen AI otonom di **Mantle Network** untuk
 **The Turing Test Hackathon 2026** (track yang dibidik: **Agentic Economy**, dengan
-reposisi sekunder ke **AI DevTools / Agentic Wallets** — lihat `review-jakartagents-v2.md`).
+reposisi sekunder ke **AI DevTools / Agentic Wallets** — lihat `review-mantleagents-v2.md`).
 
 Status saat ini (V1, sudah berjalan di repo):
 - Dua jenis agen: **FX Agent** (sentimen makro stablecoin) dan **Yield Agent** (Merkl).
@@ -19,13 +19,13 @@ Status saat ini (V1, sudah berjalan di repo):
 - Eksekusi trading via `realclaw-executor.ts` (RealClaw / Byreal Skills CLI) — **status: scaffolded**, belum terhubung penuh ke `trade-executor.ts`.
 - Dashboard Next.js + Fastify API + Supabase, cron 60s untuk siklus agent (monitor → analisis LLM → guardrails → eksekusi → attest).
 
-**Visi V2** (`Dokumentasi_Konseptual_JakartAgents_V2.md`): mengubah JakartAgents dari
+**Visi V2** (`Dokumentasi_Konseptual_MantleAgents_V2.md`): mengubah MantleAgents dari
 "bot" menjadi **No-Code AI Orchestration Platform** berbasis n8n, dengan tiga pilar:
 1. **Intent-Centric Workflow Generation** — prompt bahasa natural → workflow n8n otomatis.
 2. **Marketplace Strategi P2P** — user jual/sewa template strategi yang terbukti profit.
 3. **Unified Orchestration Canvas** — semua agen (FX, Yield, Risk) jadi satu kanvas n8n drag-and-drop.
 
-**Gap kritikal yang harus ditutup** (dari `review-jakartagents-v2.md`):
+**Gap kritikal yang harus ditutup** (dari `review-mantleagents-v2.md`):
 - Decision logic harus **ter-benchmark on-chain**, bukan cuma execution. (Sebagian sudah ada via attestation — perlu dipertajam jadi "decision hash" eksplisit.)
 - **Custody** harus jelas: non-custodial via RealClaw/Privy (default) atau session key ERC-4337.
 - Diksi yang menempatkan Byreal sebagai venue swap Mantle itu salah → ganti jadi "RealClaw / Byreal Skills CLI" + sebut venue (Merchant Moe / Agni / Fluxion).
@@ -82,7 +82,7 @@ idealnya bisa di-ship dan didemo terpisah.
 
 ### Tahap 2 — On-Chain Decision Attestation (perkuat verifiability)
 **Tujuan:** sambungkan "decision logic" (LLM signal + guardrail eval), bukan cuma hasil eksekusi, ke on-chain record — ini yang dicari juri ("mana agent on-chain-nya?").
-- Perluas `attestation-service.ts`: hash bukan cuma timeline event, tapi juga `decisionHash` (sinyal LLM + parameter guardrail yang dipakai) per keputusan — sesuai contoh `event AgentDecision` di `review-jakartagents-v2.md`.
+- Perluas `attestation-service.ts`: hash bukan cuma timeline event, tapi juga `decisionHash` (sinyal LLM + parameter guardrail yang dipakai) per keputusan — sesuai contoh `event AgentDecision` di `review-mantleagents-v2.md`.
 - Tambah field/struct di `AgentAttestationRegistry.sol` jika perlu (atau gunakan event terpisah `AgentDecision`).
 - Endpoint/UI untuk menampilkan "decision trail" per run: signal → guardrail check → execution → tx hash, semua bisa ditelusuri ke on-chain hash.
 - **Definition of done:** dari dashboard, user bisa klik satu run agent dan melihat link/hash on-chain yang membuktikan signal+guardrail+outcome konsisten dengan apa yang terjadi.
@@ -96,7 +96,7 @@ idealnya bisa di-ship dan didemo terpisah.
 
 ### Tahap 4 — Unified n8n Orchestration Canvas (V2 pilar 3)
 **Tujuan:** mulai fondasi V2 — satukan FX/Yield/Risk agent ke kanvas n8n.
-- Setup instance n8n (self-hosted atau cloud) terhubung ke API JakartAgents via webhook/REST.
+- Setup instance n8n (self-hosted atau cloud) terhubung ke API MantleAgents via webhook/REST.
 - Bungkus fungsi-fungsi existing (`market-data-service`, `llm-analyzer`, `rules-engine`, `trade-executor`, `attestation-service`) sebagai **n8n custom nodes / HTTP nodes** yang bisa dirangkai user.
 - Buat 1-2 template workflow contoh (mis. "FX Agent default flow") yang bisa di-clone & dimodifikasi user di kanvas.
 - UI: embed/link kanvas n8n di dashboard (`apps/web`), dengan SSO dari sesi user yang sama.

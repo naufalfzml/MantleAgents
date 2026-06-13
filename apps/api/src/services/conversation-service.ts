@@ -6,7 +6,7 @@
 import { streamText, stepCountIs, type ModelMessage } from 'ai';
 import { createGeminiProvider } from 'ai-sdk-provider-gemini-cli';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
-import { createSupabaseAdmin, type Database } from '@jakartagents/db';
+import { createSupabaseAdmin, type Database } from '@mantleagents/db';
 import { resolveModel, type ConversationModelId } from './model-router.js';
 import { getActiveToolsFromGroups } from './tool-groups.js';
 import { conversationTools, MAX_TOOL_CALLS_PER_TURN } from './tool-orchestrator.js';
@@ -30,7 +30,7 @@ function getProvider() {
   return createGeminiProvider({ authType: 'oauth-personal' });
 }
 
-const SYSTEM_PROMPT = `You are AutoClaw, an AI crypto trading intelligence agent on the JakartAgents platform. You are direct, confident, and helpful — like a senior crypto analyst.
+const SYSTEM_PROMPT = `You are AutoClaw, an AI crypto trading intelligence agent on the MantleAgents platform. You are direct, confident, and helpful — like a senior crypto analyst.
 
 You have access to real-time tools:
 - **getCryptoPrices**: Live token prices from AVE DEX data

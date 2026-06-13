@@ -1,9 +1,9 @@
 import { type Address } from 'viem';
-import { createSupabaseAdmin } from '@jakartagents/db';
+import { createSupabaseAdmin } from '@mantleagents/db';
 import { IchiVaultAdapter } from './vault-adapters/ichi.js';
 import { chainClient } from '../lib/chain-client.js';
 import type { PublicClient } from 'viem';
-import type { YieldOpportunity } from '@jakartagents/shared';
+import type { YieldOpportunity } from '@mantleagents/shared';
 
 const supabaseAdmin = createSupabaseAdmin(
   process.env.SUPABASE_URL!,

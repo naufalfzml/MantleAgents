@@ -1,11 +1,11 @@
-import { createSupabaseAdmin } from '@jakartagents/db';
+import { createSupabaseAdmin } from '@mantleagents/db';
 import {
   STABLE_TOKENS,
   TOKEN_METADATA,
   ALL_TOKEN_ADDRESSES,
   type TokenInfo,
   type SupportedToken,
-} from '@jakartagents/shared';
+} from '@mantleagents/shared';
 import {
   MantleDataClient,
   checkContractRisk,
@@ -15,7 +15,7 @@ import {
   type ContractRisk,
   type KlineCandle,
   type TokenDetail,
-} from '@jakartagents/mantle-data';
+} from '@mantleagents/mantle-data';
 import { priceCache, PRICE_CACHE_TTL_MS } from '../lib/cache.js';
 import { fetchAllPrices } from './price-service.js';
 

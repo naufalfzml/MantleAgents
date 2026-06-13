@@ -1,6 +1,6 @@
-import type { GuardrailCheck } from '@jakartagents/shared';
-import type { YieldOpportunity, YieldSignal, YieldGuardrails, DEFAULT_YIELD_GUARDRAILS } from '@jakartagents/shared';
-import { ALL_TOKEN_ADDRESSES } from '@jakartagents/shared';
+import type { GuardrailCheck } from '@mantleagents/shared';
+import type { YieldOpportunity, YieldSignal, YieldGuardrails, DEFAULT_YIELD_GUARDRAILS } from '@mantleagents/shared';
+import { ALL_TOKEN_ADDRESSES } from '@mantleagents/shared';
 import { fetchYieldOpportunities, fetchClaimableRewards } from '../merkl-client.js';
 import { analyzeYieldOpportunities } from '../yield-analyzer.js';
 import { executeYieldDeposit, executeYieldWithdraw } from '../yield-executor.js';

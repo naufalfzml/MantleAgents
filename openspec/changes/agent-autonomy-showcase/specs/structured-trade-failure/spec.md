@@ -27,7 +27,7 @@
 `FailureCategory` (`'slippage_exceeded' | 'risk_flagged' | 'insufficient_funds' | 'other'`) and `AdaptedPlan` SHALL be exported from `packages/shared` so all packages can import them without circular dependencies.
 
 #### Scenario: FailureCategory importable from shared
-- **WHEN** `import type { FailureCategory } from '@jakartagents/shared'` is used in any app or package
+- **WHEN** `import type { FailureCategory } from '@mantleagents/shared'` is used in any app or package
 - **THEN** TypeScript compilation MUST succeed with no type errors
 
 ### Requirement: RealClaw result status maps to FailureCategory in trade-executor

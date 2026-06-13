@@ -30,5 +30,5 @@
 
 - [x] 6.1 Re-run grep audit from step 1 — confirm zero matches for legacy Byreal-as-venue wording and AI-attributed contract-risk copy
 - [x] 6.2 Run `pnpm type-check` — must exit 0
-- [x] 6.3 Run `pnpm --filter @jakartagents/web build` — must exit 0
+- [x] 6.3 Run `pnpm --filter @mantleagents/web build` — must exit 0
 - [ ] 6.4 Run `pnpm dev`, open dashboard, visually confirm new risk-check label renders without overflow or truncation

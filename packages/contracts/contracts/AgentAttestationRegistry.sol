@@ -2,7 +2,7 @@
 pragma solidity ^0.8.28;
 
 /// @title AgentAttestationRegistry
-/// @notice On-chain commitment log for JakartAgents agent decision/outcome
+/// @notice On-chain commitment log for MantleAgents agent decision/outcome
 /// attestations. Each entry anchors an off-chain attestation (computed in
 /// apps/api/src/services/attestation-service.ts) to Mantle via a content
 /// hash, giving judges a permanent, queryable on-chain record per the

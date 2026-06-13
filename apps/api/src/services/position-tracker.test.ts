@@ -55,13 +55,13 @@ function createChainableMock(resolvedValue: unknown = { data: [], error: null })
 }
 
 const mockFrom = vi.hoisted(() => vi.fn());
-vi.mock('@jakartagents/db', () => ({
+vi.mock('@mantleagents/db', () => ({
   createSupabaseAdmin: vi.fn().mockReturnValue({
     from: mockFrom,
   }),
 }));
 
-vi.mock('@jakartagents/shared', () => ({
+vi.mock('@mantleagents/shared', () => ({
   getTokenAddress: vi.fn().mockReturnValue('0xEURm'),
 }));
 

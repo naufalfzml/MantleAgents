@@ -6,7 +6,7 @@ services:
       sh -lc "corepack enable &&
       corepack prepare pnpm@9.15.0 --activate &&
       pnpm install &&
-      pnpm --filter @jakartagents/api dev"
+      pnpm --filter @mantleagents/api dev"
     ports:
       - '4000:4000'
     env_file:
@@ -14,7 +14,7 @@ services:
     volumes:
       - .:/workspace
     networks:
-      - jakartagents
+      - mantleagents
 
   n8n:
     image: docker.n8n.io/n8nio/n8n:latest
@@ -33,11 +33,11 @@ services:
     volumes:
       - n8n_data:/home/node/.n8n
     networks:
-      - jakartagents
+      - mantleagents
 
 volumes:
   n8n_data:
 
 networks:
-  jakartagents:
+  mantleagents:
     driver: bridge

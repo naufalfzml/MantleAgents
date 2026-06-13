@@ -142,7 +142,7 @@ export function TerminalNavbar() {
         {/* Logo / prompt */}
         <Link href="/overview" className="flex items-center gap-2.5 shrink-0 mr-4">
           <span className="font-press-start-2p text-sm text-gb-accent uppercase tracking-wider hidden sm:inline">
-            JAKARTAGENTS
+            MANTLEAGENTS
           </span>
           <span className="font-press-start-2p text-sm text-gb-accent sm:hidden">JA</span>
           <span className="font-vt323 text-2xl text-gb-accent">&gt;</span>

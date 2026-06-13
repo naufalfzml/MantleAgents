@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify';
-import { createSupabaseAdmin } from '@jakartagents/db';
+import { createSupabaseAdmin } from '@mantleagents/db';
 import { authMiddleware } from '../middleware/auth.js';
 import { checkEligibility } from '../services/strategy-eligibility.js';
 import { cloneStrategyToCanvas } from '../services/strategy-clone.js';

@@ -1,7 +1,7 @@
 # 04 — Unified n8n Orchestration Canvas
 
 > Referensi untuk: `openspec propose n8n-orchestration-canvas`
-> Sumber: `Dokumentasi_Konseptual_JakartAgents_V2.md` §2.3, §3 (baris arsitektur
+> Sumber: `Dokumentasi_Konseptual_MantleAgents_V2.md` §2.3, §3 (baris arsitektur
 > "Mesin Orkestrasi (n8n Core)")
 
 ## 1. Kenapa tahap ini ada

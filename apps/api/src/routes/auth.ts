@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { thirdwebAuth } from '../lib/thirdweb.js';
 import { authMiddleware } from '../middleware/auth.js';
-import { createSupabaseAdmin } from '@jakartagents/db';
+import { createSupabaseAdmin } from '@mantleagents/db';
 
 const supabaseAdmin = createSupabaseAdmin(
   process.env.SUPABASE_URL!,

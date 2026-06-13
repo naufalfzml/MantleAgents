@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import { api } from '@/lib/api-client';
-import type { MarketTokensResponse } from '@jakartagents/shared';
+import type { MarketTokensResponse } from '@mantleagents/shared';
 
 interface YieldOpportunityResponse {
   id: string;

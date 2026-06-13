@@ -4,7 +4,7 @@ import type {
   GuardrailCheck,
   TradeSignal,
   Signal,
-} from '@jakartagents/shared';
+} from '@mantleagents/shared';
 
 const MIN_TRADE_AMOUNT_USD = 0.1;
 

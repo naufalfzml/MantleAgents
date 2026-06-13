@@ -1,5 +1,5 @@
-import { createSupabaseAdmin, type Database } from '@jakartagents/db';
-import { getTokenAddress } from '@jakartagents/shared';
+import { createSupabaseAdmin, type Database } from '@mantleagents/db';
+import { getTokenAddress } from '@mantleagents/shared';
 
 type PositionRow = Database['public']['Tables']['agent_positions']['Row'];
 

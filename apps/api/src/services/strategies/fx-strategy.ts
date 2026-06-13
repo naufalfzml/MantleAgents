@@ -1,5 +1,5 @@
-import type { FailureCategory, GuardrailCheck } from '@jakartagents/shared';
-import { STABLE_TOKENS, DEFAULT_GUARDRAILS, ALL_TOKEN_ADDRESSES, USDT_ADDRESS } from '@jakartagents/shared';
+import type { FailureCategory, GuardrailCheck } from '@mantleagents/shared';
+import { STABLE_TOKENS, DEFAULT_GUARDRAILS, ALL_TOKEN_ADDRESSES, USDT_ADDRESS } from '@mantleagents/shared';
 import { fetchFxNews } from '../news-fetcher.js';
 import { analyzeFxNews } from '../llm-analyzer.js';
 import { executeTrade } from '../trade-executor.js';

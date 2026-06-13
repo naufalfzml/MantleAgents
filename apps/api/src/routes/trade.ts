@@ -1,11 +1,11 @@
 import type { FastifyInstance } from 'fastify';
 import { authMiddleware } from '../middleware/auth.js';
-import { createSupabaseAdmin, type Database } from '@jakartagents/db';
+import { createSupabaseAdmin, type Database } from '@mantleagents/db';
 import {
   BASE_TOKENS,
   STABLE_TOKENS,
   COMMODITY_TOKENS,
-} from '@jakartagents/shared';
+} from '@mantleagents/shared';
 import { executeSwap, sendTokens } from '../services/trade-executor.js';
 
 const supabaseAdmin = createSupabaseAdmin(

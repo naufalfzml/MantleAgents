@@ -12,7 +12,7 @@ import type {
   N8nRiskCheckResponse,
   N8nSignalAnalysisRequest,
   N8nSignalAnalysisResponse,
-} from '@jakartagents/shared';
+} from '@mantleagents/shared';
 import { authMiddleware } from '../middleware/auth.js';
 import { analyzeFxNews } from '../services/llm-analyzer.js';
 import { getN8nMarketData } from '../services/market-data-service.js';

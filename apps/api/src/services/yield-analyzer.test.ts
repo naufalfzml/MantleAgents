@@ -2,7 +2,7 @@ import {
   buildYieldSystemPrompt,
   buildYieldAnalysisPrompt,
 } from './yield-analyzer.js';
-import type { YieldOpportunity } from '@jakartagents/shared';
+import type { YieldOpportunity } from '@mantleagents/shared';
 
 function makeOpportunity(overrides: Partial<YieldOpportunity> = {}): YieldOpportunity {
   return {

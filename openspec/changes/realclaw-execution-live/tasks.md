@@ -47,7 +47,7 @@
 
 - [ ] 6.1 Set `REALCLAW_API_KEY` and `REALCLAW_API_BASE` in `apps/api/.env` with testnet credentials
 - [ ] 6.2 Ensure agent wallet has testnet mUSDC and mWMNT balance on Mantle Sepolia
-- [ ] 6.3 Run `pnpm --filter @jakartagents/api dev`; confirm startup log shows "RealClaw execution active"
+- [ ] 6.3 Run `pnpm --filter @mantleagents/api dev`; confirm startup log shows "RealClaw execution active"
 - [ ] 6.4 Trigger one agent run (manual endpoint or wait for 60s cron tick) with a signal that produces a small buy (mUSDC → mWMNT)
 - [ ] 6.5 Verify `tx_hash` appears in `agent_timeline` row with `event_type = 'trade'`
 - [ ] 6.6 Verify tx hash resolves on Mantle Sepolia explorer showing the correct wallet address

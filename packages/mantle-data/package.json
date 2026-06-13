@@ -1,5 +1,5 @@
 {
-  "name": "@jakartagents/mantle-data",
+  "name": "@mantleagents/mantle-data",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -18,7 +18,7 @@
     "lint": "echo 'no linter configured yet'"
   },
   "devDependencies": {
-    "@jakartagents/typescript-config": "workspace:*",
+    "@mantleagents/typescript-config": "workspace:*",
     "@types/node": "^20.x",
     "typescript": "^5.x"
   }

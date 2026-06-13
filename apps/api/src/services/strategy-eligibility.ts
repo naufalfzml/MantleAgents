@@ -1,5 +1,5 @@
-import { createSupabaseAdmin } from '@jakartagents/db';
-import type { EligibilityResult } from '@jakartagents/shared';
+import { createSupabaseAdmin } from '@mantleagents/db';
+import type { EligibilityResult } from '@mantleagents/shared';
 
 const supabaseAdmin = createSupabaseAdmin(
   process.env.SUPABASE_URL!,

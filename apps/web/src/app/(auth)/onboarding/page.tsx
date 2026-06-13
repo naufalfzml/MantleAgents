@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'motion/react';
 import { toast } from 'sonner';
-import type { RiskAnswers } from '@jakartagents/shared';
+import type { RiskAnswers } from '@mantleagents/shared';
 import { useAuth } from '@/providers/auth-provider';
 import { useSubmitRiskProfile } from '@/hooks/use-user';
 import { api, ApiError } from '@/lib/api-client';

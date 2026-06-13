@@ -1,12 +1,12 @@
 # AVE Integration Deep-Dive
 
-Detailed documentation of how JakartAgents integrates with AVE Cloud APIs. This covers the SDK wrapper architecture, every endpoint used, trade execution flows, monitoring integration, error handling, and chain support.
+Detailed documentation of how MantleAgents integrates with AVE Cloud APIs. This covers the SDK wrapper architecture, every endpoint used, trade execution flows, monitoring integration, error handling, and chain support.
 
 ## 1. Overview
 
 ### AVE Skills Used
 
-JakartAgents uses two AVE Cloud skills:
+MantleAgents uses two AVE Cloud skills:
 
 - **`ave-data-rest`** — Real-time token data, pricing, kline charts, holder analysis, contract risk detection, trending tokens, wallet analytics. This powers the monitoring agent, AI analysis pipeline, and dashboard market data.
 - **`ave-trade-chain-wallet`** — DEX-aggregated swap execution with chain-specific transaction creation and broadcasting. This powers both the autonomous agent trades and manual user swaps.
@@ -27,7 +27,7 @@ We chose the **chain-wallet** approach over proxy-wallet for several reasons:
 
 ## 2. Data Integration (`ave-data-rest`)
 
-All data endpoints go through the `@jakartagents/mantle-data` SDK package (`packages/ave/src/data-rest.ts`). The base URL is `https://data.ave-api.xyz/v2`, authenticated via the `X-API-KEY` header.
+All data endpoints go through the `@mantleagents/mantle-data` SDK package (`packages/ave/src/data-rest.ts`). The base URL is `https://data.ave-api.xyz/v2`, authenticated via the `X-API-KEY` header.
 
 ### Endpoints Used
 
@@ -76,7 +76,7 @@ The `price-service.ts` acts as the centralized price gateway. It wraps AVE calls
 **Token Search:**
 
 ```typescript
-import { AveClient, searchToken } from '@jakartagents/mantle-data';
+import { AveClient, searchToken } from '@mantleagents/mantle-data';
 
 const client = new AveClient();
 const results = await searchToken(client, {
@@ -93,7 +93,7 @@ const results = await searchToken(client, {
 **Contract Risk Check:**
 
 ```typescript
-import { AveClient, checkContractRisk } from '@jakartagents/mantle-data';
+import { AveClient, checkContractRisk } from '@mantleagents/mantle-data';
 
 const client = new AveClient();
 const risk = await checkContractRisk(client, 'bsc', '0xTokenAddress...');
@@ -116,7 +116,7 @@ const risk = await checkContractRisk(client, 'bsc', '0xTokenAddress...');
 **Batch Price Fetch:**
 
 ```typescript
-import { AveClient, batchTokenPrices } from '@jakartagents/mantle-data';
+import { AveClient, batchTokenPrices } from '@mantleagents/mantle-data';
 
 const client = new AveClient();
 const prices = await batchTokenPrices(client, {
@@ -162,7 +162,7 @@ trade-executor.ts
 The SDK provides a high-level `executeTrade` function that orchestrates the full flow:
 
 ```typescript
-import { AveClient, executeTrade } from '@jakartagents/mantle-data';
+import { AveClient, executeTrade } from '@mantleagents/mantle-data';
 
 const client = new AveClient();
 
@@ -357,6 +357,6 @@ The system is designed to degrade gracefully:
 | Monitoring / Alerts | Supported | Supported | Supported | Supported |
 
 **Notes:**
-- Solana and BSC have full data + trading support and are the primary chains for JakartAgents
+- Solana and BSC have full data + trading support and are the primary chains for MantleAgents
 - Ethereum and Base have full data support; trading integration is on the roadmap (the AVE Trade API supports these chains, but client-side signing implementation is pending)
 - The AVE SDK types also define `arbitrum`, `optimism`, `avax`, `polygon`, and `ton` as valid chain identifiers for future expansion

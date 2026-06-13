@@ -1,6 +1,6 @@
 ## Why
 
-The V2 vision positions JakartAgents as a no-code agent builder — but today all agent logic is hardcoded in `agent-cron.ts` with no way for users to visually inspect or customise the workflow. Adding an n8n orchestration canvas makes the agent's decision pipeline visible and modifiable without code, which is the foundational layer required before intent-to-workflow generation (Change 05) and the strategy marketplace (Change 06) can exist.
+The V2 vision positions MantleAgents as a no-code agent builder — but today all agent logic is hardcoded in `agent-cron.ts` with no way for users to visually inspect or customise the workflow. Adding an n8n orchestration canvas makes the agent's decision pipeline visible and modifiable without code, which is the foundational layer required before intent-to-workflow generation (Change 05) and the strategy marketplace (Change 06) can exist.
 
 ## What Changes
 

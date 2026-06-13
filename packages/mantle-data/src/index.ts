@@ -1,4 +1,4 @@
-// @jakartagents/mantle-data — AVE Cloud API SDK wrapper
+// @mantleagents/mantle-data — AVE Cloud API SDK wrapper
 
 export { MantleDataClient, MantleDataApiError } from './client.js';
 

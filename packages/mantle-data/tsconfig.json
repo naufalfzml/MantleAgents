@@ -1,5 +1,5 @@
 {
-  "extends": "@jakartagents/typescript-config/node-library.json",
+  "extends": "@mantleagents/typescript-config/node-library.json",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",

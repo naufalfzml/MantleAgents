@@ -1,5 +1,5 @@
 import { createHash, createHmac } from 'node:crypto';
-import { createSupabaseAdmin } from '@jakartagents/db';
+import { createSupabaseAdmin } from '@mantleagents/db';
 import { createWalletClient, http, keccak256, stringToBytes } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { attestationRegistryAbi } from '../abis/attestation-registry.js';
@@ -58,7 +58,7 @@ type DecisionTrail = {
 };
 
 interface AttestationPayload {
-  schema: 'jakartagents/attestation-v1' | 'jakartagents/attestation-v2';
+  schema: 'mantleagents/attestation-v1' | 'mantleagents/attestation-v2';
   walletAddress: string;
   agentType: AgentType;
   runId: string;
@@ -112,7 +112,7 @@ function getAttestationSecret(): string {
   return (
     process.env.ATTESTATION_SECRET ||
     process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    'jakartagents-dev-attestation-secret'
+    'mantleagents-dev-attestation-secret'
   );
 }
 
@@ -397,7 +397,7 @@ export async function createAndAttachRunAttestation(params: {
     : null;
 
   const payload: AttestationPayload = {
-    schema: 'jakartagents/attestation-v2',
+    schema: 'mantleagents/attestation-v2',
     walletAddress,
     agentType,
     runId,

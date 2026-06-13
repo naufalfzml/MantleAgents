@@ -1,5 +1,5 @@
 import { EventEmitter } from 'node:events';
-import type { ProgressStep, ProgressData } from '@jakartagents/shared';
+import type { ProgressStep, ProgressData } from '@mantleagents/shared';
 
 export type { ProgressStep };
 

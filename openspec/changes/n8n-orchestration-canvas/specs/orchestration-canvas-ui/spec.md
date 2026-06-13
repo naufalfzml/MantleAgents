@@ -26,7 +26,7 @@ The Next.js app's HTTP `Content-Security-Policy` header SHALL include `frame-src
 - **THEN** the browser developer console MUST show no CSP-related frame blocking errors
 
 ### Requirement: User can modify a workflow parameter and execute from the canvas
-From the `/orchestration` page, a user SHALL be able to change at least one node parameter (e.g. `sentiment_threshold` in the Guardrail Check node), save the workflow, and trigger a manual execution — all without leaving the JakartAgents dashboard.
+From the `/orchestration` page, a user SHALL be able to change at least one node parameter (e.g. `sentiment_threshold` in the Guardrail Check node), save the workflow, and trigger a manual execution — all without leaving the MantleAgents dashboard.
 
 #### Scenario: Parameter change is persisted in n8n
 - **WHEN** a user edits `sentiment_threshold` from 0.6 to 0.7 in the n8n editor and saves
@@ -34,7 +34,7 @@ From the `/orchestration` page, a user SHALL be able to change at least one node
 
 #### Scenario: Manual execution from canvas produces timeline events
 - **WHEN** a user clicks "Execute Workflow" in the n8n editor
-- **THEN** new timeline events MUST appear in the JakartAgents dashboard for that user's agent run
+- **THEN** new timeline events MUST appear in the MantleAgents dashboard for that user's agent run
 
 ### Requirement: Multi-tenant isolation — users see only their own workflow
 Each user's embedded n8n canvas MUST show only their own workflow. A second user opening `/orchestration` MUST NOT see the first user's workflow nodes or execution history.

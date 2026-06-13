@@ -1,7 +1,7 @@
 # 05 — Intent-Centric Workflow Generation
 
 > Referensi untuk: `openspec propose intent-workflow-generation`
-> Sumber: `Dokumentasi_Konseptual_JakartAgents_V2.md` §2.1, §4 (skenario penggunaan)
+> Sumber: `Dokumentasi_Konseptual_MantleAgents_V2.md` §2.1, §4 (skenario penggunaan)
 > Bergantung pada: Tahap 4 (kanvas n8n + node wrappers harus ada lebih dulu)
 
 ## 1. Kenapa tahap ini ada

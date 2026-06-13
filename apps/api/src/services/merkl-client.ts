@@ -1,4 +1,4 @@
-import type { YieldOpportunity, MerklReward, ClaimableReward } from '@jakartagents/shared';
+import type { YieldOpportunity, MerklReward, ClaimableReward } from '@mantleagents/shared';
 import { mantle } from 'viem/chains';
 
 const MERKL_API_BASE = 'https://api.merkl.xyz/v4';

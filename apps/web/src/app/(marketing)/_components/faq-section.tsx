@@ -6,7 +6,7 @@ import { Plus } from 'lucide-react';
 
 const faqs = [
   {
-    q: 'What exactly does JakartAgents do?',
+    q: 'What exactly does MantleAgents do?',
     a: 'It runs autonomous AI agents on your behalf — they trade stablecoins across 15+ currencies via automated DEX aggregation, farm yield on DeFi protocols, and monitor markets around the clock using real-time market data. Everything happens on-chain and non-custodial.',
   },
   {

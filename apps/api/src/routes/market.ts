@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify';
-import type { Chain } from '@jakartagents/mantle-data';
+import type { Chain } from '@mantleagents/mantle-data';
 import { getMarketTokens } from '../services/market-data-service.js';
 import { getTokenPrice } from '../services/price-service.js';
 

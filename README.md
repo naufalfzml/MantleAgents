@@ -1,4 +1,4 @@
-# JakartAgents 🤖
+# MantleAgents 🤖
 
 > Autonomous AI Agents for Mantle — Monitor, Analyze, Trade, Verify On-Chain
 
@@ -6,9 +6,9 @@ Built for **The Turing Test Hackathon 2026 (Mantle)** — Agentic Economy track.
 
 ## Overview
 
-JakartAgents runs autonomous AI agents that monitor markets, generate trading signals with an LLM, validate them against user-defined guardrails, and execute on-chain. Every agent is registered as an ERC-8004 identity NFT on Mantle, and every run produces an attestation — a hash-anchored, timestamped record committed on-chain — so performance is independently verifiable rather than a black-box claim.
+MantleAgents runs autonomous AI agents that monitor markets, generate trading signals with an LLM, validate them against user-defined guardrails, and execute on-chain. Every agent is registered as an ERC-8004 identity NFT on Mantle, and every run produces an attestation — a hash-anchored, timestamped record committed on-chain — so performance is independently verifiable rather than a black-box claim.
 
-JakartAgents is also evolving into a no-code agent builder for Mantle, where trust comes from each agent's on-chain track record rather than marketing claims about performance.
+MantleAgents is also evolving into a no-code agent builder for Mantle, where trust comes from each agent's on-chain track record rather than marketing claims about performance.
 
 The platform runs two agent types:
 
@@ -67,7 +67,7 @@ graph TB
     end
 
     subgraph MarketData["Market Data Layer"]
-        MDATA["@jakartagents/mantle-data SDK"]
+        MDATA["@mantleagents/mantle-data SDK"]
         MERKL[Merkl Yield API]
     end
 
@@ -121,7 +121,7 @@ graph TB
 | AI | Gemini 2.5 Flash (via Vercel AI SDK) |
 | On-chain (Mantle) | viem, ERC-8004 (Identity + Reputation), custom AgentAttestationRegistry |
 | Mantle Execution | RealClaw / Byreal Skills CLI |
-| Market Data | `@jakartagents/mantle-data` SDK + Merkl (yield) |
+| Market Data | `@mantleagents/mantle-data` SDK + Merkl (yield) |
 | Database | Supabase (PostgreSQL + Row Level Security) |
 | Auth | SIWE (Sign-In With Ethereum) + JWT via thirdweb |
 | Monorepo | pnpm workspaces + Turborepo |
@@ -165,14 +165,14 @@ The API server runs on `http://localhost:4000` and the web app on `http://localh
 
 ### Roadmap: Account Abstraction / Gasless UX
 
-JakartAgents is currently non-custodial via Privy/RealClaw for trading execution: the platform routes actions through the agent execution layer and never stores raw user private keys. Account Abstraction is planned, not yet implemented. The intended extension is to use thirdweb smart accounts with a Mantle paymaster for non-trading actions such as publishing strategies, updating guardrails, and committing configuration changes, so users can complete routine agent-management actions without manually holding gas for every update.
+MantleAgents is currently non-custodial via Privy/RealClaw for trading execution: the platform routes actions through the agent execution layer and never stores raw user private keys. Account Abstraction is planned, not yet implemented. The intended extension is to use thirdweb smart accounts with a Mantle paymaster for non-trading actions such as publishing strategies, updating guardrails, and committing configuration changes, so users can complete routine agent-management actions without manually holding gas for every update.
 
 ### Deploying / Re-deploying Contracts
 
 ```bash
-pnpm --filter @jakartagents/contracts deploy:tokens                 # mUSDC / mUSDT / mWMNT
-pnpm --filter @jakartagents/contracts deploy:attestation-registry   # AgentAttestationRegistry
-pnpm --filter @jakartagents/contracts verify:registries             # sanity-check addresses in .env
+pnpm --filter @mantleagents/contracts deploy:tokens                 # mUSDC / mUSDT / mWMNT
+pnpm --filter @mantleagents/contracts deploy:attestation-registry   # AgentAttestationRegistry
+pnpm --filter @mantleagents/contracts verify:registries             # sanity-check addresses in .env
 ```
 
 ## Environment Variables
@@ -204,7 +204,7 @@ pnpm --filter @jakartagents/contracts verify:registries             # sanity-che
 |---|---|
 | `THIRDWEB_SECRET_KEY` / `THIRDWEB_ADMIN_PRIVATE_KEY` | thirdweb auth + server wallets |
 | `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | Database |
-| `MARKETDATA_API_KEY` | Market data SDK auth key (`@jakartagents/mantle-data`, AVE Cloud-backed — non-Mantle chains) |
+| `MARKETDATA_API_KEY` | Market data SDK auth key (`@mantleagents/mantle-data`, AVE Cloud-backed — non-Mantle chains) |
 | `MARKETDATA_DEFAULT_CHAIN` | Default chain for non-Mantle price queries (`bsc`, `eth`, `solana`, `base`) |
 | `SOLANA_SIGNER_PRIVATE_KEY` | Solana signing key (non-Mantle execution path) |
 | `PARALLEL_API_KEY` | News search (FX agent, Conversation Agent) |
@@ -218,7 +218,7 @@ pnpm --filter @jakartagents/contracts verify:registries             # sanity-che
 ## Project Structure
 
 ```
-jakartagents/
+mantleagents/
 ├── apps/
 │   ├── api/                    # Fastify v5 backend
 │   │   ├── src/
@@ -280,7 +280,7 @@ jakartagents/
 
 ## Team
 
-**JakartAgents**
+**MantleAgents**
 
 ## License
 

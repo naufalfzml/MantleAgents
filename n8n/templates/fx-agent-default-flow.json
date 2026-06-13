@@ -239,7 +239,7 @@
     "instanceId": ""
   },
   "tags": [
-    { "name": "jakartagents" },
+    { "name": "mantleagents" },
     { "name": "fx-agent" }
   ]
 }

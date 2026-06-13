@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { Logo } from '@/components/logo';
 
 export const metadata = {
-  title: 'Privacy Policy | JakartAgents',
-  description: 'Privacy Policy for JakartAgents',
+  title: 'Privacy Policy | MantleAgents',
+  description: 'Privacy Policy for MantleAgents',
 };
 
 export default function PrivacyPage() {
@@ -28,7 +28,7 @@ export default function PrivacyPage() {
           href="/"
           className="mt-8 inline-block text-sm text-primary hover:underline"
         >
-          ← Back to JakartAgents
+          ← Back to MantleAgents
         </Link>
       </main>
     </div>

@@ -12,7 +12,7 @@ import {
   getTokenDetail,
   checkContractRisk,
   type ContractRisk,
-} from '@jakartagents/mantle-data';
+} from '@mantleagents/mantle-data';
 
 let _client: MantleDataClient | undefined;
 

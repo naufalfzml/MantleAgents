@@ -3,8 +3,8 @@ import {
   type Chain,
   type ContractRisk,
   checkContractRisk,
-} from '@jakartagents/mantle-data';
-import { createSupabaseAdmin } from '@jakartagents/db';
+} from '@mantleagents/mantle-data';
+import { createSupabaseAdmin } from '@mantleagents/db';
 import { getTokenPrice } from './price-service.js';
 import { agentEvents } from './agent-events.js';
 

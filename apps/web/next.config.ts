@@ -14,7 +14,7 @@ const cspHeader = [
 ].join('; ');
 
 const nextConfig: NextConfig = {
-  transpilePackages: ['@jakartagents/shared'],
+  transpilePackages: ['@mantleagents/shared'],
   reactStrictMode: true,
   async headers() {
     return [

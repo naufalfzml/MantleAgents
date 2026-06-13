@@ -39,7 +39,7 @@ import {
   useWithdrawAll,
   useConvertToUsdc,
 } from '@/hooks/use-yield-agent';
-import { formatFrequency } from '@jakartagents/shared';
+import { formatFrequency } from '@mantleagents/shared';
 import { SliderField } from '@/components/slider-field';
 
 export function YieldSettingsTab() {

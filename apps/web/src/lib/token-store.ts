@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'jakartagents_jwt';
+const STORAGE_KEY = 'mantleagents_jwt';
 
 let token: string | null = null;
 let onClearCallback: (() => void) | null = null;

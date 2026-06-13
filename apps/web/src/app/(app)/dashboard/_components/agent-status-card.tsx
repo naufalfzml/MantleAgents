@@ -163,7 +163,7 @@ export function AgentStatusCard({
   const COOLDOWN_MS = 5 * 60 * 1000;
   const [cooldownEnd, setCooldownEnd] = useState<number | null>(() => {
     if (typeof window === 'undefined') return null;
-    const stored = localStorage.getItem('jakartagents:runNow:cooldownEnd');
+    const stored = localStorage.getItem('mantleagents:runNow:cooldownEnd');
     if (stored) {
       const end = parseInt(stored, 10);
       return end > Date.now() ? end : null;
@@ -184,7 +184,7 @@ export function AgentStatusCard({
       if (diff <= 0) {
         setCooldownLeft('');
         setCooldownEnd(null);
-        localStorage.removeItem('jakartagents:runNow:cooldownEnd');
+        localStorage.removeItem('mantleagents:runNow:cooldownEnd');
         return;
       }
       const mins = Math.floor(diff / 60000);
@@ -228,7 +228,7 @@ export function AgentStatusCard({
     // Start cooldown
     const end = Date.now() + COOLDOWN_MS;
     setCooldownEnd(end);
-    localStorage.setItem('jakartagents:runNow:cooldownEnd', String(end));
+    localStorage.setItem('mantleagents:runNow:cooldownEnd', String(end));
 
     runNowMutation.mutate(undefined, {
       onSuccess: () => {
@@ -239,7 +239,7 @@ export function AgentStatusCard({
         if (runningTimerRef.current) clearTimeout(runningTimerRef.current);
         // Clear cooldown on error
         setCooldownEnd(null);
-        localStorage.removeItem('jakartagents:runNow:cooldownEnd');
+        localStorage.removeItem('mantleagents:runNow:cooldownEnd');
         toast.error('Failed to trigger run');
       },
     });

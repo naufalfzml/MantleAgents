@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify';
-import { createSupabaseAdmin } from '@jakartagents/db';
+import { createSupabaseAdmin } from '@mantleagents/db';
 import { authMiddleware } from '../middleware/auth.js';
 import { generateWorkflow } from '../services/workflow-generator.js';
 

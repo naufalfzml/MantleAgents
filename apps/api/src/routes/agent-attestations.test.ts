@@ -65,7 +65,7 @@ const {
   return { callRecordsRef, mockResultsRef, mockSupabaseClient };
 });
 
-vi.mock('@jakartagents/db', () => ({
+vi.mock('@mantleagents/db', () => ({
   createSupabaseAdmin: () => mockSupabaseClient,
 }));
 
@@ -96,7 +96,7 @@ function makeAttestationRow(overrides: Record<string, unknown> = {}) {
     agent_type: 'fx',
     run_id: 'run-1',
     payload: {
-      schema: 'jakartagents/attestation-v2',
+      schema: 'mantleagents/attestation-v2',
       walletAddress: '0xTEST_WALLET',
       agentType: 'fx',
       runId: 'run-1',

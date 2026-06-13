@@ -1,6 +1,6 @@
 import { TrendingUp, Sprout, Lock, Newspaper, Shield, Zap } from 'lucide-react';
 import { TokenLogo } from '@/components/token-logo';
-import { TOKEN_METADATA } from '@jakartagents/shared';
+import { TOKEN_METADATA } from '@mantleagents/shared';
 
 const tokens = Object.entries(TOKEN_METADATA).map(([symbol, meta]) => ({
   symbol,

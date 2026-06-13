@@ -16,7 +16,7 @@ import { Badge } from '@/components/ui/badge';
 import { api } from '@/lib/api-client';
 import { useMotionSafe } from '@/lib/motion';
 import { useAgentProgress } from '@/hooks/use-agent-progress';
-import type { ProgressStep } from '@jakartagents/shared';
+import type { ProgressStep } from '@mantleagents/shared';
 import { cn } from '@/lib/utils';
 
 /* -------------------------------------------------------------------------- */

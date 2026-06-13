@@ -4,7 +4,7 @@ const mockSelect = vi.hoisted(() => vi.fn());
 const mockEq = vi.hoisted(() => vi.fn());
 const mockOrder = vi.hoisted(() => vi.fn());
 
-vi.mock('@jakartagents/db', () => ({
+vi.mock('@mantleagents/db', () => ({
   createSupabaseAdmin: () => ({
     from: () => ({
       select: mockSelect,

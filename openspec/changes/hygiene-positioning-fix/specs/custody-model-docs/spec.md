@@ -41,5 +41,5 @@ All copy-only changes to `.ts` and `.tsx` files SHALL NOT break TypeScript compi
 - **THEN** the command MUST exit with code 0
 
 #### Scenario: Web build passes after changes
-- **WHEN** `pnpm --filter @jakartagents/web build` is run after all copy edits are applied
+- **WHEN** `pnpm --filter @mantleagents/web build` is run after all copy edits are applied
 - **THEN** the command MUST exit with code 0

@@ -1,7 +1,7 @@
 // verify-registries.ts — sanity check that the configured ERC-8004 registry
 // addresses actually have contract code on the configured Mantle chain.
 //
-// Usage: pnpm --filter @jakartagents/contracts verify:registries
+// Usage: pnpm --filter @mantleagents/contracts verify:registries
 
 import 'dotenv/config';
 import path from 'node:path';

@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatUsd } from '@/lib/format';
 import { cn } from '@/lib/utils';
-import { TOKEN_METADATA } from '@jakartagents/shared';
+import { TOKEN_METADATA } from '@mantleagents/shared';
 import { useYieldOpportunities } from '@/hooks/use-yield-agent';
 import { getProtocolLogo } from './utils';
 

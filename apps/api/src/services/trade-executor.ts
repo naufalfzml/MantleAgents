@@ -4,7 +4,7 @@ import {
   type EvmChain,
   getAmountOut,
   createEvmTx,
-} from '@jakartagents/mantle-data';
+} from '@mantleagents/mantle-data';
 import { executeRealClawSwap, isRealClawConfigured } from './realclaw-executor.js';
 import { encodeFunctionData, parseUnits, maxUint256 } from 'viem';
 import {
@@ -12,7 +12,7 @@ import {
   type TradeResult,
   type FailureCategory,
   getTokenDecimals,
-} from '@jakartagents/shared';
+} from '@mantleagents/shared';
 import { sendTransactionFromServerWallet } from '../lib/thirdweb-wallet.js';
 
 // ---------------------------------------------------------------------------

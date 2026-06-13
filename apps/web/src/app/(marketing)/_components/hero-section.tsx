@@ -48,7 +48,7 @@ export function HeroSection() {
         <div className="relative border-4 border-gb-deep bg-gb-light p-6 md:p-8 shadow-[8px_8px_0px_var(--color-gb-deep)] min-h-[180px]">
           {/* Name Tag */}
           <div className="absolute -top-6 left-4 bg-gb-deep text-gb-light px-4 py-1 border-2 border-gb-deep font-press-start-2p text-sm">
-            JAKARTAGENTS
+            MANTLEAGENTS
           </div>
 
           <p className="font-vt323 text-2xl md:text-3xl leading-relaxed text-gb-deep">

@@ -37,7 +37,7 @@ export function TaglineBanner() {
       <div className="mx-auto max-w-5xl px-6">
         <p className="text-center text-3xl font-vt323 leading-snug tracking-tight text-gb-deep sm:text-4xl md:text-[2.75rem] md:leading-snug uppercase">
           <ScrollReveal>
-            Your portfolio doesn't sleep. Neither does JakartAgents. Agents trade, farm yield, and rebalance around the clock — so you don't have to.
+            Your portfolio doesn't sleep. Neither does MantleAgents. Agents trade, farm yield, and rebalance around the clock — so you don't have to.
           </ScrollReveal>
         </p>
       </div>

@@ -1,4 +1,4 @@
-import type { YieldSignal, YieldGuardrails, GuardrailCheck } from '@jakartagents/shared';
+import type { YieldSignal, YieldGuardrails, GuardrailCheck } from '@mantleagents/shared';
 
 interface YieldGuardrailInput {
   signal: YieldSignal;

@@ -1,5 +1,5 @@
 /**
- * Smoke test for @jakartagents/mantle-data SDK.
+ * Smoke test for @mantleagents/mantle-data SDK.
  * Run: npx tsx scripts/smoke-test.ts
  *
  * Requires AVE_API_KEY in env (or .env file in apps/api/).
@@ -43,7 +43,7 @@ import {
   EVM_NATIVE_ADDRESS,
   type Chain,
   type ExecuteTradeParams,
-} from '@jakartagents/mantle-data';
+} from '@mantleagents/mantle-data';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -72,7 +72,7 @@ const BSC_USDT = '0x55d398326f99059fF775485246999027B3197955';
 // ---------------------------------------------------------------------------
 
 async function main() {
-  console.log('\n--- JakartAgents AVE SDK Smoke Test ---\n');
+  console.log('\n--- MantleAgents AVE SDK Smoke Test ---\n');
 
   // 0. Client init
   let client: AveClient;

@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api-client';
 import { useAuth } from '@/providers/auth-provider';
-import type { SelfClawVerification } from '@jakartagents/shared';
+import type { SelfClawVerification } from '@mantleagents/shared';
 
 export interface StartVerificationResponse {
   sessionId: string;

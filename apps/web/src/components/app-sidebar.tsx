@@ -68,7 +68,7 @@ export function AppSidebar() {
     <Sidebar collapsible="offcanvas" className="border-r-4 border-gb-deep bg-gb-mid">
       <SidebarHeader className="border-b-4 border-gb-deep">
         <div className="flex items-center gap-2 px-2 py-2">
-          <Link href="/overview" aria-label="JakartAgents home">
+          <Link href="/overview" aria-label="MantleAgents home">
             <div className="group-data-[collapsible=icon]:hidden">
               <Logo size="sm" showWordmark={true} className="text-gb-deep" />
             </div>

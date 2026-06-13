@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import { TokenLogo } from '@/components/token-logo';
-import { TOKEN_METADATA } from '@jakartagents/shared';
+import { TOKEN_METADATA } from '@mantleagents/shared';
 
 const tokens = Object.entries(TOKEN_METADATA).map(([symbol, meta]) => ({
   symbol,
@@ -81,7 +81,7 @@ export function CryptosSection() {
               href="#get-started"
               className="mt-8 inline-flex items-center gap-1 font-vt323 text-2xl text-gb-deep transition-colors hover:text-gb-dark uppercase"
             >
-              JakartAgents for Web
+              MantleAgents for Web
               <ArrowUpRight className="h-5 w-5" />
             </a>
           </div>

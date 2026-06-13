@@ -1,5 +1,5 @@
-import { createSupabaseAdmin } from '@jakartagents/db';
-import { STABLE_TOKENS } from '@jakartagents/shared';
+import { createSupabaseAdmin } from '@mantleagents/db';
+import { STABLE_TOKENS } from '@mantleagents/shared';
 import { fetchFxNews } from './news-fetcher.js';
 import { analyzeFxNews } from './llm-analyzer.js';
 import { getMarketTokens } from './market-data-service.js';

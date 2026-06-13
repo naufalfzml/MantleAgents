@@ -26,7 +26,7 @@ import type {
   ProgressCompleteData,
   ProgressErrorData,
   ProgressData,
-} from '@jakartagents/shared';
+} from '@mantleagents/shared';
 
 /* ------------------------------------------------------------------ */
 /*  Props                                                              */

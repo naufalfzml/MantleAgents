@@ -1,7 +1,7 @@
 import { type Address, erc20Abi } from 'viem';
 import { chainClient } from '../lib/chain-client.js';
-import { createSupabaseAdmin, type Database } from '@jakartagents/db';
-import { STABLE_TOKEN_ADDRESSES, USDC_ADDRESS, USDT_ADDRESS } from '@jakartagents/shared';
+import { createSupabaseAdmin, type Database } from '@mantleagents/db';
+import { STABLE_TOKEN_ADDRESSES, USDC_ADDRESS, USDT_ADDRESS } from '@mantleagents/shared';
 import { logTimeline } from './agent-cron.js';
 import { executeTrade } from './trade-executor.js';
 

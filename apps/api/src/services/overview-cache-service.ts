@@ -1,4 +1,4 @@
-import { createSupabaseAdmin } from '@jakartagents/db';
+import { createSupabaseAdmin } from '@mantleagents/db';
 import { getMarketTokens } from './market-data-service.js';
 import { fetchYieldOpportunities } from './merkl-client.js';
 import { fetchNewsForTokens, type TokenNewsResult } from './token-news-service.js';

@@ -49,7 +49,7 @@ function makeQuery(table: string) {
   return chain;
 }
 
-vi.mock('@jakartagents/db', () => ({
+vi.mock('@mantleagents/db', () => ({
   createSupabaseAdmin: () => ({
     from: (table: string) => {
       fromCallsRef.value.push(table);
@@ -106,7 +106,7 @@ vi.mock('./token-monitor.js', () => ({
   getWatchlist: mockGetWatchlist,
 }));
 
-import { MAX_ADAPTATIONS_PER_TICK } from '@jakartagents/shared';
+import { MAX_ADAPTATIONS_PER_TICK } from '@mantleagents/shared';
 import { getTradeCountToday, logTimeline, runAgentCycle } from './agent-cron.js';
 
 function makeConfig(overrides: Partial<Record<string, unknown>> = {}) {

@@ -3,7 +3,7 @@ pragma solidity ^0.8.28;
 
 /// @title MockERC20
 /// @notice Minimal mintable ERC20 for use on Mantle Testnet only.
-/// Includes a public, rate-limited faucet so the JakartAgents agent
+/// Includes a public, rate-limited faucet so the MantleAgents agent
 /// wallets (and judges) can self-fund test balances without relying on a
 /// real bridged USDC/USDT/WMNT, which may not exist (or may be unreliable)
 /// on Mantle Sepolia.
