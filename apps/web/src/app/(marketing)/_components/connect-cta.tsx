@@ -12,10 +12,7 @@ export function ConnectCTA({ children, ...buttonProps }: ConnectCTAProps) {
   const { connectors, signIn, isPending } = useSiweAuth();
 
   const handleClick = async () => {
-    // Prefer the injected (MetaMask) connector for the marketing CTA; fall back
-    // to whatever connector is available first.
-    const connector =
-      connectors.find((c) => c.type === 'injected') ?? connectors[0];
+    const connector = connectors[0];
     if (!connector) return;
     await signIn(connector);
   };
@@ -26,7 +23,7 @@ export function ConnectCTA({ children, ...buttonProps }: ConnectCTAProps) {
       onClick={handleClick}
       disabled={isPending || buttonProps.disabled}
     >
-      {children}
+      {isPending ? 'Connecting...' : children}
     </Button>
   );
 }

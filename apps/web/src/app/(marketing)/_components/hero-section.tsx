@@ -44,8 +44,16 @@ export function HeroSection() {
       {/* RPG Scene Container - fixed height so choice menu doesn't push dialogue */}
       <div className="w-full max-w-4xl z-10">
 
-        {/* The Dialogue Box */}
-        <div className="relative border-4 border-gb-deep bg-gb-light p-6 md:p-8 shadow-[8px_8px_0px_var(--color-gb-deep)] min-h-[180px]">
+        {/* The Dialogue Box — click to skip typing animation */}
+        <div
+          className="relative border-4 border-gb-deep bg-gb-light p-6 md:p-8 shadow-[8px_8px_0px_var(--color-gb-deep)] min-h-45 cursor-pointer"
+          onClick={() => {
+            if (isTyping) {
+              setDisplayedText(fullText);
+              setIsTyping(false);
+            }
+          }}
+        >
           {/* Name Tag */}
           <div className="absolute -top-6 left-4 bg-gb-deep text-gb-light px-4 py-1 border-2 border-gb-deep font-press-start-2p text-sm">
             MANTLEAGENTS
@@ -59,7 +67,7 @@ export function HeroSection() {
 
         {/* The Choice Menu - absolute positioned so it doesn't shift dialogue */}
         <div
-          className={`flex justify-end mt-4 transition-opacity duration-300 ${
+          className={`flex justify-end mt-4 transition-opacity duration-500 ${
             !isTyping ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
         >
