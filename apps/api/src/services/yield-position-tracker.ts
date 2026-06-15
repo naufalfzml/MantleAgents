@@ -40,9 +40,9 @@ export async function upsertYieldPositionAfterDeposit(params: {
   const depositedAt = existingRow.data?.deposited_at ?? new Date().toISOString();
 
   // Use real LP shares from addLiquidity result; fall back to existing or 1
-  const existingLp = existingRow.data?.lp_shares ? BigInt(existingRow.data.lp_shares) : 0n;
+  const existingLp = existingRow.data?.lp_shares ? BigInt(Math.round(existingRow.data.lp_shares)) : 0n;
   const addedLp = newLpShares ? BigInt(newLpShares) : 0n;
-  const lpShares = (existingLp + addedLp > 0n ? existingLp + addedLp : 1n).toString();
+  const lpShares = Number(existingLp + addedLp > 0n ? existingLp + addedLp : 1n);
 
   // Use insert-or-update pattern (no unique constraint needed)
   let error;

@@ -44,7 +44,7 @@ export async function provisionUserWorkflow(walletAddress: string): Promise<{
     return { workflowId: null, n8nBaseUrl, token, configured: false };
   }
 
-  const authHeader = hasApiKey
+  const authHeader: Record<string, string> = hasApiKey
     ? { 'X-N8N-API-KEY': n8nApiKey! }
     : { Authorization: `Basic ${Buffer.from(`${n8nUser}:${n8nPass}`).toString('base64')}` };
 
