@@ -172,15 +172,20 @@ function TimelineRow({ event, onViewLogs }: { event: any; onViewLogs: () => void
   );
 
   if (event.eventType === 'trade') {
+    const isBuy = event.direction === 'buy';
     icon = <ArrowRightLeft className="size-4" />;
-    iconBg = 'bg-green-500/10 border-green-500/20 text-green-500';
-    title = event.direction === 'buy' ? 'Buy Executed' : 'Sell Executed';
+    iconBg = isBuy
+      ? 'bg-green-500/10 border-green-500/20 text-green-500'
+      : 'bg-red-500/10 border-red-500/20 text-red-400';
+    title = isBuy ? 'Buy Executed' : 'Sell Executed';
     const amount = event.amountUsd ? `$${event.amountUsd.toFixed(2)}` : null;
     if (amount) {
-      impact = <span className="font-mono font-medium text-emerald-500 text-sm">+{amount}</span>;
+      impact = isBuy
+        ? <span className="font-mono font-medium text-emerald-500 text-sm">+{amount}</span>
+        : <span className="font-mono font-medium text-red-400 text-sm">-{amount}</span>;
     }
     statusBadge = (
-      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-500/10 text-green-500 border border-green-500/20 leading-none">
+      <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border leading-none ${isBuy ? 'bg-green-500/10 text-green-500 border-green-500/20' : 'bg-red-500/10 text-red-400 border-red-500/20'}`}>
         Success
       </span>
     );
