@@ -11,7 +11,12 @@ interface SiwePayload {
   nonce: string;
 }
 
-export function useSiweAuth() {
+export function useSiweAuth(): {
+  connectors: readonly Connector[];
+  signIn: (connector: Connector) => Promise<void>;
+  isPending: boolean;
+  error: string | null;
+} {
   const { connectors, connectAsync } = useConnect();
   const { signMessageAsync } = useSignMessage();
   const { handleLogin } = useAuth();

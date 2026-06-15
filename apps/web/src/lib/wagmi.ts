@@ -1,4 +1,4 @@
-import { createConfig, http } from 'wagmi';
+import { createConfig, http, type Config } from 'wagmi';
 import { mantle, mantleSepoliaTestnet } from 'wagmi/chains';
 import { metaMask } from 'wagmi/connectors';
 
@@ -15,7 +15,7 @@ const chains =
     ? ([mantle, mantleSepoliaTestnet] as const)
     : ([mantleSepoliaTestnet, mantle] as const);
 
-export const wagmiConfig = createConfig({
+export const wagmiConfig: Config = createConfig({
   chains,
   connectors: [metaMask()],
   transports: {
