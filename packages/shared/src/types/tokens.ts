@@ -112,6 +112,7 @@ export const TOKEN_METADATA: Record<
   USDC: { name: 'USD Coin', flag: '🇺🇸', decimals: 18 }, // Binance-Peg USDC on BSC
   USDT: { name: 'Tether USD', flag: '🇺🇸', decimals: 18 }, // Binance-Peg USDT on BSC
   XAUT: { name: 'Tether Gold', flag: '🥇', decimals: 6 },
+  WMNT: { name: 'Wrapped Mantle', flag: '🔷', decimals: 18 },
   NATIVE: { name: 'Native Token', flag: '🌐', decimals: 18 },
   WETH: { name: 'Wrapped Ether', flag: 'Ξ', decimals: 18 },
   ETH: { name: 'Ethereum', flag: 'Ξ', decimals: 18 },

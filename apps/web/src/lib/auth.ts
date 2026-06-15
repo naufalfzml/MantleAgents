@@ -25,9 +25,11 @@ interface LoginResponse {
  */
 export async function generatePayload(params: {
   address: string;
+  chainId?: number;
 }): Promise<unknown> {
   return api.post<unknown>('/api/auth/payload', {
     address: params.address,
+    chainId: params.chainId,
   });
 }
 

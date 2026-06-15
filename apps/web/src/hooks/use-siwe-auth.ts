@@ -15,7 +15,7 @@ export function useSiweAuth() {
   const { connectors, connectAsync } = useConnect();
   const { signMessageAsync } = useSignMessage();
   const { handleLogin } = useAuth();
-  const { address: connectedAddress, isConnected } = useAccount();
+  const { address: connectedAddress, isConnected, chainId: accountChainId } = useAccount();
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,17 +25,21 @@ export function useSiweAuth() {
       setError(null);
       try {
         let address: string;
+        let chainId: number | undefined;
 
         if (isConnected && connectedAddress) {
-          // Wallet already connected — skip connectAsync, go straight to SIWE
+          // Wallet already connected — use the account's current chain ID
           address = connectedAddress;
+          chainId = accountChainId;
         } else {
-          const { accounts } = await connectAsync({ connector });
-          address = accounts[0];
+          // connectAsync returns the actual chainId at connection time (more reliable than hook state)
+          const result = await connectAsync({ connector });
+          address = result.accounts[0];
+          chainId = result.chainId;
           if (!address) throw new Error('No account returned from wallet');
         }
 
-        const payload = (await generatePayload({ address })) as SiwePayload;
+        const payload = (await generatePayload({ address, chainId })) as SiwePayload;
         const signature = await signMessageAsync({
           account: address as `0x${string}`,
           message: payload.message,
@@ -52,7 +56,7 @@ export function useSiweAuth() {
         setIsPending(false);
       }
     },
-    [connectAsync, signMessageAsync, handleLogin, isConnected, connectedAddress],
+    [connectAsync, signMessageAsync, handleLogin, isConnected, connectedAddress, accountChainId],
   );
 
   return { connectors, signIn, isPending, error };

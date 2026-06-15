@@ -1,6 +1,6 @@
 import { createConfig, http } from 'wagmi';
 import { mantle, mantleSepoliaTestnet } from 'wagmi/chains';
-import { injected } from 'wagmi/connectors';
+import { metaMask } from 'wagmi/connectors';
 
 function normalizeNetwork(network: string | undefined): 'mainnet' | 'testnet' {
   const value = network?.toLowerCase();
@@ -17,7 +17,7 @@ const chains =
 
 export const wagmiConfig = createConfig({
   chains,
-  connectors: [injected()],
+  connectors: [metaMask()],
   transports: {
     [mantle.id]: http(),
     [mantleSepoliaTestnet.id]: http(),

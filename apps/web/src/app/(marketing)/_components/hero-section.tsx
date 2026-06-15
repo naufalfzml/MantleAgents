@@ -82,16 +82,6 @@ export function HeroSection() {
                 </ConnectCTA>
               </li>
               <li>
-                <VideoModal
-                  trigger={
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start text-2xl hover:bg-gb-mid hover:text-gb-deep px-2 py-6 group border-2 border-transparent hover:border-gb-deep transition-none"
-                    >
-                      <span className="mr-2 opacity-0 group-hover:opacity-100">&gt;</span> WHAT ARE YOU?
-                    </Button>
-                  }
-                />
               </li>
             </ul>
           </div>
