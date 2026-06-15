@@ -200,10 +200,9 @@ export function OverviewTrendingFx() {
                       </p>
                     </>
                   ) : (
-                    <div className="space-y-2">
-                      <Skeleton className="h-4 w-4/5" shimmer />
-                      <Skeleton className="h-3 w-full" shimmer />
-                    </div>
+                    <p className="text-sm text-gb-dark/60 italic">
+                      No recent news — run the agent for an AI signal.
+                    </p>
                   )}
                 </div>
               </div>

@@ -1,7 +1,7 @@
 import { createSupabaseAdmin } from '@mantleagents/db';
 import { STABLE_TOKENS } from '@mantleagents/shared';
 import { fetchFxNews } from './news-fetcher.js';
-import { analyzeFxNews } from './llm-analyzer.js';
+import { analyzeOverviewFx } from './llm-analyzer.js';
 import { getMarketTokens } from './market-data-service.js';
 import { fetchNewsForTokens } from './token-news-service.js';
 
@@ -10,31 +10,29 @@ const supabaseAdmin = createSupabaseAdmin(
   process.env.SUPABASE_SERVICE_ROLE_KEY!,
 );
 
-const DEFAULT_CURRENCIES = ['EURm', 'GBPm', 'JPYm', 'CHFm', 'XAUT'];
+const FX_CURRENCIES = STABLE_TOKENS.filter((t) => t !== 'USDm') as string[];
 
 /**
  * Run FX analysis (news + LLM) and update overview_cache.
  * Does NOT execute trades. Used when Overview has no cached analysis.
+ * Works without PARALLEL_API_KEY — falls back to LLM general knowledge.
  */
 export async function runOverviewFxAnalysis(): Promise<void> {
-  const news = await fetchFxNews(DEFAULT_CURRENCIES);
-
-  if (news.length === 0) {
-    console.log('[overview-fx-analysis] No news found, skipping LLM');
-    return;
+  // Fetch news — tolerate missing API key or network errors
+  let news: Awaited<ReturnType<typeof fetchFxNews>> = [];
+  try {
+    news = await fetchFxNews(FX_CURRENCIES.slice(0, 5));
+  } catch {
+    console.log('[overview-fx-analysis] News fetch unavailable, using general FX knowledge');
   }
 
-  const result = await analyzeFxNews({
+  const result = await analyzeOverviewFx({
     news,
-    currentPositions: [],
-    portfolioValueUsd: 0,
-    allowedCurrencies: STABLE_TOKENS.filter((t) => t !== 'USDm'),
-    walletBalances: [],
-    customPrompt: null,
+    allowedCurrencies: FX_CURRENCIES,
   });
 
   if (result.signals.length === 0) {
-    console.log('[overview-fx-analysis] No signals from LLM');
+    console.log('[overview-fx-analysis] LLM returned no signals');
     return;
   }
 

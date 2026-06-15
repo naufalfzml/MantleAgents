@@ -143,3 +143,56 @@ export function buildAnalysisPrompt(params: { news: NewsArticle[] }): string {
 
   return `Analyze these ${params.news.length} FX news articles and generate trading signals:\n\n${articles}`;
 }
+
+/** Dedicated system prompt for overview FX analysis (Mantle stablecoins, no trade execution). */
+function buildOverviewSystemPrompt(allowedCurrencies: string[]): string {
+  return [
+    'You are a macro FX analyst generating market outlook signals for Mantle blockchain FX stablecoin pairs.',
+    'These tokens track real-world fiat currencies: USDm=USD, EURm=EUR, GBPm=GBP, JPYm=JPY,',
+    'BRLm=BRL, KESm=KES, PHPm=PHP, CHFm=CHF, ZARm=ZAR, AUDm=AUD, CADm=CAD, NGNm=NGN.',
+    `Your analysis universe: ${allowedCurrencies.join(', ')}`,
+    '',
+    '## Task',
+    'Generate directional signals (buy/sell/hold vs USD baseline) based on macro FX trends.',
+    '- "buy" = this currency is appreciating vs USD (bullish)',
+    '- "sell" = this currency is weakening vs USD (bearish)',
+    '- "hold" = neutral / insufficient data',
+    '- confidence: 0-100 (express your conviction)',
+    '- allocationPct: 0-100 (relative weight, not actual capital allocation)',
+    '- reasoning: brief macro rationale (use news if available, otherwise general FX knowledge)',
+    '- timeHorizon: short/medium/long',
+    '',
+    'Generate at least 3-5 signals covering different currency regions.',
+    'If no news is available, base signals on established macro FX trends and fundamentals.',
+  ].join('\n');
+}
+
+/** Overview-specific FX analysis: no trade execution, uses Mantle FX stablecoin system prompt. */
+export async function analyzeOverviewFx(params: {
+  news: NewsArticle[];
+  allowedCurrencies: string[];
+}): Promise<TradingSignals> {
+  const { news, allowedCurrencies } = params;
+
+  const prompt = news.length > 0
+    ? buildAnalysisPrompt({ news })
+    : `No live news available. Generate FX market outlook signals for ${allowedCurrencies.join(', ')} based on current macro trends and historical patterns.`;
+
+  try {
+    const result = await generateText({
+      model: getGeminiProvider()(getLlmModel()),
+      output: Output.object({ schema: SignalSchema }),
+      system: buildOverviewSystemPrompt(allowedCurrencies),
+      prompt,
+    });
+
+    if (!result.output) {
+      return { signals: [], marketSummary: 'Analysis returned no output', sourcesUsed: 0 };
+    }
+
+    return result.output;
+  } catch (err) {
+    console.error('[analyzeOverviewFx] LLM failed:', err);
+    return { signals: [], marketSummary: `Analysis failed: ${err instanceof Error ? err.message : 'Unknown error'}`, sourcesUsed: 0 };
+  }
+}
