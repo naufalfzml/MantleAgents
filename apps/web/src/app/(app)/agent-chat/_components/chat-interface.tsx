@@ -27,7 +27,7 @@ const ALL_TOOL_GROUP_IDS = TOOL_GROUPS.map((g) => g.id);
 
 const SUGGESTIONS = [
   { label: 'BTC Price', prompt: 'What is the current price of BTC and is it bullish or bearish?' },
-  { label: 'BNB Outlook', prompt: 'What is the BNB price outlook this week?' },
+  { label: 'MNT Outlook', prompt: 'What is the MNT price outlook this week?' },
   { label: 'Latest News', prompt: 'Show me the latest important crypto news today' },
   { label: 'ETH Analysis', prompt: 'Give me a quick ETH market analysis' },
   { label: 'DeFi Sentiment', prompt: "What's the current market sentiment on DeFi?" },
