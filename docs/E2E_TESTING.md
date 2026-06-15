@@ -18,8 +18,9 @@ Pastikan sebelum mulai:
 - [x] Step 1 (Connect Wallet) otomatis ter-centang
 - [x] Step 2 (Fund) — cek apakah ada link faucet Mantle Sepolia; fund wallet jika perlu di https://faucet.mantle.xyz
 - [x] Step 3 (Register Agent) — klik Register, approve transaksi di wallet
-- [ ] Setelah register, muncul `agentId` (ERC-8004 token ID)
-- [ ] Redirect ke `/overview` setelah onboarding selesai
+- [x] Setelah register, muncul `agentId` (ERC-8004 token ID)
+- [x] Redirect ke `/overview` setelah onboarding selesai
+- [x] Session tetap valid setelah page refresh (tidak redirect ulang ke connect/onboarding)
 
 ---
 
@@ -27,10 +28,10 @@ Pastikan sebelum mulai:
 
 **URL**: http://localhost:3000/overview
 
-- [ ] Portfolio value muncul (boleh 0)
-- [ ] FX Agent status card muncul
-- [ ] Yield Agent status card muncul
-- [ ] Trending FX pairs muncul (harga dari CoinGecko)
+- [x] Portfolio value muncul (boleh 0)
+- [x] FX Agent status card muncul
+- [x] Yield Agent status card muncul
+- [x] Trending FX pairs muncul (harga $0 normal untuk mock tokens Mantle Sepolia)
 
 ---
 
