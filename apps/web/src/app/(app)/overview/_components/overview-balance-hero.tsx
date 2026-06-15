@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatUsd } from '@/lib/format';
+import { get8004ScanUrl } from '@/lib/explorer';
 import { SendModal } from '@/app/(app)/dashboard/_components/send-modal';
 import { ReceiveModal } from '@/app/(app)/dashboard/_components/receive-modal';
 import { usePortfolio } from '@/hooks/use-portfolio';
@@ -84,7 +85,7 @@ export function OverviewBalanceHero() {
             <div className="flex flex-wrap gap-3 text-xs">
               {fxAgent?.config.agent8004Id != null && (
                 <a
-                  href={`https://www.8004scan.io/agents/bsc/${fxAgent.config.agent8004Id}`}
+                  href={get8004ScanUrl(fxAgent.config.agent8004Id)}
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-1 text-gb-accent hover:underline"
@@ -95,7 +96,7 @@ export function OverviewBalanceHero() {
               )}
               {yieldAgent?.config.agent8004Id != null && (
                 <a
-                  href={`https://www.8004scan.io/agents/bsc/${yieldAgent.config.agent8004Id}`}
+                  href={get8004ScanUrl(yieldAgent.config.agent8004Id)}
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-1 text-gb-accent hover:underline"

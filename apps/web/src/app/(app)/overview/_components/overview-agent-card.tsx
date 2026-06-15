@@ -30,7 +30,7 @@ import { useAgentProgress } from '@/hooks/use-agent-progress';
 import { useSelfClawStatus } from '@/hooks/use-selfclaw';
 import { SelfClawVerificationDialog } from '../../_components/selfclaw-verification-dialog';
 
-const ERC8004_SCAN_BASE = 'https://www.8004scan.io/agents/bsc';
+import { get8004ScanUrl } from '@/lib/explorer';
 const isLpToken = (symbol: string) => /VAULT|LP|UNIV3/i.test(symbol);
 
 interface OverviewAgentCardProps {
@@ -291,7 +291,7 @@ export function OverviewAgentCard({ agentType }: OverviewAgentCardProps) {
           {agent8004Id ? (
             <div className="flex flex-col gap-0.5">
               <a
-                href={`${ERC8004_SCAN_BASE}/${agent8004Id}`}
+                href={get8004ScanUrl(agent8004Id)}
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-1 text-sm font-medium text-gb-accent hover:underline"

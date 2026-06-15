@@ -14,6 +14,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { api } from '@/lib/api-client';
+import { get8004ScanUrl } from '@/lib/explorer';
 import { useMotionSafe } from '@/lib/motion';
 import { useAgentProgress } from '@/hooks/use-agent-progress';
 import type { ProgressStep } from '@mantleagents/shared';
@@ -323,7 +324,7 @@ export function RegisterAgent({
 
       {agentId && (
         <a
-          href={`https://www.8004scan.io/agents/bsc/${agentId}`}
+          href={get8004ScanUrl(agentId)}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline"

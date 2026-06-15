@@ -43,7 +43,7 @@ import {
   RING_SIZE,
 } from './agent-countdown';
 
-const ERC8004_SCAN_BASE = 'https://www.8004scan.io/agents/bsc';
+import { get8004ScanUrl } from '@/lib/explorer';
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -272,7 +272,7 @@ export function AgentStatusCard({
             <div className="flex items-center gap-2">
               <ShieldCheck className="size-4 text-primary" />
               <a
-                href={`${ERC8004_SCAN_BASE}/${agent8004Id}`}
+                href={get8004ScanUrl(agent8004Id)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
