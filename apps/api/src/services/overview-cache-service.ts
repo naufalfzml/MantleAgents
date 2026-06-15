@@ -1,6 +1,6 @@
 import { createSupabaseAdmin } from '@mantleagents/db';
 import { getMarketTokens } from './market-data-service.js';
-import { fetchYieldOpportunities } from './merkl-client.js';
+import { fetchDexPoolOpportunities } from './dex-pool-reader.js';
 import { fetchNewsForTokens, type TokenNewsResult } from './token-news-service.js';
 
 const supabaseAdmin = createSupabaseAdmin(
@@ -96,7 +96,7 @@ export async function getCachedTrendingFx(): Promise<{
 }
 
 export async function getCachedYieldOpportunities(): Promise<{
-  opportunities: Awaited<ReturnType<typeof fetchYieldOpportunities>>;
+  opportunities: Awaited<ReturnType<typeof fetchDexPoolOpportunities>>;
   updatedAt: string;
 }> {
   const cacheKey = 'yield_opportunities';
@@ -112,13 +112,13 @@ export async function getCachedYieldOpportunities(): Promise<{
   if (row?.payload && typeof row.payload === 'object' && 'opportunities' in row.payload) {
     return {
       opportunities: row.payload.opportunities as Awaited<
-        ReturnType<typeof fetchYieldOpportunities>
+        ReturnType<typeof fetchDexPoolOpportunities>
       >,
       updatedAt: row.cached_at,
     };
   }
 
-  const opportunities = await fetchYieldOpportunities();
+  const opportunities = await fetchDexPoolOpportunities();
   const now = new Date().toISOString();
   await supabaseAdmin
     .from('overview_cache')

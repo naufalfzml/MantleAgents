@@ -21,12 +21,9 @@ import {
 } from "../services/attestation-service.js";
 import { convertWalletToUsdc } from "../services/convert-to-usdc.js";
 import { getWalletBalances } from "../services/dune-balances.js";
-import {
-	fetchClaimableRewards,
-	fetchYieldOpportunities,
-} from "../services/merkl-client.js";
-import { IchiVaultAdapter } from "../services/vault-adapters/ichi.js";
-import { executeYieldWithdraw } from "../services/yield-executor.js";
+import { fetchClaimableRewards } from "../services/merkl-client.js";
+import { fetchDexPoolOpportunities } from "../services/dex-pool-reader.js";
+import { executeYieldWithdraw } from "../services/trade-executor.js";
 import {
 	clearYieldPositionAfterWithdraw,
 	fullSyncYieldPositionsFromChain,
@@ -177,7 +174,7 @@ export async function yieldAgentRoutes(app: FastifyInstance) {
 		{ preHandler: authMiddleware },
 		async (_request, reply) => {
 			try {
-				const opportunities = await fetchYieldOpportunities();
+				const opportunities = await fetchDexPoolOpportunities();
 				return { opportunities };
 			} catch (err) {
 				console.error("Failed to fetch yield opportunities:", err);
@@ -499,7 +496,7 @@ export async function yieldAgentRoutes(app: FastifyInstance) {
 					.send({ error: "Yield agent wallet not configured" });
 			}
 
-			const opportunities = await fetchYieldOpportunities();
+			const opportunities = await fetchDexPoolOpportunities();
 			const { synced, cleared } = await fullSyncYieldPositionsFromChain({
 				walletAddress,
 				serverWalletAddress: configData.server_wallet_address,
@@ -557,38 +554,11 @@ export async function yieldAgentRoutes(app: FastifyInstance) {
 				return { results: [], message: "No active positions to withdraw" };
 			}
 
-			const ichiAdapter = new IchiVaultAdapter();
-			const publicClient = chainClient as import("viem").PublicClient;
-
-			// Execute withdrawal for each position
+			// Execute withdrawal for each position using Uniswap V2 removeLiquidity
 			const results = [];
 			for (const pos of positions) {
 				const vaultAddress = pos.vault_address as `0x${string}`;
-				const proto = (pos.protocol ?? '').toLowerCase();
 				try {
-					// Only verify on-chain for Ichi vaults; CLAMM positions are DB-only
-					if (proto.includes('ichi')) {
-						const onChainPosition = await ichiAdapter.getPosition(
-							vaultAddress,
-							config.server_wallet_address as `0x${string}`,
-							publicClient,
-						);
-						if (onChainPosition.lpShares === 0n) {
-							await clearYieldPositionAfterWithdraw({
-								walletAddress,
-								vaultAddress: pos.vault_address,
-							});
-							results.push({
-								vaultAddress,
-								txHash: null,
-								success: true,
-								skipped: true,
-								message: "No on-chain position; cleared stale DB row",
-							});
-							continue;
-						}
-					}
-
 					const result = await executeYieldWithdraw({
 						serverWalletId: config.server_wallet_id,
 						serverWalletAddress: config.server_wallet_address,

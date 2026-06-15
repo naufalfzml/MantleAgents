@@ -1,13 +1,23 @@
-import { streamText, Output } from 'ai';
+import { generateText, Output } from 'ai';
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createGeminiProvider } from 'ai-sdk-provider-gemini-cli';
 import { z } from 'zod';
 import type { YieldOpportunity, YieldSignal, YieldAnalysisResult, YieldGuardrails, ProgressReasoningData } from '@mantleagents/shared';
 import { emitProgress } from './agent-events.js';
 
-const gemini = createGeminiProvider({
-  authType: (process.env.GEMINI_CLI_AUTH_TYPE as 'api-key' | 'oauth-personal') || 'oauth-personal',
-  apiKey: process.env.GEMINI_API_KEY,
-});
+function getGeminiProvider() {
+  const authType = process.env.GEMINI_CLI_AUTH_TYPE || 'oauth-personal';
+  if (authType === 'api-key') {
+    const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+    if (!apiKey) throw new Error('GEMINI_API_KEY is required when GEMINI_CLI_AUTH_TYPE=api-key');
+    return createGoogleGenerativeAI({ apiKey });
+  }
+  return createGeminiProvider({ authType: 'oauth-personal' });
+}
+
+function getLlmModel(): string {
+  return process.env.LLM_MODEL || 'gemini-2.5-flash';
+}
 
 const YieldSignalSchema = z.object({
   vaultAddress: z.string(),
@@ -66,53 +76,39 @@ function formatYieldResultForDisplay(strategySummary: string, signals: YieldSign
 }
 
 export async function analyzeYieldOpportunities(input: YieldAnalysisInput): Promise<YieldAnalysisResult> {
+  // Emit stage messages at intervals during analysis
+  let stageIndex = 0;
+  const stageTimer =
+    input.walletAddress
+      ? setInterval(() => {
+          const stage = STAGE_MESSAGES[stageIndex % STAGE_MESSAGES.length];
+          stageIndex += 1;
+          emitProgress(
+            input.walletAddress!,
+            'analyzing_yields',
+            stage,
+            { stage } as ProgressReasoningData,
+            'yield'
+          );
+        }, STAGE_INTERVAL_MS)
+      : null;
+
   try {
-    const stream = streamText({
-      model: gemini('gemini-2.5-flash'),
+    const result = await generateText({
+      model: getGeminiProvider()(getLlmModel()),
       output: Output.object({ schema: YieldAnalysisSchema }),
       system: buildYieldSystemPrompt(input),
       prompt: buildYieldAnalysisPrompt(input),
     });
 
-    // Emit stage messages at intervals during analysis (no raw JSON)
-    let stageIndex = 0;
-    const stageTimer =
-      input.walletAddress
-        ? setInterval(() => {
-            const stage = STAGE_MESSAGES[stageIndex % STAGE_MESSAGES.length];
-            stageIndex += 1;
-            emitProgress(
-              input.walletAddress!,
-              'analyzing_yields',
-              stage,
-              { stage } as ProgressReasoningData,
-              'yield'
-            );
-          }, STAGE_INTERVAL_MS)
-        : null;
-
-    // Consume stream (do not emit raw JSON)
-    if (input.walletAddress) {
-      for await (const _chunk of stream.textStream) {
-        // Stream consumed; stage timer provides user feedback
-      }
-    } else {
-      for await (const _chunk of stream.textStream) {
-        // Consume without emitting
-      }
-    }
-
     if (stageTimer) clearInterval(stageTimer);
 
-    const final = await stream;
-    const result = await final.output;
-
-    if (!result) {
+    if (!result.output) {
       console.error('[yield-analyzer] LLM returned no structured output');
       return { signals: [], strategySummary: 'Analysis failed: no structured output from LLM', sourcesUsed: 0 };
     }
 
-    const signals: YieldSignal[] = result.signals.map((s: any) => ({
+    const signals: YieldSignal[] = result.output.signals.map((s: any) => ({
       vaultAddress: s.vaultAddress,
       vaultName: s.vaultName,
       action: s.action,
@@ -126,7 +122,7 @@ export async function analyzeYieldOpportunities(input: YieldAnalysisInput): Prom
 
     // Emit formatted result (human-readable, not JSON)
     if (input.walletAddress) {
-      const formatted = formatYieldResultForDisplay(result.strategySummary, signals);
+      const formatted = formatYieldResultForDisplay(result.output.strategySummary, signals);
       emitProgress(
         input.walletAddress,
         'analyzing_yields',
@@ -138,10 +134,11 @@ export async function analyzeYieldOpportunities(input: YieldAnalysisInput): Prom
 
     return {
       signals,
-      strategySummary: result.strategySummary,
+      strategySummary: result.output.strategySummary,
       sourcesUsed: input.opportunities.length,
     };
   } catch (err) {
+    if (stageTimer) clearInterval(stageTimer);
     console.error('[yield-analyzer] LLM analysis failed:', err);
     return {
       signals: [],
@@ -175,7 +172,10 @@ export function buildYieldSystemPrompt(input: YieldAnalysisInput): string {
     : '';
 
   return [
-    'You are a DeFi yield optimization analyst. Analyze the available vault opportunities and current positions to recommend deposit, withdraw, or hold actions.',
+    'You are a DeFi yield optimization analyst for a Mantle Sepolia on-chain agent.',
+    'The available opportunities are Uniswap V2 LP pools on our self-hosted Mantle DEX.',
+    'To deposit into a pool: the system will add liquidity using addLiquidity() on the Uniswap V2 router.',
+    'To exit a position: the system will call removeLiquidity() to redeem LP shares back to tokens.',
     walletWarning,
     '',
     '## Portfolio',
@@ -193,16 +193,16 @@ export function buildYieldSystemPrompt(input: YieldAnalysisInput): string {
     positionList,
     '',
     '## Rules',
-    '1. Prioritize higher APR vaults but consider TVL (low TVL = higher risk)',
+    '1. Prioritize higher APR pools but consider TVL (low TVL = higher slippage risk)',
     '2. Respect all guardrails — don\'t suggest allocations exceeding limits',
-    '3. For existing positions: suggest withdraw if APR dropped significantly (>50% from entry)',
+    '3. For existing LP positions: suggest withdraw if APR dropped significantly or position is aged',
     '4. Use APR-weighted allocation — higher APR gets proportionally more allocation',
-    '5. Never suggest more vaults than maxVaultCount',
+    '5. Never suggest more pools than maxVaultCount',
     '6. Set confidence 0-100 based on data quality and risk assessment',
     '7. Only signals with confidence >= 60 will be acted upon',
-    '8. **Token matching is CRITICAL**: Only recommend DEPOSIT for a vault/pool if the wallet holds at least one of the pool\'s tokens. Check the Wallet Balances section — if the wallet has USDT, only recommend pools that contain USDT (or USDC/BUSD/USDm as close substitutes). Never recommend a pool where the wallet has ZERO balance of both pool tokens.',
-    '9. Never suggest swapping from volatile assets (WETH, WBTC, native tokens, etc.) — only USDC, USDT, and USDm are used as swap sources. If a pool requires PUFFER, BNB, or any non-stable the wallet does not hold, mark it as hold.',
-    '10. **Swap-then-deposit**: If a vault shows routeFromUSDC=true and the wallet has USDC, USDT, or USDm, you can recommend DEPOSIT (not hold) even if the wallet doesn\'t have the vault\'s native token, because the system will automatically swap for the user.',
+    '8. **DEPOSIT ONLY if the wallet holds USDC or USDT** — all pools contain at least one stablecoin, so the system can always enter. Do not suggest deposit if wallet has zero balance.',
+    '9. vaultAddress MUST be the exact pair contract address shown in the opportunity list — do not modify it.',
+    '10. For USDC/WMNT or USDT/WMNT pools: the system will automatically swap half the input to WMNT before adding liquidity.',
     customPrompt ? `\nUser instructions: ${customPrompt}` : '',
   ].join('\n');
 }
@@ -215,12 +215,9 @@ export function buildYieldAnalysisPrompt(input: YieldAnalysisInput): string {
   }
 
   const vaultList = opportunities.slice(0, 20).map((o, i) => {
-    const depositToken = (o as YieldOpportunityForAnalysis).depositTokenSymbol ?? 'see Tokens';
-    const swapNote = (o as YieldOpportunityForAnalysis).routeFromUSDC === true
-      ? ', swap-from-USDC: yes (system can swap USDC/USDT/USDm to deposit token)'
-      : '';
-    return `${i + 1}. ${o.name} (${o.vaultAddress})\n   APR: ${o.apr.toFixed(1)}%, TVL: $${o.tvl.toLocaleString()}, Protocol: ${o.protocol}, Tokens: ${o.tokens.map(t => t.symbol).join('/')}\n   Deposit token: ${depositToken}${swapNote}`;
+    const depositToken = (o as YieldOpportunityForAnalysis).depositTokenSymbol ?? 'USDC';
+    return `${i + 1}. ${o.name} (${o.vaultAddress})\n   APR: ${o.apr.toFixed(1)}%, TVL: $${o.tvl.toLocaleString()}, Protocol: ${o.protocol}, Tokens: ${o.tokens.map(t => t.symbol).join('/')}\n   Entry: add liquidity with ${depositToken} (system handles swap to pair token automatically)`;
   }).join('\n');
 
-  return `Analyze these ${Math.min(opportunities.length, 20)} vault opportunities and generate yield signals:\n\n${vaultList}`;
+  return `Analyze these ${Math.min(opportunities.length, 20)} Uniswap V2 LP pool opportunities on Mantle DEX and generate yield signals:\n\n${vaultList}`;
 }
