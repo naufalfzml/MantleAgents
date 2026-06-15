@@ -1,6 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { createPublicClient, http, type Address, formatUnits } from 'viem';
-import { bsc } from 'viem/chains';
+import { type Address } from 'viem';
 import { createSupabaseAdmin, type Database } from '@mantleagents/db';
 import {
   DEFAULT_GUARDRAILS,
@@ -29,6 +28,7 @@ import { getStrategy } from './strategies/index.js';
 import type { WalletBalance } from './strategies/types.js';
 import { formatExecutionError } from '../lib/format-error.js';
 import { getWatchlist } from './token-monitor.js';
+import { getWalletBalances } from './dune-balances.js';
 
 type AgentConfigRow = Database['public']['Tables']['agent_configs']['Row'];
 type TimelineInsert = Database['public']['Tables']['agent_timeline']['Insert'];
@@ -455,7 +455,7 @@ export async function runAgentCycle(config: AgentConfigRow): Promise<void> {
           const currentAction = current.direction ?? current.action ?? 'unknown';
 
           emitProgress(walletAddress, executeStep, `Executing ${currentAction} ${currentLabel}...`);
-          const result = await strategy.executeSignal(signalToExecute, wallet, config);
+          const result = await strategy.executeSignal(signalToExecute, wallet, config, strategyContext);
 
           if (result.success) {
             tradeCount++;
@@ -463,7 +463,13 @@ export async function runAgentCycle(config: AgentConfigRow): Promise<void> {
             emitProgress(walletAddress, executeStep,
               `Executed ${currentAction} ${currentLabel}${result.amountUsd ? ` ($${result.amountUsd.toFixed(2)})` : ''}${simTag}`,
             );
-            await logTimeline(walletAddress, 'trade', {
+            // Yield deposits/withdraws get their own event types so the UI can label them correctly
+            const tradeEventType: TimelineInsert['event_type'] =
+              agentType === 'yield' && currentAction === 'deposit' ? 'deposit'
+              : agentType === 'yield' && currentAction === 'withdraw' ? 'withdraw'
+              : 'trade';
+
+            await logTimeline(walletAddress, tradeEventType, {
               summary: `${currentAction} ${currentLabel}${result.amountUsd ? ` ($${result.amountUsd.toFixed(2)})` : ''}${simTag}`,
               detail: {
                 signal: signalToExecute,
@@ -486,9 +492,10 @@ export async function runAgentCycle(config: AgentConfigRow): Promise<void> {
                   serverWalletAddress: config.server_wallet_address,
                   vaultAddress: result.vaultAddress as Address,
                   amountUsd: result.amountUsd,
-                  protocol: (s.vaultName ?? currentLabel ?? 'pancakeswap-v3')
+                  protocol: (s.vaultName ?? currentLabel ?? 'mantle-dex-v2')
                     .toLowerCase()
                     .replace(/\s+/g, '-'),
+                  lpShares: result.lpShares,
                 });
                 console.log(`[yield] Position saved OK`);
               } catch (err) {
@@ -686,47 +693,19 @@ export async function logTimeline(
   }
 }
 
-const BSC_TOKENS: Array<{ symbol: string; address: Address; decimals: number }> = [
-  { symbol: 'USDT', address: '0x55d398326f99059fF775485246999027B3197955', decimals: 18 },
-  { symbol: 'USDC', address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d', decimals: 18 },
-  { symbol: 'USDm', address: '0x42bbfa2e77757c645eeaad1655e0911a7553efbc', decimals: 18 },
-  { symbol: 'BUSD', address: '0xe9e7cea3dedca5984780bafc599bd69add087d56', decimals: 18 },
-  { symbol: 'USDD', address: '0xd17479997F34dd9156Deef8d7A048c652c1426DF', decimals: 18 },
-];
-
-const ERC20_BALANCE_ABI = [
-  { name: 'balanceOf', type: 'function', stateMutability: 'view',
-    inputs: [{ name: 'account', type: 'address' }],
-    outputs: [{ name: '', type: 'uint256' }] },
-] as const;
-
-const bscPublicClient = createPublicClient({ chain: bsc, transport: http() });
-
 /**
- * Read on-chain ERC-20 balances for key stablecoins on BSC.
+ * Read on-chain ERC-20 balances for the agent wallet on Mantle.
  */
 async function getOnChainBalances(serverWalletAddress: string): Promise<WalletBalance[]> {
   if (!serverWalletAddress) return [];
   try {
-    const results = await Promise.all(
-      BSC_TOKENS.map(async (token) => {
-        try {
-          const balance = await bscPublicClient.readContract({
-            address: token.address,
-            abi: ERC20_BALANCE_ABI,
-            functionName: 'balanceOf',
-            args: [serverWalletAddress as Address],
-          }) as bigint;
-          const formatted = formatUnits(balance, token.decimals);
-          const valueUsd = Number(formatted); // stablecoins: 1:1 USD
-          return { symbol: token.symbol, balance, formatted, valueUsd };
-        } catch {
-          return null;
-        }
-      })
-    );
-    return results
-      .filter((r): r is WalletBalance => r !== null && r.balance > 0n);
+    const duneBalances = await getWalletBalances(serverWalletAddress);
+    return duneBalances.map(b => ({
+      symbol: b.symbol,
+      balance: BigInt(b.amount),
+      formatted: String(Number(b.amount) / 10 ** b.decimals),
+      valueUsd: b.value_usd,
+    }));
   } catch {
     return [];
   }

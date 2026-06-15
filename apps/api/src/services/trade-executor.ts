@@ -5,7 +5,7 @@ import {
   getAmountOut,
   createEvmTx,
 } from '@mantleagents/mantle-data';
-import { encodeFunctionData, parseUnits, maxUint256 } from 'viem';
+import { encodeFunctionData, parseUnits, maxUint256, createPublicClient as viemCreatePublicClient, http as viemHttp } from 'viem';
 import {
   ALL_TOKEN_ADDRESSES,
   type TradeResult,
@@ -17,6 +17,11 @@ import { executeUniswapSwap } from './uniswap-swap.js';
 import {
   findMantleTokenByAddress,
   isMantleDexConfigured,
+  getMantleUsdc,
+  getMantleUsdt,
+  getMantleDexRouterAddress,
+  MANTLE_CHAIN,
+  mantleRpcUrl,
 } from '../lib/chains.js';
 
 // ---------------------------------------------------------------------------
@@ -459,6 +464,261 @@ export async function executeSwap(params: {
     };
   } catch (error) {
     return toFailureResult(error);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Uniswap V2 addLiquidity / removeLiquidity
+// ---------------------------------------------------------------------------
+
+const UNISWAP_V2_ROUTER_ABI = [
+  {
+    name: 'addLiquidity',
+    type: 'function',
+    stateMutability: 'nonpayable',
+    inputs: [
+      { name: 'tokenA', type: 'address' },
+      { name: 'tokenB', type: 'address' },
+      { name: 'amountADesired', type: 'uint256' },
+      { name: 'amountBDesired', type: 'uint256' },
+      { name: 'amountAMin', type: 'uint256' },
+      { name: 'amountBMin', type: 'uint256' },
+      { name: 'to', type: 'address' },
+      { name: 'deadline', type: 'uint256' },
+    ],
+    outputs: [
+      { name: 'amountA', type: 'uint256' },
+      { name: 'amountB', type: 'uint256' },
+      { name: 'liquidity', type: 'uint256' },
+    ],
+  },
+  {
+    name: 'removeLiquidity',
+    type: 'function',
+    stateMutability: 'nonpayable',
+    inputs: [
+      { name: 'tokenA', type: 'address' },
+      { name: 'tokenB', type: 'address' },
+      { name: 'liquidity', type: 'uint256' },
+      { name: 'amountAMin', type: 'uint256' },
+      { name: 'amountBMin', type: 'uint256' },
+      { name: 'to', type: 'address' },
+      { name: 'deadline', type: 'uint256' },
+    ],
+    outputs: [
+      { name: 'amountA', type: 'uint256' },
+      { name: 'amountB', type: 'uint256' },
+    ],
+  },
+] as const;
+
+const PAIR_ABI_FOR_EXECUTOR = [
+  {
+    name: 'token0',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [{ name: '', type: 'address' }],
+  },
+  {
+    name: 'token1',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [{ name: '', type: 'address' }],
+  },
+  {
+    name: 'balanceOf',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ name: 'owner', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    name: 'Transfer',
+    type: 'event',
+    inputs: [
+      { name: 'from', type: 'address', indexed: true },
+      { name: 'to', type: 'address', indexed: true },
+      { name: 'value', type: 'uint256', indexed: false },
+    ],
+  },
+] as const;
+
+export interface YieldDepositResult {
+  success: boolean;
+  txHash?: string;
+  vaultAddress?: string;
+  lpShares?: bigint;
+  error?: string;
+}
+
+export interface YieldWithdrawResult {
+  success: boolean;
+  txHash?: string;
+  error?: string;
+}
+
+/**
+ * Add liquidity to a Uniswap V2 pair on Mantle DEX.
+ * Single-sided zap-in: swaps half the USDC/USDT input to the paired token first.
+ */
+export async function executeYieldDeposit(params: {
+  serverWalletId: string;
+  serverWalletAddress: string;
+  vaultAddress: `0x${string}`;
+  amountUsd: number;
+}): Promise<YieldDepositResult> {
+  const { serverWalletAddress, vaultAddress, amountUsd } = params;
+
+  try {
+    const router = getMantleDexRouterAddress();
+    const client = viemCreatePublicClient({ chain: MANTLE_CHAIN, transport: viemHttp(mantleRpcUrl()) });
+
+    // Read pair tokens
+    const [token0, token1] = await Promise.all([
+      client.readContract({ address: vaultAddress, abi: PAIR_ABI_FOR_EXECUTOR, functionName: 'token0' }),
+      client.readContract({ address: vaultAddress, abi: PAIR_ABI_FOR_EXECUTOR, functionName: 'token1' }),
+    ]);
+
+    const usdc = getMantleUsdc();
+    const usdt = getMantleUsdt();
+
+    // Determine which token is our entry stablecoin and which is the other token
+    const isUsdc = (addr: string) => addr.toLowerCase() === usdc.address.toLowerCase();
+    const isUsdt = (addr: string) => addr.toLowerCase() === usdt.address.toLowerCase();
+
+    const isToken0Stable = isUsdc(token0) || isUsdt(token0);
+    const stableAddress = (isToken0Stable ? token0 : token1) as `0x${string}`;
+    const otherAddress = (isToken0Stable ? token1 : token0) as `0x${string}`;
+
+    const stableDecimals = 6; // Both USDC and USDT are 6 decimals on Mantle
+    const otherToken = findMantleTokenByAddress(otherAddress);
+    const otherDecimals = otherToken?.decimals ?? 18;
+
+    // Half the amount in stable for entry side, half to swap for the other token
+    const halfUsd = amountUsd / 2;
+    const stableAmountIn = parseUnits(halfUsd.toFixed(stableDecimals), stableDecimals);
+
+    // Swap half stable → other token via our DEX
+    console.log(`[yield-deposit] Swapping half ($${halfUsd.toFixed(2)}) ${stableAddress} → ${otherAddress}`);
+    const swapResult = await executeUniswapSwap({
+      tokenIn: stableAddress,
+      tokenOut: otherAddress,
+      amountIn: stableAmountIn,
+      slippageBps: 200, // 2% slippage for zap-in
+    });
+
+    const otherAmountIn = swapResult.amountOut;
+    const stableAmountForLiquidity = stableAmountIn;
+
+    console.log(`[yield-deposit] Got ${otherAmountIn} of other token from swap`);
+
+    // Approve both tokens for router
+    await Promise.all([
+      ensureErc20Allowance(stableAddress, serverWalletAddress, router, stableAmountForLiquidity),
+      ensureErc20Allowance(otherAddress, serverWalletAddress, router, otherAmountIn),
+    ]);
+
+    // Read LP balance before addLiquidity to compute shares minted by diff
+    const lpBefore = await client.readContract({
+      address: vaultAddress,
+      abi: PAIR_ABI_FOR_EXECUTOR,
+      functionName: 'balanceOf',
+      args: [serverWalletAddress as `0x${string}`],
+    });
+
+    const deadline = BigInt(Math.floor(Date.now() / 1000) + 60 * 20); // 20 min deadline
+
+    // Determine token order for addLiquidity (must match token0/token1)
+    const tokenA = isToken0Stable ? stableAddress : otherAddress;
+    const tokenB = isToken0Stable ? otherAddress : stableAddress;
+    const amountADesired = isToken0Stable ? stableAmountForLiquidity : otherAmountIn;
+    const amountBDesired = isToken0Stable ? otherAmountIn : stableAmountForLiquidity;
+
+    console.log(`[yield-deposit] addLiquidity: tokenA=${tokenA} amtA=${amountADesired}, tokenB=${tokenB} amtB=${amountBDesired}`);
+
+    const addLiquidityData = encodeFunctionData({
+      abi: UNISWAP_V2_ROUTER_ABI,
+      functionName: 'addLiquidity',
+      args: [tokenA, tokenB, amountADesired, amountBDesired, 0n, 0n, serverWalletAddress as `0x${string}`, deadline],
+    });
+
+    const txHash = await sendRelayerTransaction({ to: router, data: addLiquidityData });
+    console.log(`[yield-deposit] addLiquidity tx: ${txHash}`);
+
+    // Compute LP shares minted
+    const lpAfter = await client.readContract({
+      address: vaultAddress,
+      abi: PAIR_ABI_FOR_EXECUTOR,
+      functionName: 'balanceOf',
+      args: [serverWalletAddress as `0x${string}`],
+    });
+    const lpShares = lpAfter - lpBefore;
+    console.log(`[yield-deposit] LP shares minted: ${lpShares}`);
+
+    return { success: true, txHash, vaultAddress, lpShares };
+  } catch (err) {
+    console.error('[yield-deposit] Failed:', err);
+    return { success: false, error: err instanceof Error ? err.message : String(err) };
+  }
+}
+
+/**
+ * Remove liquidity from a Uniswap V2 pair on Mantle DEX.
+ */
+export async function executeYieldWithdraw(params: {
+  serverWalletId: string;
+  serverWalletAddress: string;
+  vaultAddress: `0x${string}`;
+  lpShares?: bigint;
+}): Promise<YieldWithdrawResult> {
+  const { serverWalletAddress, vaultAddress, lpShares } = params;
+
+  try {
+    const router = getMantleDexRouterAddress();
+    const client = viemCreatePublicClient({ chain: MANTLE_CHAIN, transport: viemHttp(mantleRpcUrl()) });
+
+    // If lpShares not provided, use full balance
+    let shares = lpShares;
+    if (!shares || shares === 0n) {
+      shares = await client.readContract({
+        address: vaultAddress,
+        abi: PAIR_ABI_FOR_EXECUTOR,
+        functionName: 'balanceOf',
+        args: [serverWalletAddress as `0x${string}`],
+      });
+    }
+
+    if (!shares || shares === 0n) {
+      return { success: false, error: 'No LP shares to withdraw' };
+    }
+
+    const [token0, token1] = await Promise.all([
+      client.readContract({ address: vaultAddress, abi: PAIR_ABI_FOR_EXECUTOR, functionName: 'token0' }),
+      client.readContract({ address: vaultAddress, abi: PAIR_ABI_FOR_EXECUTOR, functionName: 'token1' }),
+    ]);
+
+    // LP token in Uniswap V2 = pair contract itself — approve router to spend it
+    await ensureErc20Allowance(vaultAddress, serverWalletAddress, router, shares);
+
+    const deadline = BigInt(Math.floor(Date.now() / 1000) + 60 * 20);
+
+    console.log(`[yield-withdraw] removeLiquidity: pair=${vaultAddress}, shares=${shares}`);
+
+    const removeLiquidityData = encodeFunctionData({
+      abi: UNISWAP_V2_ROUTER_ABI,
+      functionName: 'removeLiquidity',
+      args: [token0, token1, shares, 0n, 0n, serverWalletAddress as `0x${string}`, deadline],
+    });
+
+    const txHash = await sendRelayerTransaction({ to: router, data: removeLiquidityData });
+    console.log(`[yield-withdraw] removeLiquidity tx: ${txHash}`);
+
+    return { success: true, txHash };
+  } catch (err) {
+    console.error('[yield-withdraw] Failed:', err);
+    return { success: false, error: err instanceof Error ? err.message : String(err) };
   }
 }
 

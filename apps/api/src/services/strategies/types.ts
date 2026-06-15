@@ -28,6 +28,7 @@ export interface ExecutionResult {
   txHash?: string;
   amountUsd?: number;
   vaultAddress?: string;
+  lpShares?: string;
   error?: string;
   failureCategory?: FailureCategory;
   simulated?: boolean;
@@ -69,6 +70,7 @@ export interface AgentStrategy {
     signal: unknown,
     wallet: WalletContext,
     config: AgentConfigRow,
+    context?: StrategyContext,
   ): Promise<ExecutionResult>;
 
   /** Get strategy-specific guardrail checks */

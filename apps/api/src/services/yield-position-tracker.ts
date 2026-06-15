@@ -24,8 +24,9 @@ export async function upsertYieldPositionAfterDeposit(params: {
   amountUsd: number;
   protocol?: string;
   depositToken?: string;
+  lpShares?: string;
 }): Promise<void> {
-  const { walletAddress, vaultAddress, amountUsd, protocol, depositToken } = params;
+  const { walletAddress, vaultAddress, amountUsd, protocol, depositToken, lpShares: newLpShares } = params;
 
   const existingRow = await supabaseAdmin
     .from('yield_positions')
@@ -37,10 +38,11 @@ export async function upsertYieldPositionAfterDeposit(params: {
   const existingDepositUsd = existingRow.data?.deposit_amount_usd ?? 0;
   const totalDepositUsd = existingDepositUsd + amountUsd;
   const depositedAt = existingRow.data?.deposited_at ?? new Date().toISOString();
-  // Keep existing lp_shares if present; set to 1 for new CLAMM positions (indicates active)
-  const lpShares = Number(existingRow.data?.lp_shares ?? 0) > 0
-    ? Number(existingRow.data!.lp_shares)
-    : 1;
+
+  // Use real LP shares from addLiquidity result; fall back to existing or 1
+  const existingLp = existingRow.data?.lp_shares ? BigInt(existingRow.data.lp_shares) : 0n;
+  const addedLp = newLpShares ? BigInt(newLpShares) : 0n;
+  const lpShares = (existingLp + addedLp > 0n ? existingLp + addedLp : 1n).toString();
 
   // Use insert-or-update pattern (no unique constraint needed)
   let error;
