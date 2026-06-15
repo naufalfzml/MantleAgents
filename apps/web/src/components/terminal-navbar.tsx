@@ -15,8 +15,6 @@ import {
   Wallet,
   Menu,
   X,
-  GitBranch,
-  Store,
   LogOut,
   Copy,
   Check,
@@ -34,11 +32,13 @@ const navItems = [
   { title: 'Yield Agent', url: '/yield-agent', icon: Sprout },
   { title: 'Monitor', url: '/monitor', icon: Eye },
   { title: 'Swap', url: '/swap', icon: ArrowLeftRight },
-  { title: 'Orchestration', url: '/orchestration', icon: GitBranch },
-  { title: 'Marketplace', url: '/marketplace', icon: Store },
 ];
 
 const isLpToken = (symbol: string) => /VAULT|LP|UNIV3/i.test(symbol);
+
+function getNetworkBadgeLabel(network: string | undefined): string {
+  return network?.toLowerCase() === 'mainnet' ? 'Mantle' : 'Mantle Testnet';
+}
 
 function WalletDropdown() {
   const [open, setOpen] = React.useState(false);
@@ -200,6 +200,7 @@ function WalletDropdown() {
 export function TerminalNavbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const networkLabel = getNetworkBadgeLabel(process.env.NEXT_PUBLIC_MANTLE_NETWORK);
 
   return (
     <nav className="shrink-0 border-b-4 border-gb-deep bg-gb-deep z-50">
@@ -242,7 +243,7 @@ export function TerminalNavbar() {
               <span className="absolute inline-flex size-full animate-ping bg-green-400 opacity-60" />
               <span className="relative inline-flex size-2 bg-green-400" />
             </span>
-            BSC
+            {networkLabel}
           </div>
 
           {/* Unified wallet dropdown */}

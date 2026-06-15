@@ -19,12 +19,7 @@ import { TokenLogo } from '@/components/token-logo';
 import { api, ApiError } from '@/lib/api-client';
 import { usePortfolio, portfolioKeys } from '@/hooks/use-portfolio';
 
-const BASE_TOKENS = ['USDC', 'USDT', 'USDm'] as const;
-
-const STABLE_TOKENS = [
-  'EURm', 'BRLm', 'KESm', 'PHPm', 'COPm', 'XOFm',
-  'NGNm', 'JPYm', 'CHFm', 'ZARm', 'GBPm', 'AUDm', 'CADm', 'GHSm',
-] as const;
+const MANTLE_TOKENS = ['USDC', 'USDT', 'WMNT'] as const;
 
 interface QuoteResponse {
   estimatedAmountOut: string;
@@ -51,7 +46,7 @@ export function SwapContent() {
   const { data: portfolio, isLoading: portfolioLoading } = usePortfolio(agentType);
 
   const [fromToken, setFromToken] = useState('USDC');
-  const [toToken, setToToken] = useState('EURm');
+  const [toToken, setToToken] = useState('WMNT');
   const [amount, setAmount] = useState('');
   const [slippage] = useState(0.5);
   const [debouncedAmount, setDebouncedAmount] = useState('');
@@ -62,36 +57,17 @@ export function SwapContent() {
     return () => clearTimeout(timer);
   }, [amount]);
 
-  // Determine available tokens for each side
-  const baseTokenSet = useMemo(() => new Set<string>([...BASE_TOKENS]), []);
-  const isFromBase = useMemo(
-    () => baseTokenSet.has(fromToken),
-    [baseTokenSet, fromToken],
+  const fromTokens = useMemo((): string[] => [...MANTLE_TOKENS], []);
+
+  const toTokens = useMemo(
+    (): string[] => MANTLE_TOKENS.filter((token) => token !== fromToken),
+    [fromToken],
   );
-
-  const fromTokens = useMemo((): string[] => {
-    const held = portfolio?.holdings.map((h) => h.tokenSymbol) ?? [];
-    const baseSet = new Set<string>([...BASE_TOKENS]);
-    const stableSet = new Set<string>([...STABLE_TOKENS]);
-    const tokens = [...baseSet];
-    for (const t of held) {
-      if (stableSet.has(t) && !baseSet.has(t)) tokens.push(t);
-    }
-    return tokens;
-  }, [portfolio]);
-
-  const toTokens = useMemo((): string[] => {
-    if (isFromBase) {
-      // Can swap to other base tokens (USDC, USDT, USDm) or stablecoin tokens
-      return ([...BASE_TOKENS, ...STABLE_TOKENS] as string[]).filter((t) => t !== fromToken);
-    }
-    return ([...BASE_TOKENS] as string[]).filter((t) => t !== fromToken);
-  }, [isFromBase, fromToken]);
 
   // Ensure toToken is valid when fromToken changes
   useEffect(() => {
     if (!toTokens.includes(toToken)) {
-      setToToken(toTokens[0] ?? 'EURm');
+      setToToken(toTokens[0] ?? 'WMNT');
     }
   }, [toTokens, toToken]);
 

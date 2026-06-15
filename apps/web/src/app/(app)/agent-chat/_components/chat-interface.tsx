@@ -141,7 +141,7 @@ export function ChatInterface({
                 <Bot className="size-4 text-gb-accent" />
               </div>
               <div>
-                <span className="text-sm font-bold text-gb-light tracking-wide uppercase">AutoClaw AI</span>
+                <span className="text-sm font-bold text-gb-light tracking-wide uppercase">MantleAgents AI</span>
                 <div className="flex items-center gap-1">
                   <span className="size-1.5 rounded-full bg-gb-accent animate-pulse" />
                   <span className="text-[10px] text-gb-accent uppercase tracking-widest">Online</span>
@@ -186,7 +186,7 @@ export function ChatInterface({
                   <div className="inline-flex items-center justify-center size-16 rounded-full border-2 border-dashed border-gb-accent/40 bg-gb-dark mb-4">
                     <Bot className="size-8 text-gb-accent" />
                   </div>
-                  <h2 className="text-xl font-bold text-gb-light uppercase tracking-wider">AutoClaw Intelligence</h2>
+                  <h2 className="text-xl font-bold text-gb-light uppercase tracking-wider">MantleAgents Intelligence</h2>
                   <p className="text-sm text-gb-mid max-w-sm">
                     Real-time crypto analysis powered by AI. Ask me anything about prices, market trends, or trading signals.
                   </p>
