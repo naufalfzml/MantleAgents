@@ -2,6 +2,5 @@
   "framework": "nextjs",
   "buildCommand": "pnpm build --filter=@mantleagents/web",
   "outputDirectory": "apps/web/.next",
-  "installCommand": "pnpm install",
-  "nodeVersion": "20.x"
+  "installCommand": "pnpm install"
 }
