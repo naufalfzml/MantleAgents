@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
+    "prebuild": "pnpm --filter @mantleagents/shared --filter @mantleagents/db --filter @mantleagents/mantle-data build",
     "build": "tsc",
     "start": "node dist/index.js",
+    "pretype-check": "pnpm --filter @mantleagents/shared --filter @mantleagents/db --filter @mantleagents/mantle-data build",
     "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
