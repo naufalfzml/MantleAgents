@@ -18,7 +18,8 @@
     "lint": "echo 'no linter configured yet'"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.x"
+    "@supabase/supabase-js": "^2.x",
+    "ws": "^8.18.3"
   },
   "devDependencies": {
     "@mantleagents/typescript-config": "workspace:*",
